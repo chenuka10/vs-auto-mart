@@ -1,0 +1,46 @@
+import type { Metadata } from "next";
+import { Oswald, Inter, JetBrains_Mono } from "next/font/google";
+import "./globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+
+const display = Oswald({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-display",
+});
+
+const body = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
+});
+
+const plate = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["500"],
+  variable: "--font-plate",
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://vsautomart.lk"),
+  title: {
+    default: "VS Auto Mart — Quality Used Vehicles in Sri Lanka",
+    template: "%s | VS Auto Mart",
+  },
+  description:
+    "Browse inspected, quality used vehicles in Sri Lanka. Suzuki, Toyota, and more — trusted by 500+ happy customers.",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${display.variable} ${body.variable} ${plate.variable}`}>
+      <body>
+        <Header />
+        <main className="min-h-screen">{children}</main>
+        <Footer />
+        <WhatsAppButton />
+      </body>
+    </html>
+  );
+}

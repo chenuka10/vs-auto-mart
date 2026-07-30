@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-paper text-graphite-950 font-body antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  ::selection {
+    @apply bg-brass-500/30;
+  }
+}
+
+@layer components {
+  /* Registration-plate style spec tag — the site's signature motif */
+  .plate-tag {
+    @apply inline-flex items-center gap-1 rounded-plate border border-graphite-700/15
+           bg-white px-2.5 py-1 font-plate text-xs font-medium tracking-wider
+           text-graphite-700;
+  }
+}
