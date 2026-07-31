@@ -14,19 +14,34 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   if (!user) redirect("/admin/login");
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-10">
-      <div className="flex items-center justify-between border-b border-graphite-700/10 pb-6">
-        <div>
-          <p className="font-display text-xl font-semibold">Admin Dashboard</p>
-          <p className="text-sm text-graphite-500">{user.email}</p>
+    <div className="min-h-screen bg-graphite-950 text-paper">
+      <div className="mx-auto max-w-6xl px-6 py-10">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brass-400">
+              VS Auto Mart
+            </p>
+            <p className="mt-1 font-display text-xl font-semibold">Admin Dashboard</p>
+            <p className="text-sm text-graphite-300">{user.email}</p>
+          </div>
+          <nav className="flex items-center gap-2 text-sm font-medium">
+            <Link
+              href="/admin"
+              className="rounded-plate px-3 py-2 text-graphite-300 transition-colors duration-200 hover:bg-white/5 hover:text-brass-400"
+            >
+              Vehicles
+            </Link>
+            <Link
+              href="/admin/vehicles/new"
+              className="rounded-plate bg-brass-500 px-3 py-2 font-semibold text-graphite-950 transition-all duration-200 hover:bg-brass-400"
+            >
+              + Add Vehicle
+            </Link>
+            <SignOutButton />
+          </nav>
         </div>
-        <nav className="flex items-center gap-4 text-sm font-medium">
-          <Link href="/admin" className="hover:text-brass-600">Vehicles</Link>
-          <Link href="/admin/vehicles/new" className="hover:text-brass-600">Add Vehicle</Link>
-          <SignOutButton />
-        </nav>
+        <div className="mt-8">{children}</div>
       </div>
-      <div className="mt-8">{children}</div>
     </div>
   );
 }
