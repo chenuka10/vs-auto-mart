@@ -36,29 +36,45 @@ export default async function InventoryPage({
   const vehicles = await getVehicles(params);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12">
-      <h1 className="font-display text-3xl font-semibold">Vehicle Inventory</h1>
-      <p className="mt-2 text-graphite-500">
-        {vehicles.length} vehicle{vehicles.length === 1 ? "" : "s"} available
-      </p>
+    <div className="min-h-screen bg-graphite-950 text-paper">
+      <div className="mx-auto max-w-6xl px-6 py-12">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brass-400">
+          Showroom
+        </p>
+        <h1 className="mt-2 font-display text-3xl font-semibold md:text-4xl">
+          Vehicle Inventory
+        </h1>
+        <p className="mt-2 text-graphite-300">
+          <span className="font-semibold text-brass-400">{vehicles.length}</span>{" "}
+          vehicle{vehicles.length === 1 ? "" : "s"} available
+        </p>
 
-      <div className="mt-6">
-        <Suspense fallback={null}>
-          <InventoryFilters />
-        </Suspense>
+        <div className="sticky top-0 z-10 mt-6 -mx-6 border-y border-white/5 bg-graphite-950/90 px-6 py-4 backdrop-blur">
+          <Suspense fallback={null}>
+            <InventoryFilters />
+          </Suspense>
+        </div>
+
+        {vehicles.length === 0 ? (
+          <div className="mt-16 rounded-2xl border border-dashed border-white/10 bg-charcoal-900 p-12 text-center">
+            <p className="font-display text-lg font-semibold">No matches yet</p>
+            <p className="mt-2 text-graphite-300">
+              No vehicles match those filters. Try widening your search.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {vehicles.map((vehicle) => (
+              <div
+                key={vehicle.id}
+                className="group rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_32px_-12px_rgba(0,0,0,0.6)]"
+              >
+                <VehicleCard vehicle={vehicle} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-
-      {vehicles.length === 0 ? (
-        <div className="mt-16 rounded-lg border border-dashed border-graphite-700/20 p-12 text-center text-graphite-500">
-          No vehicles match those filters yet. Try widening your search.
-        </div>
-      ) : (
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {vehicles.map((vehicle) => (
-            <VehicleCard key={vehicle.id} vehicle={vehicle} />
-          ))}
-        </div>
-      )}
     </div>
   );
 }

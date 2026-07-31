@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Oswald, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -30,6 +30,31 @@ export const metadata: Metadata = {
   },
   description:
     "Browse inspected, quality used vehicles in Sri Lanka. Suzuki, Toyota, and more — trusted by 500+ happy customers.",
+  openGraph: {
+    type: "website",
+    locale: "en_LK",
+    siteName: "VS Auto Mart",
+    title: "VS Auto Mart — Quality Used Vehicles in Sri Lanka",
+    description:
+      "Browse inspected, quality used vehicles in Sri Lanka. Suzuki, Toyota, and more.",
+    images: ["/og-image.jpg"], // 1200x630, obsidian bg + gold logo
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "VS Auto Mart",
+    description: "Quality used vehicles in Sri Lanka.",
+    images: ["/og-image.jpg"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0B0B0B",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
