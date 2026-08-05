@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
@@ -14,22 +15,39 @@ export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  const isHome = pathname === "/";
+
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-graphite-950/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="font-display text-xl font-semibold tracking-tight text-paper">
-          VS <span className="text-brass-400">Auto Mart</span>
+    <header
+      className={`${
+        isHome
+          ? "absolute inset-x-0 top-0 bg-black/20" 
+          : "sticky top-0 bg-graphite-950/90"
+      } z-50 border-b border-white/10 backdrop-blur-md transition-colors duration-200`}
+    >
+      <div className="flex items-center justify-between gap-4 px-6 py-4 md:px-10">
+        {/* Brand Logo */}
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/logo.png"
+            alt="VS Auto Mart"
+            width={40}
+            height={40}
+            className="h-9 w-auto"
+            priority
+          />
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        {/* Desktop Navigation Links */}
+        <nav className="hidden items-center gap-8 text-sm font-medium tracking-wide text-white md:flex">
           {NAV_LINKS.map((link) => {
             const active = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  active ? "text-brass-400" : "text-graphite-300 hover:text-paper"
+                className={`transition ${
+                  active ? "text-brass-400" : "hover:text-brass-400"
                 }`}
               >
                 {link.label}
@@ -38,18 +56,20 @@ export default function Header() {
           })}
         </nav>
 
+        {/* Desktop CTA Button */}
         <Link
           href="/inventory"
-          className="hidden rounded-plate bg-brass-500 px-4 py-2 text-sm font-semibold text-graphite-950 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brass-400 md:inline-block"
+          className="hidden rounded-plate border border-brass-400/40 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-brass-400 transition hover:bg-brass-400 hover:text-graphite-950 md:inline-block"
         >
-          Browse Vehicles
+          Explore Inventory
         </Link>
 
+        {/* Mobile Menu Toggle */}
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={open}
-          className="flex h-10 w-10 items-center justify-center rounded-plate text-paper transition-colors duration-200 hover:bg-white/5 md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-plate text-brass-400 transition hover:bg-white/5 md:hidden"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -68,9 +88,9 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       <div
-        className={`overflow-hidden border-t border-white/10 bg-graphite-950 transition-[max-height] duration-300 ease-in-out md:hidden ${
+        className={`overflow-hidden border-t border-white/10 bg-black/60 backdrop-blur-md transition-[max-height] duration-300 ease-in-out md:hidden ${
           open ? "max-h-80" : "max-h-0 border-t-0"
         }`}
       >
@@ -82,8 +102,10 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className={`rounded-plate px-3 py-3 text-base font-medium transition-colors duration-200 ${
-                  active ? "bg-brass-500/10 text-brass-400" : "text-graphite-300 hover:bg-white/5 hover:text-paper"
+                className={`rounded-plate px-3 py-3 text-sm font-medium transition ${
+                  active
+                    ? "bg-brass-400/10 text-brass-400"
+                    : "text-graphite-200 hover:bg-white/5 hover:text-brass-400"
                 }`}
               >
                 {link.label}
@@ -93,9 +115,9 @@ export default function Header() {
           <Link
             href="/inventory"
             onClick={() => setOpen(false)}
-            className="mt-2 rounded-plate bg-brass-500 px-4 py-3 text-center text-sm font-semibold text-graphite-950 transition-all duration-200 hover:bg-brass-400"
+            className="mt-2 rounded-plate border border-brass-400/40 px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-brass-400 transition hover:bg-brass-400 hover:text-graphite-950"
           >
-            Browse Vehicles
+            Explore Inventory
           </Link>
         </nav>
       </div>

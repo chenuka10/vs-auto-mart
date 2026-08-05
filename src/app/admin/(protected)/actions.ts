@@ -34,6 +34,7 @@ export async function createVehicle(formData: FormData) {
       transmission: String(formData.get("transmission")),
       engine_capacity: String(formData.get("engine_capacity") ?? "") || null,
       colour: String(formData.get("colour") ?? "") || null,
+      registration_no: String(formData.get("registration_no") ?? "") || null,
       condition: String(formData.get("condition") ?? "") || null,
       description: String(formData.get("description") ?? "") || null,
       location: String(formData.get("location") ?? "") || null,
@@ -53,6 +54,7 @@ export async function createVehicle(formData: FormData) {
         vehicle_id: vehicle.id,
         image_url,
         sort_order: index,
+        is_cover: index === 0,
       }))
     );
   }
@@ -91,16 +93,25 @@ export async function updateVehicle(id: string, formData: FormData) {
       description: String(formData.get("description") ?? "") || null,
       is_featured: formData.get("is_featured") === "on",
       condition: String(formData.get("condition") ?? "") || null,
+      registration_no: String(formData.get("registration_no") ?? "") || null,
     })
     .eq("id", id);
 
   const newImageUrls = parseImageUrls(String(formData.get("image_urls") ?? ""));
   if (newImageUrls.length > 0) {
+    const { count } = await supabase
+      .from("vehicle_images")
+      .select("id", { count: "exact", head: true })
+      .eq("vehicle_id", id)
+      .eq("is_cover", true);
+    const needsCover = !count;
+
     await supabase.from("vehicle_images").insert(
       newImageUrls.map((image_url, index) => ({
         vehicle_id: id,
         image_url,
         sort_order: 100 + index,
+        is_cover: needsCover && index === 0,
       }))
     );
   }
@@ -108,4 +119,53 @@ export async function updateVehicle(id: string, formData: FormData) {
   revalidatePath("/admin");
   revalidatePath("/inventory");
   redirect("/admin");
+}
+
+export async function setCoverImage(vehicleId: string, imageId: string) {
+  const supabase = await createClient();
+
+  // Unique partial index only allows one is_cover=true row per vehicle, so
+  // clear the old one first.
+  await supabase
+    .from("vehicle_images")
+    .update({ is_cover: false })
+    .eq("vehicle_id", vehicleId)
+    .eq("is_cover", true);
+
+  await supabase.from("vehicle_images").update({ is_cover: true }).eq("id", imageId);
+
+  revalidatePath("/admin");
+  revalidatePath("/inventory");
+  revalidatePath("/");
+}
+
+export async function deleteVehicleImage(imageId: string, vehicleId: string) {
+  const supabase = await createClient();
+
+  const { data: image } = await supabase
+    .from("vehicle_images")
+    .select("is_cover")
+    .eq("id", imageId)
+    .single();
+
+  await supabase.from("vehicle_images").delete().eq("id", imageId);
+
+  // If the deleted photo was the cover, promote the next remaining one.
+  if (image?.is_cover) {
+    const { data: nextImage } = await supabase
+      .from("vehicle_images")
+      .select("id")
+      .eq("vehicle_id", vehicleId)
+      .order("sort_order", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+
+    if (nextImage) {
+      await supabase.from("vehicle_images").update({ is_cover: true }).eq("id", nextImage.id);
+    }
+  }
+
+  revalidatePath("/admin");
+  revalidatePath("/inventory");
+  revalidatePath("/");
 }

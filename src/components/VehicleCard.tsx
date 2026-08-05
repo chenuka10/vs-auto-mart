@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { VehicleWithImages } from "@/lib/types";
-import { formatLKR, formatMileage } from "@/lib/utils";
+import type { PublicVehicleWithImages } from "@/lib/types";
+import { formatLKR, formatMileage, sortVehicleImages } from "@/lib/utils";
 import StatusBadge from "./StatusBadge";
 
-export default function VehicleCard({ vehicle }: { vehicle: VehicleWithImages }) {
-  const cover = vehicle.vehicle_images?.[0]?.image_url ?? "/placeholder-car.jpg";
+export default function VehicleCard({ vehicle }: { vehicle: PublicVehicleWithImages }) {
+  const cover = sortVehicleImages(vehicle.vehicle_images ?? [])[0]?.image_url ?? "/placeholder-car.jpg";
 
   return (
     <Link

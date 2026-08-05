@@ -1,4 +1,15 @@
 import slugify from "slugify";
+import type { VehicleImage } from "./types";
+
+/** Cover photo first, then the rest in their chosen order. */
+export function sortVehicleImages<T extends Pick<VehicleImage, "is_cover" | "sort_order">>(
+  images: T[]
+): T[] {
+  return [...images].sort((a, b) => {
+    if (a.is_cover !== b.is_cover) return a.is_cover ? -1 : 1;
+    return a.sort_order - b.sort_order;
+  });
+}
 
 export function formatLKR(amount: number): string {
   return `Rs. ${new Intl.NumberFormat("en-LK").format(Math.round(amount))}`;

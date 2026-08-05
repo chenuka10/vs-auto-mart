@@ -4,17 +4,18 @@ import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import StatusBadge from "@/components/StatusBadge";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { formatLKR, formatMileage } from "@/lib/utils";
-import type { VehicleWithImages } from "@/lib/types";
+import { formatLKR, formatMileage, sortVehicleImages } from "@/lib/utils";
+import { PUBLIC_VEHICLE_WITH_IMAGES_COLUMNS } from "@/lib/queries";
+import type { PublicVehicleWithImages } from "@/lib/types";
 
 async function getVehicle(slug: string) {
   const supabase = await createClient();
   const { data } = await supabase
     .from("vehicles")
-    .select("*, vehicle_images(*)")
+    .select(PUBLIC_VEHICLE_WITH_IMAGES_COLUMNS)
     .eq("slug", slug)
     .single();
-  return data as VehicleWithImages | null;
+  return data as PublicVehicleWithImages | null;
 }
 
 export async function generateMetadata({
@@ -32,6 +33,7 @@ export async function generateMetadata({
   )}, ${vehicle.transmission}. Priced at ${formatLKR(vehicle.price)}. Located in ${
     vehicle.location ?? "Sri Lanka"
   }.`;
+  const cover = sortVehicleImages(vehicle.vehicle_images ?? [])[0]?.image_url;
 
   return {
     title,
@@ -39,7 +41,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      images: vehicle.vehicle_images?.[0]?.image_url ? [vehicle.vehicle_images[0].image_url] : [],
+      images: cover ? [cover] : [],
     },
   };
 }
@@ -52,6 +54,8 @@ export default async function VehicleDetailPage({
   const { slug } = await params;
   const vehicle = await getVehicle(slug);
   if (!vehicle) notFound();
+
+  const images = sortVehicleImages(vehicle.vehicle_images ?? []);
 
   const specs = [
     ["Brand", vehicle.brand],
@@ -71,9 +75,9 @@ export default async function VehicleDetailPage({
         {/* Gallery */}
         <div className="lg:col-span-3">
           <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite-100">
-            {vehicle.vehicle_images?.[0] && (
+            {images[0] && (
               <Image
-                src={vehicle.vehicle_images[0].image_url}
+                src={images[0].image_url}
                 alt={`${vehicle.brand} ${vehicle.model}`}
                 fill
                 priority
@@ -81,9 +85,9 @@ export default async function VehicleDetailPage({
               />
             )}
           </div>
-          {vehicle.vehicle_images?.length > 1 && (
+          {images.length > 1 && (
             <div className="mt-3 grid grid-cols-4 gap-3">
-              {vehicle.vehicle_images.slice(1, 9).map((img) => (
+              {images.slice(1, 9).map((img) => (
                 <div key={img.id} className="relative aspect-square overflow-hidden rounded-md bg-graphite-100">
                   <Image src={img.image_url} alt={img.context} fill className="object-cover" />
                 </div>

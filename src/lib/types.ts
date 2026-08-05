@@ -38,9 +38,22 @@ export interface VehicleImage {
   image_url: string;
   context: ImageContext;
   sort_order: number;
+  is_cover: boolean;
 }
 
 export interface VehicleWithImages extends Vehicle {
+  vehicle_images: VehicleImage[];
+}
+
+/**
+ * Fields safe to select on public pages. Deliberately omits registration_no
+ * (plate number) and created_by, which are admin-only. Always select this
+ * exact column list (see PUBLIC_VEHICLE_COLUMNS in lib/queries.ts) rather
+ * than "*" on any public-facing query.
+ */
+export type PublicVehicle = Omit<Vehicle, "registration_no">;
+
+export interface PublicVehicleWithImages extends PublicVehicle {
   vehicle_images: VehicleImage[];
 }
 
