@@ -4,41 +4,38 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-const NAV_LINKS = [
-  { href: "/inventory", label: "Inventory" },
-  { href: "/customers", label: "Customer Stories" },
-  { href: "/about", label: "About" },
-  { href: "#contact", label: "Contact" },
-];
-
 export default function Hero() {
   return (
     <section className="relative flex h-[100svh] min-h-[640px] w-full items-end overflow-hidden bg-[#050505] text-paper">
-      {/* Glass nav */}
-      
 
-      {/* Video background */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <motion.video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/hero-poster.jpg"
-          initial={{ scale: 1.15 }}
+        <motion.div
+          initial={{ scale: 1.12 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 8, ease: "easeOut" }}
-          className="h-full w-full object-cover"
+          transition={{
+            duration: 10,
+            ease: "easeOut",
+          }}
+          className="absolute inset-0"
         >
-          <source src="/vs-automart-hero.mp4" type="video/mp4" />
-        </motion.video>
-        {/* Cinematic overlay */}
+          <Image
+            src="/hero-bg.jpg"
+            alt="Premium vehicles showroom"
+            fill
+            priority
+            className="object-cover"
+          />
+        </motion.div>
+
+        {/* Cinematic overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-[#050505]/20" />
         <div className="absolute inset-0 bg-[#050505]/30" />
       </div>
 
       {/* Content */}
       <div className="relative z-20 mx-auto w-full max-w-6xl px-6 pb-24 md:px-10 md:pb-28">
+
         <motion.span
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -81,6 +78,7 @@ export default function Hero() {
           >
             Explore Inventory
           </Link>
+
           <Link
             href="#location"
             className="rounded-plate border border-white/25 bg-white/5 px-7 py-3.5 text-sm font-semibold backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white/10"
@@ -88,6 +86,7 @@ export default function Hero() {
             Visit Showroom
           </Link>
         </motion.div>
+
       </div>
 
       {/* Scroll indicator */}
@@ -99,14 +98,17 @@ export default function Hero() {
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+          transition={{
+            repeat: Infinity,
+            duration: 1.8,
+            ease: "easeInOut",
+          }}
           className="flex h-9 w-6 items-start justify-center rounded-full border border-white/30 p-1.5"
         >
           <span className="h-1.5 w-1 rounded-full bg-brass-400" />
         </motion.div>
       </motion.div>
 
-      
     </section>
   );
 }

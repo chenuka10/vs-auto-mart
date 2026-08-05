@@ -10,6 +10,7 @@ import WhyChooseUs from "@/components/home/WhyChooseUs";
 import Testimonials from "@/components/home/Testimonials";
 import LocationSection from "@/components/home/LocationSection";
 import Footer from "@/components/home/Footer";
+import VideoShowcase from "@/components/home/VideoShowcase";
 
 export const revalidate = 60;
 
@@ -45,6 +46,7 @@ export default async function HomePage() {
     <>
       <Hero />
       <TrustStats />
+      <VideoShowcase />
       <FeaturedVehicles vehicles={featured} />
       <WhyChooseUs />
       <Testimonials stories={stories} />

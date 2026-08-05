@@ -27,7 +27,7 @@ export default function Header() {
     >
       <div className="flex items-center justify-between gap-4 px-6 py-4 md:px-10">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-3">
           <Image
             src="/logo.png"
             alt="VS Auto Mart"
@@ -36,6 +36,15 @@ export default function Header() {
             className="h-9 w-auto"
             priority
           />
+
+          <div className="flex flex-col leading-tight">
+            <span className="font-display text-lg font-semibold tracking-wide text-white">
+              VS Auto Mart
+            </span>
+            <span className="text-[10px] uppercase tracking-[0.25em] text-brass-400">
+              Premium Vehicles
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Navigation Links */}
