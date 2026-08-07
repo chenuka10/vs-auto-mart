@@ -53,7 +53,7 @@ export default function TrustStats() {
             className="group rounded-lg border border-white/10 bg-white/[0.03] p-8 shadow-[0_8px_30px_rgba(0,0,0,0.4)] backdrop-blur-md transition hover:-translate-y-1 hover:border-brass-400/30 hover:bg-white/[0.05]"
           >
             <Counter value={stat.value} suffix={stat.suffix} />
-            <p className="mt-2 text-sm uppercase tracking-wider text-graphite-400">
+            <p className="mt-2 text-sm uppercase tracking-wider text-paper/70">
               {stat.label}
             </p>
           </motion.div>

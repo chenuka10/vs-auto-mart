@@ -11,8 +11,6 @@ interface TestimonialFormProps {
 
 export function TestimonialForm({ testimonial }: TestimonialFormProps) {
   const router = useRouter();
-  // TODO: replace with your existing Cloudinary uploader (the one used
-  // on the vehicle image form) — this text input is a placeholder.
   const [photoUrl, setPhotoUrl] = useState(testimonial?.photo_url ?? "");
   const [isSaving, setIsSaving] = useState(false);
 
@@ -35,69 +33,77 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
     router.push("/admin/testimonials");
   }
 
+  const inputStyles =
+    "mt-1 w-full rounded-lg border border-zinc-800 bg-zinc-900/80 px-3 py-2 text-sm text-white placeholder:text-zinc-500 focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-400 transition-colors";
+
   return (
-    <form action={handleSubmit} className="mt-6 max-w-xl space-y-5">
+    <form action={handleSubmit} className="mt-6 max-w-xl space-y-5 text-white">
       <div>
-        <label className="text-sm font-medium">Reviewer Name</label>
+        <label className="text-sm font-medium text-zinc-200">Reviewer Name</label>
         <input
           name="reviewer_name"
           defaultValue={testimonial?.reviewer_name}
           required
-          className="mt-1 w-full rounded-lg border border-graphite-700/10 px-3 py-2 text-sm"
+          className={inputStyles}
         />
       </div>
 
       <div>
-        <label className="text-sm font-medium">Rating (1–5)</label>
+        <label className="text-sm font-medium text-zinc-200">Rating (1–5)</label>
         <input
           type="number"
           name="rating"
           min={1}
           max={5}
           defaultValue={testimonial?.rating ?? undefined}
-          className="mt-1 w-full rounded-lg border border-graphite-700/10 px-3 py-2 text-sm"
+          className={inputStyles}
         />
       </div>
 
       <div>
-        <label className="text-sm font-medium">Review Text</label>
+        <label className="text-sm font-medium text-zinc-200">Review Text</label>
         <textarea
           name="review_text"
           rows={4}
           defaultValue={testimonial?.review_text ?? undefined}
-          className="mt-1 w-full rounded-lg border border-graphite-700/10 px-3 py-2 text-sm"
+          className={inputStyles}
         />
       </div>
 
       <div>
-        <label className="text-sm font-medium">Photo</label>
+        <label className="text-sm font-medium text-zinc-200">Photo</label>
         <input
           type="text"
           placeholder="Cloudinary URL"
           value={photoUrl}
           onChange={(e) => setPhotoUrl(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-graphite-700/10 px-3 py-2 text-sm"
+          className={inputStyles}
         />
       </div>
 
       <div>
-        <label className="text-sm font-medium">Video URL</label>
+        <label className="text-sm font-medium text-zinc-200">Video URL</label>
         <input
           name="video_url"
           defaultValue={testimonial?.video_url ?? undefined}
-          className="mt-1 w-full rounded-lg border border-graphite-700/10 px-3 py-2 text-sm"
+          className={inputStyles}
         />
       </div>
 
-      <label className="flex items-center gap-2 text-sm">
-        <input type="checkbox" name="is_published" defaultChecked={testimonial?.is_published ?? true} />
+      <label className="flex items-center gap-2 text-sm text-zinc-200 cursor-pointer">
+        <input
+          type="checkbox"
+          name="is_published"
+          defaultChecked={testimonial?.is_published ?? true}
+          className="h-4 w-4 rounded border-zinc-800 bg-zinc-900 accent-amber-500 focus:ring-amber-400"
+        />
         Published
       </label>
 
       <button
         type="submit"
         disabled={isSaving}
-        className="rounded-lg bg-brass-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-brass-700 disabled:opacity-50"
+        className="rounded-lg bg-brass-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-brass-700 disabled:opacity-50 transition-colors"
       >
         {isSaving ? "Saving…" : "Save Testimonial"}
       </button>

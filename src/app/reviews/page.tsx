@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { getPublishedTestimonials, getPublishedTestimonialsCount } from "@/lib/queries";
+import { getGooglePlaceRating } from "@/lib/google-places";
 import { TESTIMONIALS_PAGE_SIZE, GOOGLE_REVIEWS_CONFIG } from "@/lib/constants";
 import { GoogleReviewSummaryCard } from "@/components/reviews/GoogleReviewSummaryCard";
 import { TestimonialsSection } from "@/components/reviews/TestimonialsSection";
@@ -11,10 +12,16 @@ export const metadata = {
 
 export default async function ReviewsPage() {
   const supabase = await createClient();
-  const [testimonials, totalCount] = await Promise.all([
+  const [testimonials, totalCount, liveRating] = await Promise.all([
     getPublishedTestimonials(supabase, { limit: TESTIMONIALS_PAGE_SIZE, offset: 0 }),
     getPublishedTestimonialsCount(supabase),
+    getGooglePlaceRating(),
   ]);
+
+  const googleConfig = {
+    ...GOOGLE_REVIEWS_CONFIG,
+    ...(liveRating && { rating: liveRating.rating, totalReviews: liveRating.totalReviews }),
+  };
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-12">
@@ -24,7 +31,7 @@ export default async function ReviewsPage() {
       </p>
 
       <div className="mt-10">
-        <GoogleReviewSummaryCard />
+        <GoogleReviewSummaryCard config={googleConfig} />
       </div>
 
       <div className="mt-14">
@@ -36,6 +43,7 @@ export default async function ReviewsPage() {
         <p className="mt-2 text-sm text-graphite-500">
           A quick Google review helps other buyers trust VS Auto Mart too.
         </p>
+
         <a
           href={GOOGLE_REVIEWS_CONFIG.leaveReviewUrl}
           target="_blank"
