@@ -69,6 +69,7 @@ export interface CustomerStory {
   customer_story_photos: { id: string; image_url: string; sort_order: number }[];
 }
 
+// Replace the existing Testimonial interface with this (added is_published, created_at)
 export interface Testimonial {
   id: string;
   reviewer_name: string;
@@ -76,6 +77,15 @@ export interface Testimonial {
   review_text: string | null;
   photo_url: string | null;
   video_url: string | null;
+  is_published: boolean;
+  created_at: string;
+}
+
+export interface GoogleReviewsConfig {
+  rating: number;
+  totalReviews: number;
+  googleReviewsUrl: string;
+  leaveReviewUrl: string;
 }
 
 export interface InventoryFilters {

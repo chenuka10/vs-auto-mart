@@ -25,12 +25,20 @@ export default async function AdminDashboardPage() {
           <p><span className="font-semibold text-amber-600">{counts.reserved}</span> reserved</p>
           <p><span className="font-semibold text-signal-600">{counts.sold}</span> sold</p>
         </div>
-        <Link
-          href="/admin/vehicles/new"
-          className="rounded-plate bg-graphite-950 px-4 py-2 text-sm font-semibold text-paper hover:bg-graphite-900"
-        >
-          + Add Vehicle
-        </Link>
+        <div className="flex gap-3">
+          <Link
+            href="/admin/testimonials"
+            className="rounded-plate bg-graphite-950 px-4 py-2 text-sm font-semibold text-paper hover:bg-graphite-900"
+          >
+            Manage Testimonials
+          </Link>
+          <Link
+            href="/admin/vehicles/new"
+            className="rounded-plate bg-graphite-950 px-4 py-2 text-sm font-semibold text-paper hover:bg-graphite-900"
+          >
+            + Add Vehicle
+          </Link>
+        </div>
       </div>
 
       <div className="mt-6">

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
@@ -38,11 +37,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      images: cover ? [cover] : [],
-    },
+    openGraph: { title, description, images: cover ? [cover] : [] },
   };
 }
 
@@ -71,25 +66,50 @@ export default async function VehicleDetailPage({
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-12">
+      {/* Back button: plain <a> with lowercase "onclick" (not React's onClick) so this
+         works inside a Server Component. It's a real HTML attribute the browser
+         executes directly. href="/inventory" is the fallback if there's no history
+         (e.g. someone opened this page from a shared link in a new tab). */}
+      
+       <a href="/inventory"
+        onClick={undefined}
+        // @ts-expect-error -- intentionally using the raw DOM attribute, not React's synthetic handler
+        onclick="if(window.history.length>1){event.preventDefault();window.history.back();}"
+        className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-graphite-500 hover:text-graphite-700"
+      >
+        ← Back to Inventory
+      </a>
+
       <div className="grid gap-10 lg:grid-cols-5">
         {/* Gallery */}
         <div className="lg:col-span-3">
           <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite-100">
-            {images[0] && (
-              <Image
+            {images.length > 0 ? (
+              <img
+                id="main-vehicle-image"
                 src={images[0].image_url}
                 alt={`${vehicle.brand} ${vehicle.model}`}
-                fill
-                priority
-                className="object-cover"
+                className="h-full w-full object-cover"
               />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center text-graphite-500">
+                No photos available
+              </div>
             )}
           </div>
           {images.length > 1 && (
             <div className="mt-3 grid grid-cols-4 gap-3">
-              {images.slice(1, 9).map((img) => (
-                <div key={img.id} className="relative aspect-square overflow-hidden rounded-md bg-graphite-100">
-                  <Image src={img.image_url} alt={img.context} fill className="object-cover" />
+              {images.slice(0, 9).map((img) => (
+                <div
+                  key={img.id}
+                  // Same trick: swap the main <img>'s src on click, no client component needed.
+                  // @ts-expect-error -- raw DOM attribute
+                  onclick={`document.getElementById('main-vehicle-image').src=${JSON.stringify(
+                    img.image_url
+                  )}`}
+                  className="relative aspect-square cursor-pointer overflow-hidden rounded-md bg-graphite-100 outline-offset-2 hover:outline hover:outline-2 hover:outline-brass-600"
+                >
+                  <img src={img.image_url} alt={img.context ?? ""} className="h-full w-full object-cover" />
                 </div>
               ))}
             </div>
@@ -128,8 +148,8 @@ export default async function VehicleDetailPage({
               label="WhatsApp Inquiry"
               message={`Hi, I'm interested in the ${vehicle.brand} ${vehicle.model} (${vehicle.year}) listed for ${formatLKR(vehicle.price)}.`}
             />
-            <a
-              href="tel:+94771234567"
+            
+             <a href="tel:+94771234567"
               className="rounded-plate border border-graphite-700/15 px-5 py-3 text-center text-sm font-semibold hover:bg-graphite-100"
             >
               Call Now
