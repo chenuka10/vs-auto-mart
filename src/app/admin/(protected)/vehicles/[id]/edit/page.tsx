@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { updateVehicle } from "../../../actions";
 import PhotoManager from "@/components/admin/PhotoManger";
+import { CloudinaryUploader } from "@/components/admin/CloudinaryUploader";
 import { sortVehicleImages } from "@/lib/utils";
 import type { VehicleWithImages } from "@/lib/types";
 
@@ -31,7 +32,7 @@ export default async function EditVehiclePage({
         Edit {vehicle.brand} {vehicle.model} ({vehicle.year})
       </h1>
       <p className="mt-1 text-sm text-graphite-500">
-        Brand, model, and year are fixed after creation. Add new photo URLs to append to the gallery.
+        Brand, model, and year are fixed after creation. Upload new photos to append to the gallery.
       </p>
 
       <div className="mt-6">
@@ -77,10 +78,12 @@ export default async function EditVehiclePage({
           />
         </label>
 
-        <label className={`${labelClass} sm:col-span-2`}>
-          Add more photo URLs (one per line)
-          <textarea name="image_urls" rows={3} className={inputClass} placeholder="https://res.cloudinary.com/..." />
-        </label>
+        <div className="sm:col-span-2">
+          <span className="text-sm font-medium text-graphite-700">Add More Photos</span>
+          <div className="mt-1">
+            <CloudinaryUploader name="image_urls" folder="vehicles" label="Upload New Photos" />
+          </div>
+        </div>
 
         <label className="flex items-center gap-2 text-sm sm:col-span-2">
           <input type="checkbox" name="is_featured" defaultChecked={vehicle.is_featured} />

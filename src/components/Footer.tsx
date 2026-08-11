@@ -3,13 +3,13 @@ import Image from "next/image";
 
 const NAV_LINKS = [
   { href: "/inventory", label: "Inventory" },
-  { href: "/customers", label: "Customer Stories" },
+  { href: "/reviews", label: "Customer Stories" },
   { href: "/about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
 
 const SOCIAL_LINKS = [
-  { href: "https://facebook.com", label: "Facebook" },
+  { href: "https://www.facebook.com/people/VS-auto-mart/100063609908658/", label: "Facebook" },
   { href: "https://instagram.com", label: "Instagram" },
   { href: "https://tiktok.com", label: "TikTok" },
 ];
@@ -42,7 +42,7 @@ export default function Footer() {
         <div>
           <p className="text-xs uppercase tracking-wider text-graphite-500">Contact</p>
           <ul className="mt-4 space-y-2 text-sm text-graphite-300">
-            <li className="font-mono">+94 77 123 4567</li>
+            <li className="font-mono">+94 77 250 0320</li>
             <li>Kadawatha, Sri Lanka</li>
           </ul>
           <div className="mt-4 flex gap-4 text-sm">

@@ -18,23 +18,29 @@ export default async function AdminDashboardPage() {
   };
 
   return (
-    <div>
+    <div className="text-graphite-100">
       <div className="flex items-center justify-between">
         <div className="flex gap-6 text-sm">
-          <p><span className="font-semibold text-moss-600">{counts.available}</span> available</p>
-          <p><span className="font-semibold text-amber-600">{counts.reserved}</span> reserved</p>
-          <p><span className="font-semibold text-signal-600">{counts.sold}</span> sold</p>
+          <p className="text-graphite-300">
+            <span className="font-semibold text-emerald-400">{counts.available}</span> available
+          </p>
+          <p className="text-graphite-300">
+            <span className="font-semibold text-amber-400">{counts.reserved}</span> reserved
+          </p>
+          <p className="text-graphite-300">
+            <span className="font-semibold text-rose-400">{counts.sold}</span> sold
+          </p>
         </div>
         <div className="flex gap-3">
           <Link
             href="/admin/testimonials"
-            className="rounded-plate bg-graphite-950 px-4 py-2 text-sm font-semibold text-paper hover:bg-graphite-900"
+            className="rounded-plate border border-graphite-700 bg-graphite-900 px-4 py-2 text-sm font-semibold text-graphite-100 transition-colors hover:bg-graphite-800"
           >
             Manage Testimonials
           </Link>
           <Link
             href="/admin/vehicles/new"
-            className="rounded-plate bg-graphite-950 px-4 py-2 text-sm font-semibold text-paper hover:bg-graphite-900"
+            className="rounded-plate bg-white px-4 py-2 text-sm font-semibold text-graphite-950 transition-colors hover:bg-graphite-200"
           >
             + Add Vehicle
           </Link>

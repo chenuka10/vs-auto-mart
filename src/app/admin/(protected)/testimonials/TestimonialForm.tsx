@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createTestimonial, updateTestimonial } from "./actions";
+import { CloudinaryUploader } from "@/components/admin/CloudinaryUploader";
 import type { Testimonial } from "@/lib/types";
 
 interface TestimonialFormProps {
@@ -11,8 +12,10 @@ interface TestimonialFormProps {
 
 export function TestimonialForm({ testimonial }: TestimonialFormProps) {
   const router = useRouter();
-  const [photoUrl, setPhotoUrl] = useState(testimonial?.photo_url ?? "");
   const [isSaving, setIsSaving] = useState(false);
+  const [photoUrls, setPhotoUrls] = useState<string[]>(
+    testimonial?.photo_url ? [testimonial.photo_url] : []
+  );
 
   async function handleSubmit(formData: FormData) {
     setIsSaving(true);
@@ -20,17 +23,22 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
       reviewer_name: formData.get("reviewer_name") as string,
       rating: formData.get("rating") ? Number(formData.get("rating")) : null,
       review_text: (formData.get("review_text") as string) || null,
-      photo_url: photoUrl || null,
+      photo_url: photoUrls[0] || null, // Use first photo as main photo
       video_url: (formData.get("video_url") as string) || null,
       is_published: formData.get("is_published") === "on",
     };
 
-    if (testimonial) {
-      await updateTestimonial(testimonial.id, input);
-    } else {
-      await createTestimonial(input);
+    try {
+      if (testimonial) {
+        await updateTestimonial(testimonial.id, input);
+      } else {
+        await createTestimonial(input);
+      }
+      router.push("/admin/testimonials");
+    } catch (error) {
+      console.error("Failed to save testimonial:", error);
+      setIsSaving(false);
     }
-    router.push("/admin/testimonials");
   }
 
   const inputStyles =
@@ -71,14 +79,19 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
       </div>
 
       <div>
-        <label className="text-sm font-medium text-zinc-200">Photo</label>
-        <input
-          type="text"
-          placeholder="Cloudinary URL"
-          value={photoUrl}
-          onChange={(e) => setPhotoUrl(e.target.value)}
-          className={inputStyles}
+        <label className="text-sm font-medium text-zinc-200">Photos</label>
+        <CloudinaryUploader
+          folder="testimonials"
+          initialUrls={photoUrls}
+          onChange={(urls) => setPhotoUrls(urls)}
+          maxFiles={3}
+          label="Upload testimonial photos"
         />
+        {photoUrls.length > 0 && (
+          <p className="mt-1 text-xs text-zinc-400">
+            {photoUrls.length} photo{photoUrls.length > 1 ? "s" : ""} uploaded
+          </p>
+        )}
       </div>
 
       <div>
@@ -100,13 +113,22 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
         Published
       </label>
 
-      <button
-        type="submit"
-        disabled={isSaving}
-        className="rounded-lg bg-brass-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-brass-700 disabled:opacity-50 transition-colors"
-      >
-        {isSaving ? "Saving…" : "Save Testimonial"}
-      </button>
+      <div className="flex gap-3">
+        <button
+          type="submit"
+          disabled={isSaving}
+          className="rounded-lg bg-brass-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-brass-700 disabled:opacity-50 transition-colors"
+        >
+          {isSaving ? "Saving…" : "Save Testimonial"}
+        </button>
+        <button
+          type="button"
+          onClick={() => router.push("/admin/testimonials")}
+          className="rounded-lg border border-zinc-700 px-5 py-2.5 text-sm font-medium text-zinc-300 hover:bg-zinc-800 transition-colors"
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }
