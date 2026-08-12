@@ -97,7 +97,7 @@ export default function AboutPage() {
               Meet the Founder
             </p>
             <h2 className="mt-1 font-display text-3xl font-bold text-graphite-900">
-              Founder Name
+              Sumindaka Kariyapperuma
             </h2>
             <p className="mt-4 text-base leading-relaxed text-graphite-700">
               With years of hands-on experience in the automotive trade, our
