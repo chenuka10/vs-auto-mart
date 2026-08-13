@@ -6,6 +6,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { formatLKR, formatMileage, sortVehicleImages } from "@/lib/utils";
 import { PUBLIC_VEHICLE_WITH_IMAGES_COLUMNS } from "@/lib/queries";
 import type { PublicVehicleWithImages } from "@/lib/types";
+import VehicleGallery from "@/components/VehicleGallery";
 
 async function getVehicle(slug: string) {
   const supabase = await createClient();
@@ -83,38 +84,12 @@ export default async function VehicleDetailPage({
       <div className="grid gap-10 lg:grid-cols-5">
         {/* Gallery */}
         <div className="lg:col-span-3">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite-100">
-            {images.length > 0 ? (
-              <img
-                id="main-vehicle-image"
-                src={images[0].image_url}
-                alt={`${vehicle.brand} ${vehicle.model}`}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center text-graphite-500">
-                No photos available
-              </div>
-            )}
-          </div>
-          {images.length > 1 && (
-            <div className="mt-3 grid grid-cols-4 gap-3">
-              {images.slice(0, 9).map((img) => (
-                <div
-                  key={img.id}
-                  // Same trick: swap the main <img>'s src on click, no client component needed.
-                  // @ts-expect-error -- raw DOM attribute
-                  onclick={`document.getElementById('main-vehicle-image').src=${JSON.stringify(
-                    img.image_url
-                  )}`}
-                  className="relative aspect-square cursor-pointer overflow-hidden rounded-md bg-graphite-100 outline-offset-2 hover:outline hover:outline-2 hover:outline-brass-600"
-                >
-                  <img src={img.image_url} alt={img.context ?? ""} className="h-full w-full object-cover" />
-                </div>
-              ))}
-            </div>
-          )}
+          <VehicleGallery
+            images={images}
+            vehicleName={`${vehicle.brand} ${vehicle.model} ${vehicle.year}`}
+          />
         </div>
+        
 
         {/* Details */}
         <div className="lg:col-span-2">
