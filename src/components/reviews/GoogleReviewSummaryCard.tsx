@@ -10,11 +10,11 @@ export function GoogleReviewSummaryCard({ config = GOOGLE_REVIEWS_CONFIG }: Goog
   const { rating, totalReviews, googleReviewsUrl, leaveReviewUrl } = config;
 
   return (
-    <div className="flex flex-col items-center gap-4 rounded-lg border border-graphite-700/10 bg-white p-8 text-center sm:flex-row sm:justify-between sm:text-left">
+    <div className="flex flex-col items-center gap-4 rounded-[24px] border border-brass-500/20 bg-graphite-900/40 p-8 text-center sm:flex-row sm:justify-between sm:text-left shadow-[0_10px_40px_rgba(0,0,0,0.5)] backdrop-blur-md">
       <div>
-        <StarRating rating={Math.round(rating)} className="justify-center sm:justify-start text-lg" />
-        <p className="mt-2 font-display text-2xl font-semibold">{rating.toFixed(1)} on Google</p>
-        <p className="text-sm text-graphite-500">
+        <StarRating rating={Math.round(rating)} className="justify-center sm:justify-start text-lg text-brass-400" />
+        <p className="mt-2 font-display text-2xl font-semibold text-graphite-100">{rating.toFixed(1)} on Google</p>
+        <p className="text-sm text-graphite-400">
           Based on {totalReviews.toLocaleString("en-LK")} reviews
         </p>
       </div>
@@ -23,16 +23,16 @@ export function GoogleReviewSummaryCard({ config = GOOGLE_REVIEWS_CONFIG }: Goog
          <a href={googleReviewsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-lg border border-graphite-700/10 px-5 py-2.5 text-sm font-medium hover:bg-graphite-100"
+          className="rounded-plate border border-brass-500/30 px-5 py-2.5 text-sm font-medium text-graphite-300 transition-colors hover:bg-graphite-900/60 hover:text-brass-400 hover:border-brass-500/50"
         >
           View Google Reviews
         </a>
 
         <a
-          href={googleReviewsUrl}
+          href={leaveReviewUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-lg bg-brass-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-brass-700"
+          className="rounded-plate bg-gradient-gold px-5 py-2.5 text-sm font-medium text-graphite-950 transition-all hover:shadow-glow-gold hover:-translate-y-0.5"
         >
           Leave a Review
         </a>

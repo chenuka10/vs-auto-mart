@@ -18,7 +18,7 @@ export default function FeaturedVehicles({
     spotlight.vehicle_images?.[0]?.image_url;
 
   return (
-    <section className="bg-[#050505] py-20 text-paper">
+    <section className="bg-graphite-950 py-20 text-graphite-100 border-t border-brass-500/10">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <div className="flex items-end justify-between">
           <h2 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
@@ -35,7 +35,7 @@ export default function FeaturedVehicles({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
-          className="mt-10 grid gap-0 overflow-hidden rounded-lg border border-white/10 md:grid-cols-2"
+          className="mt-10 grid gap-0 overflow-hidden rounded-lg glass-card-dark md:grid-cols-2"
         >
           <div className="group relative aspect-[4/3] overflow-hidden md:aspect-auto">
             {coverImage && (
@@ -47,11 +47,11 @@ export default function FeaturedVehicles({
               />
             )}
           </div>
-          <div className="flex flex-col justify-center bg-[#0D0D0F] p-8 md:p-12">
+          <div className="flex flex-col justify-center bg-transparent p-8 md:p-12">
             <h3 className="font-display text-2xl font-semibold md:text-3xl">
-              {spotlight.brand}
+              {spotlight.brand} {spotlight.model}
             </h3>
-            <p className="mt-3 font-mono text-2xl text-brass-400">
+            <p className="mt-3 font-mono text-2xl text-gradient-gold">
               {formatLKR(spotlight.price)}
             </p>
             <dl className="mt-6 grid grid-cols-2 gap-4 text-sm">
@@ -76,7 +76,7 @@ export default function FeaturedVehicles({
             </dl>
             <Link
               href={`/cars/${spotlight.slug}`}
-              className="mt-8 inline-flex w-fit items-center rounded-plate bg-brass-500 px-6 py-3 text-sm font-semibold text-graphite-950 transition hover:bg-brass-400"
+              className="mt-8 inline-flex w-fit items-center rounded-plate bg-gradient-gold px-6 py-3 text-sm font-semibold text-graphite-950 shadow-glow-gold transition-all duration-300 hover:shadow-[0_0_30px_0_rgba(199,158,50,0.5)]"
             >
               View Vehicle
             </Link>
@@ -94,7 +94,7 @@ export default function FeaturedVehicles({
                 <Link
                   key={vehicle.id}
                   href={`/cars/${vehicle.slug}`}
-                  className="group w-[78%] shrink-0 snap-start rounded-lg border border-white/10 bg-[#0D0D0F] sm:w-[45%] lg:w-[31%]"
+                  className="group w-[78%] shrink-0 snap-start rounded-lg border border-white/5 bg-graphite-900/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-brass-500/30 sm:w-[45%] lg:w-[31%]"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden rounded-t-lg">
                     {img && (

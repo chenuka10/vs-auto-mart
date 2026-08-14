@@ -24,12 +24,24 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <p className="mt-1 font-display text-xl font-semibold">Admin Dashboard</p>
             <p className="text-sm text-graphite-300">{user.email}</p>
           </div>
-          <nav className="flex items-center gap-2 text-sm font-medium">
+          <nav className="flex flex-wrap items-center gap-2 text-sm font-medium">
             <Link
               href="/admin"
               className="rounded-plate px-3 py-2 text-graphite-300 transition-colors duration-200 hover:bg-white/5 hover:text-brass-400"
             >
               Vehicles
+            </Link>
+            <Link
+              href="/admin/customer-stories"
+              className="rounded-plate px-3 py-2 text-graphite-300 transition-colors duration-200 hover:bg-white/5 hover:text-brass-400"
+            >
+              Happy Customers
+            </Link>
+            <Link
+              href="/admin/testimonials"
+              className="rounded-plate px-3 py-2 text-graphite-300 transition-colors duration-200 hover:bg-white/5 hover:text-brass-400"
+            >
+              Reviews
             </Link>
             <Link
               href="/admin/vehicles/new"

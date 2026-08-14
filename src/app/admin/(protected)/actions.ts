@@ -45,7 +45,7 @@ export async function createVehicle(formData: FormData) {
     .single();
 
   if (error || !vehicle) {
-    throw new Error(error?.message ?? "Failed to create vehicle");
+    return { error: error?.message ?? "Failed to create vehicle" };
   }
 
   if (imageUrls.length > 0) {
@@ -62,6 +62,7 @@ export async function createVehicle(formData: FormData) {
   revalidatePath("/admin");
   revalidatePath("/inventory");
   revalidatePath("/");
+  revalidatePath("/cars/[slug]", "page");
   redirect("/admin");
 }
 
@@ -72,6 +73,7 @@ export async function updateVehicleStatus(id: string, status: VehicleStatus) {
   revalidatePath("/admin");
   revalidatePath("/inventory");
   revalidatePath("/");
+  revalidatePath("/cars/[slug]", "page");
 }
 
 export async function deleteVehicle(id: string) {
@@ -80,6 +82,8 @@ export async function deleteVehicle(id: string) {
 
   revalidatePath("/admin");
   revalidatePath("/inventory");
+  revalidatePath("/");
+  revalidatePath("/cars/[slug]", "page");
 }
 
 export async function updateVehicle(id: string, formData: FormData) {
@@ -101,10 +105,10 @@ export async function updateVehicle(id: string, formData: FormData) {
   if (newImageUrls.length > 0) {
     const { count } = await supabase
       .from("vehicle_images")
-      .select("id", { count: "exact", head: true })
+      .select("*", { count: "exact", head: true })
       .eq("vehicle_id", id)
       .eq("is_cover", true);
-    const needsCover = !count;
+    const needsCover = count === 0;
 
     await supabase.from("vehicle_images").insert(
       newImageUrls.map((image_url, index) => ({
@@ -118,6 +122,8 @@ export async function updateVehicle(id: string, formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath("/inventory");
+  revalidatePath("/");
+  revalidatePath("/cars/[slug]", "page");
   redirect("/admin");
 }
 
@@ -137,6 +143,7 @@ export async function setCoverImage(vehicleId: string, imageId: string) {
   revalidatePath("/admin");
   revalidatePath("/inventory");
   revalidatePath("/");
+  revalidatePath("/cars/[slug]", "page");
 }
 
 export async function deleteVehicleImage(imageId: string, vehicleId: string) {
@@ -168,4 +175,5 @@ export async function deleteVehicleImage(imageId: string, vehicleId: string) {
   revalidatePath("/admin");
   revalidatePath("/inventory");
   revalidatePath("/");
+  revalidatePath("/cars/[slug]", "page");
 }

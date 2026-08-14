@@ -27,18 +27,38 @@ export async function generateMetadata({
   const vehicle = await getVehicle(slug);
   if (!vehicle) return { title: "Vehicle not found" };
 
-  const title = `${vehicle.brand} ${vehicle.model} ${vehicle.year} — Used Car Sri Lanka`;
+  const title = `${vehicle.brand} ${vehicle.model} ${vehicle.year} for sale in Kadawatha — VS Auto Mart`;
   const description = `${vehicle.brand} ${vehicle.model} ${vehicle.year}, ${formatMileage(
     vehicle.mileage_km
-  )}, ${vehicle.transmission}. Priced at ${formatLKR(vehicle.price)}. Located in ${
-    vehicle.location ?? "Sri Lanka"
-  }.`;
+  )}, ${vehicle.transmission}. Priced at ${formatLKR(vehicle.price)}. Buy from the trusted Kadawatha car sale: VS Auto Mart.`;
+  
   const cover = sortVehicleImages(vehicle.vehicle_images ?? [])[0]?.image_url;
 
   return {
     title,
     description,
-    openGraph: { title, description, images: cover ? [cover] : [] },
+    keywords: [
+      `${vehicle.brand} ${vehicle.model} ${vehicle.year}`,
+      `${vehicle.brand} ${vehicle.model} for sale Kadawatha`,
+      `${vehicle.brand} for sale Sri Lanka`,
+      `buy ${vehicle.brand} ${vehicle.model} Kadawatha`,
+      "used cars Sri Lanka",
+      "VS Auto Mart Kadawatha",
+      "Kadawatha car sale",
+    ],
+    openGraph: {
+      title,
+      description,
+      images: cover ? [cover] : [],
+      url: `https://vsautomart.lk/cars/${slug}`,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: cover ? [cover] : [],
+    },
   };
 }
 
@@ -52,6 +72,7 @@ export default async function VehicleDetailPage({
   if (!vehicle) notFound();
 
   const images = sortVehicleImages(vehicle.vehicle_images ?? []);
+  const cover = images[0]?.image_url;
 
   const specs = [
     ["Brand", vehicle.brand],
@@ -65,73 +86,103 @@ export default async function VehicleDetailPage({
     ["Condition", vehicle.condition ?? "—"],
   ] as const;
 
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${vehicle.brand} ${vehicle.model} ${vehicle.year}`,
+    image: cover ? [cover] : [],
+    description: vehicle.description || `${vehicle.brand} ${vehicle.model} ${vehicle.year} in ${vehicle.condition ?? "excellent"} condition.`,
+    brand: {
+      "@type": "Brand",
+      name: vehicle.brand,
+    },
+    offers: {
+      "@type": "Offer",
+      url: `https://vsautomart.lk/cars/${slug}`,
+      priceCurrency: "LKR",
+      price: vehicle.price,
+      itemCondition: "https://schema.org/UsedCondition",
+      availability: vehicle.status === "available" ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      seller: {
+        "@type": "AutoDealer",
+        name: "VS Auto Mart Kadawatha",
+      },
+    },
+  };
+
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12">
-      {/* Back button: plain <a> with lowercase "onclick" (not React's onClick) so this
-         works inside a Server Component. It's a real HTML attribute the browser
-         executes directly. href="/inventory" is the fallback if there's no history
-         (e.g. someone opened this page from a shared link in a new tab). */}
-      
-       <a href="/inventory"
-        onClick={undefined}
-        // @ts-expect-error -- intentionally using the raw DOM attribute, not React's synthetic handler
-        onclick="if(window.history.length>1){event.preventDefault();window.history.back();}"
-        className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-graphite-500 hover:text-graphite-700"
-      >
-        ← Back to Inventory
-      </a>
-
-      <div className="grid gap-10 lg:grid-cols-5">
-        {/* Gallery */}
-        <div className="lg:col-span-3">
-          <VehicleGallery
-            images={images}
-            vehicleName={`${vehicle.brand} ${vehicle.model} ${vehicle.year}`}
-          />
-        </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <div className="mx-auto max-w-6xl px-6 py-12">
+        {/* Back button: plain <a> with lowercase "onclick" (not React's onClick) so this
+           works inside a Server Component. It's a real HTML attribute the browser
+           executes directly. href="/inventory" is the fallback if there's no history
+           (e.g. someone opened this page from a shared link in a new tab). */}
         
+         <a href="/inventory"
+          onClick={undefined}
+          // @ts-expect-error -- intentionally using the raw DOM attribute, not React's synthetic handler
+          onclick="if(window.history.length>1){event.preventDefault();window.history.back();}"
+          className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-graphite-500 hover:text-graphite-700"
+        >
+          ← Back to Inventory
+        </a>
 
-        {/* Details */}
-        <div className="lg:col-span-2">
-          <StatusBadge status={vehicle.status} />
-          <h1 className="mt-3 font-display text-3xl font-semibold">
-            {vehicle.brand} {vehicle.model}
-          </h1>
-          <p className="mt-1 text-graphite-500">
-            {vehicle.year} · {vehicle.location ?? "Sri Lanka"}
-          </p>
-          <p className="mt-4 font-display text-3xl font-semibold text-brass-600">
-            {formatLKR(vehicle.price)}
-          </p>
-
-          <dl className="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 border-y border-graphite-700/10 py-6 text-sm">
-            {specs.map(([label, value]) => (
-              <div key={label}>
-                <dt className="text-graphite-500">{label}</dt>
-                <dd className="font-medium capitalize">{value}</dd>
-              </div>
-            ))}
-          </dl>
-
-          {vehicle.description && (
-            <p className="mt-6 text-sm leading-relaxed text-graphite-700">{vehicle.description}</p>
-          )}
-
-          <div className="mt-8 flex flex-col gap-3">
-            <WhatsAppButton
-              variant="inline"
-              label="WhatsApp Inquiry"
-              message={`Hi, I'm interested in the ${vehicle.brand} ${vehicle.model} (${vehicle.year}) listed for ${formatLKR(vehicle.price)}.`}
+        <div className="grid gap-10 lg:grid-cols-5">
+          {/* Gallery */}
+          <div className="lg:col-span-3">
+            <VehicleGallery
+              images={images}
+              vehicleName={`${vehicle.brand} ${vehicle.model} ${vehicle.year}`}
             />
-            
-             <a href="tel:+94771234567"
-              className="rounded-plate border border-graphite-700/15 px-5 py-3 text-center text-sm font-semibold hover:bg-graphite-100"
-            >
-              Call Now
-            </a>
+          </div>
+          
+
+          {/* Details */}
+          <div className="lg:col-span-2">
+            <StatusBadge status={vehicle.status} />
+            <h1 className="mt-3 font-display text-3xl font-semibold">
+              {vehicle.brand} {vehicle.model}
+            </h1>
+            <p className="mt-1 text-graphite-500">
+              {vehicle.year} · {vehicle.location ?? "Kadawatha, Sri Lanka"}
+            </p>
+            <p className="mt-4 font-display text-3xl font-semibold text-brass-600">
+              {formatLKR(vehicle.price)}
+            </p>
+
+            <dl className="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 border-y border-graphite-700/10 py-6 text-sm">
+              {specs.map(([label, value]) => (
+                <div key={label}>
+                  <dt className="text-graphite-500">{label}</dt>
+                  <dd className="font-medium capitalize">{value}</dd>
+                </div>
+              ))}
+            </dl>
+
+            {vehicle.description && (
+              <p className="mt-6 text-sm leading-relaxed text-graphite-700">{vehicle.description}</p>
+            )}
+
+            <div className="mt-8 flex flex-col gap-3">
+              <WhatsAppButton
+                variant="inline"
+                label="WhatsApp Inquiry"
+                message={`Hi, I'm interested in the ${vehicle.brand} ${vehicle.model} (${vehicle.year}) listed for ${formatLKR(vehicle.price)}.`}
+              />
+              
+               <a href="tel:+94772500320"
+                className="rounded-plate border border-graphite-700/15 px-5 py-3 text-center text-sm font-semibold hover:bg-graphite-100"
+              >
+                Call Now
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

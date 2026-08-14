@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative flex h-[100svh] min-h-[640px] w-full items-end overflow-hidden bg-[#050505] text-paper">
+    <section className="relative flex h-[100svh] min-h-[640px] w-full items-end overflow-hidden bg-black text-paper">
 
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
@@ -29,8 +29,8 @@ export default function Hero() {
         </motion.div>
 
         {/* Cinematic overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-[#050505]/20" />
-        <div className="absolute inset-0 bg-[#050505]/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-graphite-950 via-graphite-950/60 to-transparent" />
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
       {/* Content */}
@@ -53,7 +53,7 @@ export default function Hero() {
         >
           Premium Vehicles.
           <br />
-          Trusted Journeys.
+          <span className="text-gradient-gold">Trusted Journeys.</span>
         </motion.h1>
 
         <motion.p
@@ -70,18 +70,18 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="mt-9 flex flex-wrap gap-3"
+          className="mt-9 flex flex-wrap gap-4"
         >
           <Link
             href="/inventory"
-            className="rounded-plate bg-brass-500 px-7 py-3.5 text-sm font-semibold text-graphite-950 transition hover:-translate-y-0.5 hover:bg-brass-400"
+            className="rounded-plate bg-gradient-gold px-8 py-3.5 text-sm font-semibold text-graphite-950 shadow-glow-gold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_35px_0_rgba(199,158,50,0.6)]"
           >
             Explore Inventory
           </Link>
 
           <Link
             href="#location"
-            className="rounded-plate border border-white/25 bg-white/5 px-7 py-3.5 text-sm font-semibold backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white/10"
+            className="rounded-plate border border-brass-500/20 bg-graphite-950/40 px-8 py-3.5 text-sm font-semibold text-brass-400 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-brass-500/50 hover:bg-graphite-900/60"
           >
             Visit Showroom
           </Link>

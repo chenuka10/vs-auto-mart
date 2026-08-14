@@ -10,7 +10,7 @@ export default function VehicleCard({ vehicle }: { vehicle: PublicVehicleWithIma
   return (
     <Link
       href={`/cars/${vehicle.slug}`}
-      className="group block overflow-hidden rounded-lg border border-graphite-700/10 bg-white transition hover:shadow-lg"
+      className="group block overflow-hidden rounded-lg border border-white/5 bg-graphite-900/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brass-500/30 hover:shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-graphite-100">
         <Image
@@ -26,19 +26,19 @@ export default function VehicleCard({ vehicle }: { vehicle: PublicVehicleWithIma
       </div>
 
       <div className="p-4">
-        <h3 className="font-display text-lg font-semibold text-graphite-950">
+        <h3 className="font-display text-lg font-semibold text-graphite-100 group-hover:text-brass-400 transition-colors">
           {vehicle.brand} {vehicle.model}
         </h3>
 
         <div className="mt-2 flex flex-wrap gap-1.5">
-          <span className="plate-tag">{vehicle.year}</span>
-          <span className="plate-tag">{formatMileage(vehicle.mileage_km)}</span>
-          <span className="plate-tag capitalize">{vehicle.fuel}</span>
-          <span className="plate-tag capitalize">{vehicle.transmission}</span>
+          <span className="inline-flex items-center gap-1 rounded-plate border border-white/10 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300">{vehicle.year}</span>
+          <span className="inline-flex items-center gap-1 rounded-plate border border-white/10 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300">{formatMileage(vehicle.mileage_km)}</span>
+          <span className="inline-flex items-center gap-1 rounded-plate border border-white/10 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300 capitalize">{vehicle.fuel}</span>
+          <span className="inline-flex items-center gap-1 rounded-plate border border-white/10 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300 capitalize">{vehicle.transmission}</span>
         </div>
 
-        <div className="mt-3 flex items-center justify-between">
-          <p className="font-display text-lg font-semibold text-brass-600">
+        <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3">
+          <p className="font-display text-lg font-semibold text-brass-400">
             {formatLKR(vehicle.price)}
           </p>
           {vehicle.location && (

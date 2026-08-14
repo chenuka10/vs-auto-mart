@@ -40,11 +40,11 @@ export default function Testimonials({ stories }: { stories: CustomerStory[] }) 
                 )}
               </div>
               <div className="flex flex-col justify-center gap-4 p-8 md:p-12">
-                <div className="flex gap-1 font-mono text-brass-400" aria-label={`${story.rating ?? 5} out of 5`}>
-                  {"★".repeat(story.rating ?? 5)}
+                <div className="flex gap-1 font-mono text-brass-400" aria-label="5 out of 5">
+                  {"★".repeat(5)}
                 </div>
                 <p className="font-display text-xl leading-relaxed text-graphite-100 md:text-2xl">
-                  &ldquo;{story.testimonial}&rdquo;
+                  &ldquo;{story.message}&rdquo;
                 </p>
                 <div>
                   <p className="font-semibold">{story.customer_name}</p>

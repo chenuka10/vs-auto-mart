@@ -140,15 +140,22 @@ const copy = {
   si: {
     support: "සහාය",
     heading: "නිතර අසන ප්‍රශ්න",
-    intro: "අපගේ පාරිභෝගිකයින් නිතර අසන ප්‍රශ්න සඳහා පිළිතුරු මෙහිදී ලබාගත හැකිය.",
-    stillHave: "තවමත් ප්‍රශ්නයක් තිබේද? අපව සම්බන්ධ කරගන්න:",
+    intro:
+      "වාහන මිලදී ගැනීම, Financing, Inspection, Trade-ins සහ අපගේ සේවාවන් පිළිබඳ පාරිභෝගිකයින් නිතර අසන ප්‍රශ්න සඳහා පිළිතුරු.",
+    stillHave: "තවමත් ප්‍රශ්නයක් තිබේද?",
+    contact: "අපගේ කණ්ඩායම සමඟ කතා කරන්න",
+    phone: "අමතන්න",
+    email: "විද්‍යුත් තැපෑල",
   },
   en: {
     support: "Support",
     heading: "Frequently Asked Questions",
     intro:
-      "Answers to some of the most common questions we get from customers. Can't find what you're looking for? Reach out to us directly and we'll be happy to help.",
-    stillHave: "Still have questions? Contact us at",
+      "Answers to common questions about vehicles, financing, inspections, trade-ins, and the buying experience at VS Auto Mart.",
+    stillHave: "Still have a question?",
+    contact: "Talk to our team",
+    phone: "Call us",
+    email: "Email us",
   },
 } as const;
 
@@ -157,88 +164,204 @@ export default function FaqPage() {
   const t = copy[language];
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-brass-600">
-            {t.support}
-          </p>
-          <h1 className="mt-1 font-display text-3xl font-semibold">
-            {t.heading}
-          </h1>
-        </div>
+    <main className="overflow-hidden">
+      <div className="mx-auto w-full max-w-5xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+        {/* Hero */}
+        <section className="animate-fade-up relative overflow-hidden rounded-[28px] border border-white/10 bg-graphite-950 px-7 py-9 text-white shadow-2xl sm:px-10 sm:py-12 lg:px-14 lg:py-14">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brass-500/10 blur-3xl"
+          />
 
-        <div
-          role="group"
-          aria-label="Language"
-          className="mt-1 flex shrink-0 items-center gap-0.5 rounded-full border border-graphite-700/15 bg-white p-0.5 text-xs font-medium shadow-sm"
-        >
-          <button
-            type="button"
-            onClick={() => setLanguage("si")}
-            aria-pressed={language === "si"}
-            className={`rounded-full px-3 py-1.5 transition-colors ${
-              language === "si"
-                ? "bg-graphite-950 text-paper"
-                : "text-graphite-700 hover:text-graphite-900"
-            }`}
-          >
-            සිංහල
-          </button>
-          <button
-            type="button"
-            onClick={() => setLanguage("en")}
-            aria-pressed={language === "en"}
-            className={`rounded-full px-3 py-1.5 transition-colors ${
-              language === "en"
-                ? "bg-graphite-950 text-paper"
-                : "text-graphite-700 hover:text-graphite-900"
-            }`}
-          >
-            English
-          </button>
-        </div>
-      </div>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-white/[0.03] blur-3xl"
+          />
 
-      <p className="mt-4 leading-relaxed text-graphite-700">{t.intro}</p>
+          <div className="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brass-400">
+                {t.support}
+              </p>
 
-      <div className="mt-10 divide-y divide-graphite-700/10 rounded-lg border border-graphite-700/10 bg-white">
-        {faqs.map((faq, index) => (
-          <details key={faq.question.en} className="group px-6 py-5">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-sm font-semibold text-graphite-900 sm:text-base">
-              <span>
-                <span className="mr-2 text-graphite-400">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                {faq.question[language]}
-              </span>
-              <span className="shrink-0 text-brass-600 transition-transform group-open:rotate-45">
-                +
-              </span>
-            </summary>
-            <p className="mt-3 text-sm leading-relaxed text-graphite-700">
-              {faq.answer[language]}
+              <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
+                {t.heading}
+              </h1>
+
+              <p className="mt-5 max-w-2xl text-sm leading-7 text-white/60 sm:text-base">
+                {t.intro}
+              </p>
+            </div>
+
+            {/* Language switcher */}
+            <div
+              role="group"
+              aria-label="Language"
+              className="inline-flex self-start rounded-full border border-white/10 bg-white/[0.06] p-1 shadow-lg backdrop-blur-xl lg:self-auto"
+            >
+              <button
+                type="button"
+                onClick={() => setLanguage("si")}
+                aria-pressed={language === "si"}
+                className={`rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
+                  language === "si"
+                    ? "bg-white text-graphite-950 shadow-sm"
+                    : "text-white/55 hover:text-white"
+                }`}
+              >
+                සිංහල
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setLanguage("en")}
+                aria-pressed={language === "en"}
+                className={`rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
+                  language === "en"
+                    ? "bg-white text-graphite-950 shadow-sm"
+                    : "text-white/55 hover:text-white"
+                }`}
+              >
+                English
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ list */}
+        <section className="mt-10 sm:mt-12">
+          <div className="mb-5 flex items-center justify-between">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-graphite-400">
+              {String(faqs.length).padStart(2, "0")} Questions
             </p>
-          </details>
-        ))}
-      </div>
 
-      <div className="mt-10 rounded-lg border border-graphite-700/10 bg-white p-6 text-center">
-        <p className="text-sm text-graphite-700">
-          {t.stillHave}{" "}
-          <a href="tel:0772500320" className="font-medium text-brass-600">
-            077 250 0320
-          </a>{" "}
-          {language === "en" ? "or" : "හෝ"}{" "}
-          <a
-            href="mailto:vsautomart@gmail.com"
-            className="font-medium text-brass-600"
-          >
-            vsautomart@gmail.com
-          </a>
-          .
-        </p>
+            <div className="h-px flex-1 bg-graphite-700/[0.08] ml-4" />
+          </div>
+
+          <div className="space-y-3">
+            {faqs.map((faq, index) => (
+              <details
+                key={faq.question.en}
+                className="
+                  group
+                  animate-fade-up
+                  overflow-hidden
+                  rounded-2xl
+                  border border-brass-500/10
+                  bg-graphite-900/40
+                  shadow-[0_8px_30px_rgba(0,0,0,0.5)]
+                  backdrop-blur-xl
+                  transition-all duration-500
+                  open:border-brass-500/30
+                  open:bg-graphite-900/60
+                  open:shadow-[0_16px_40px_rgba(0,0,0,0.6)]
+                "
+                style={{
+                  animationDelay: `${Math.min(index * 55, 550)}ms`,
+                }}
+              >
+                <summary className="flex cursor-pointer list-none items-center gap-4 px-5 py-5 sm:px-6 sm:py-6">
+                  {/* Number */}
+                  <span className="shrink-0 font-mono text-[10px] font-semibold tracking-[0.15em] text-brass-600/80 sm:text-xs">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  {/* Question */}
+                  <span className="flex-1 font-display text-sm font-semibold leading-6 text-graphite-100 sm:text-base group-hover:text-brass-400 transition-colors">
+                    {faq.question[language]}
+                  </span>
+
+                  {/* Icon */}
+                  <span
+                    aria-hidden="true"
+                    className="
+                      flex h-8 w-8 shrink-0 items-center justify-center
+                      rounded-full
+                      border border-brass-500/10
+                      bg-graphite-950/50
+                      text-lg leading-none text-brass-400
+                      shadow-sm
+                      transition-all duration-400
+                      group-open:rotate-45
+                      group-open:border-brass-500/20
+                      group-open:bg-brass-500/[0.05]
+                    "
+                  >
+                    +
+                  </span>
+                </summary>
+
+                <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-out group-open:grid-rows-[1fr]">
+                  <div className="overflow-hidden">
+                    <div className="border-t border-brass-500/10 px-5 pb-6 pt-4 sm:px-6">
+                      <p className="max-w-3xl text-sm leading-7 text-graphite-300 sm:text-[15px]">
+                        {faq.answer[language]}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        {/* Contact CTA */}
+        <section className="mt-12 overflow-hidden rounded-[24px] bg-graphite-950 text-white shadow-2xl sm:mt-14">
+          <div className="grid lg:grid-cols-[1fr_auto] lg:items-center">
+            <div className="p-7 sm:p-9">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brass-400">
+                {t.stillHave}
+              </p>
+
+              <h2 className="mt-2 font-display text-2xl font-semibold sm:text-3xl">
+                {t.contact}
+              </h2>
+
+              <p className="mt-3 max-w-xl text-sm leading-6 text-white/50">
+                {language === "en"
+                  ? "Our team can help with vehicle availability, inspections, financing, trade-ins, and anything else you need before making a decision."
+                  : "වාහන Availability, Inspection, Financing, Trade-in සහ මිලදී ගැනීමේ ක්‍රියාවලිය සම්බන්ධයෙන් ඔබට අවශ්‍ය සහාය සඳහා අපගේ කණ්ඩායම අමතන්න."}
+              </p>
+            </div>
+
+            <div className="grid border-t border-white/10 sm:grid-cols-2 lg:border-l lg:border-t-0">
+              <a
+                href="tel:0772500320"
+                className="group p-6 transition-colors hover:bg-white/[0.04] sm:p-7"
+              >
+                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
+                  {t.phone}
+                </span>
+
+                <span className="mt-2 block text-sm font-semibold text-white">
+                  077 250 0320
+                </span>
+
+                <span className="mt-1 block text-xs text-brass-400 transition-transform duration-300 group-hover:translate-x-1">
+                  Call →
+                </span>
+              </a>
+
+              <a
+                href="mailto:vsautomart@gmail.com"
+                className="group border-t border-white/10 p-6 transition-colors hover:bg-white/[0.04] sm:border-l sm:border-t-0 sm:p-7"
+              >
+                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
+                  {t.email}
+                </span>
+
+                <span className="mt-2 block text-sm font-semibold text-white">
+                  vsautomart@gmail.com
+                </span>
+
+                <span className="mt-1 block text-xs text-brass-400 transition-transform duration-300 group-hover:translate-x-1">
+                  Email →
+                </span>
+              </a>
+            </div>
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }
