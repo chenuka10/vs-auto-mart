@@ -11,6 +11,7 @@ import Testimonials from "@/components/home/Testimonials";
 import LocationSection from "@/components/home/LocationSection";
 import Footer from "@/components/home/Footer";
 import VideoShowcase from "@/components/home/VideoShowcase";
+import SellCarBanner from "@/components/SellCarBanner";
 
 export const revalidate = 60;
 
@@ -48,6 +49,7 @@ export default async function HomePage() {
       <TrustStats />
       <VideoShowcase />
       <FeaturedVehicles vehicles={featured} />
+      <SellCarBanner />
       <WhyChooseUs />
       <Testimonials stories={stories} />
       <LocationSection />

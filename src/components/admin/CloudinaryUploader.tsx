@@ -25,6 +25,10 @@ interface CloudinaryUploaderProps {
   multiple?: boolean;
   maxFiles?: number;
   label?: string;
+  /** Reject files over this size, in MB. Omit for no limit (existing behavior). */
+  maxSizeMB?: number;
+  /** Restrict to specific MIME types, e.g. ["image/jpeg", "image/png"]. Omit to accept any image/*. */
+  acceptedTypes?: string[];
 }
 
 function makeId() {
@@ -39,6 +43,8 @@ export function CloudinaryUploader({
   multiple = true,
   maxFiles,
   label = "Upload Photos",
+  maxSizeMB,
+  acceptedTypes,
 }: CloudinaryUploaderProps) {
   const inputId = useId();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -114,13 +120,57 @@ export function CloudinaryUploader({
   const handleFiles = useCallback(
     async (fileList: FileList | null) => {
       if (!fileList || fileList.length === 0) return;
-      let files = Array.from(fileList).filter((f) => f.type.startsWith("image/"));
+      const allFiles = Array.from(fileList);
+      const rejectedItems: UploadItem[] = [];
+      let files: File[] = [];
+
+      for (const file of allFiles) {
+        const typeOk = acceptedTypes ? acceptedTypes.includes(file.type) : file.type.startsWith("image/");
+        if (!typeOk) {
+          rejectedItems.push({
+            id: makeId(),
+            url: null,
+            previewUrl: "",
+            progress: 0,
+            status: "error",
+            error: `${file.name}: unsupported file type.`,
+          });
+          continue;
+        }
+        if (maxSizeMB && file.size > maxSizeMB * 1024 * 1024) {
+          rejectedItems.push({
+            id: makeId(),
+            url: null,
+            previewUrl: "",
+            progress: 0,
+            status: "error",
+            error: `${file.name}: file is larger than ${maxSizeMB}MB.`,
+          });
+          continue;
+        }
+        files.push(file);
+      }
 
       if (maxFiles) {
         const remaining = maxFiles - items.filter((i) => i.status !== "error").length;
+        const overflow = files.slice(Math.max(0, remaining));
         files = files.slice(0, Math.max(0, remaining));
+        if (overflow.length > 0) {
+          rejectedItems.push({
+            id: makeId(),
+            url: null,
+            previewUrl: "",
+            progress: 0,
+            status: "error",
+            error: `Only up to ${maxFiles} photos are allowed — ${overflow.length} skipped.`,
+          });
+        }
       }
       if (!multiple) files = files.slice(0, 1);
+
+      if (rejectedItems.length > 0) {
+        setItems((prev) => [...prev, ...rejectedItems]);
+      }
       if (files.length === 0) return;
 
       let sig: Awaited<ReturnType<typeof getCloudinarySignature>>;
@@ -153,7 +203,7 @@ export function CloudinaryUploader({
       setItems((prev) => (multiple ? [...prev, ...newItems] : newItems));
       files.forEach((file, idx) => uploadFile(file, newItems[idx].id, sig));
     },
-    [items, maxFiles, multiple, folder, uploadFile]
+    [items, maxFiles, multiple, folder, uploadFile, maxSizeMB, acceptedTypes]
   );
 
   const removeItem = useCallback(
@@ -209,7 +259,7 @@ export function CloudinaryUploader({
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept={acceptedTypes ? acceptedTypes.join(",") : "image/*"}
           multiple={multiple}
           className="hidden"
           onChange={(e) => {

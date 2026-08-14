@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import VehicleCard from "@/components/VehicleCard";
 import InventoryFilters from "@/components/InventoryFilters";
+import SellCarBanner from "@/components/SellCarBanner";
 import { PUBLIC_VEHICLE_WITH_IMAGES_COLUMNS } from "@/lib/queries";
 import type { PublicVehicleWithImages } from "@/lib/types";
 
@@ -37,29 +38,32 @@ export default async function InventoryPage({
   const vehicles = await getVehicles(params);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-12">
-      <h1 className="font-display text-3xl font-semibold">Vehicle Inventory</h1>
-      <p className="mt-2 text-graphite-500">
-        {vehicles.length} vehicle{vehicles.length === 1 ? "" : "s"} available
-      </p>
+    <>
+      <div className="mx-auto max-w-6xl px-6 py-12">
+        <h1 className="font-display text-3xl font-semibold">Vehicle Inventory</h1>
+        <p className="mt-2 text-graphite-500">
+          {vehicles.length} vehicle{vehicles.length === 1 ? "" : "s"} available
+        </p>
 
-      <div className="mt-6">
-        <Suspense fallback={null}>
-          <InventoryFilters />
-        </Suspense>
+        <div className="mt-6">
+          <Suspense fallback={null}>
+            <InventoryFilters />
+          </Suspense>
+        </div>
+
+        {vehicles.length === 0 ? (
+          <div className="mt-16 rounded-lg border border-dashed border-graphite-700/20 p-12 text-center text-graphite-500">
+            No vehicles match those filters yet. Try widening your search.
+          </div>
+        ) : (
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {vehicles.map((vehicle) => (
+              <VehicleCard key={vehicle.id} vehicle={vehicle} />
+            ))}
+          </div>
+        )}
       </div>
-
-      {vehicles.length === 0 ? (
-        <div className="mt-16 rounded-lg border border-dashed border-graphite-700/20 p-12 text-center text-graphite-500">
-          No vehicles match those filters yet. Try widening your search.
-        </div>
-      ) : (
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {vehicles.map((vehicle) => (
-            <VehicleCard key={vehicle.id} vehicle={vehicle} />
-          ))}
-        </div>
-      )}
-    </div>
+      <SellCarBanner />
+    </>
   );
 }

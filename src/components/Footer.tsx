@@ -3,6 +3,7 @@ import Image from "next/image";
 
 const NAV_LINKS = [
   { href: "/inventory", label: "Inventory" },
+  { href: "/sell-your-car", label: "Sell Your Car" },
   { href: "/reviews", label: "Customer Stories" },
   { href: "/about", label: "About" },
   { href: "#contact", label: "Contact" },

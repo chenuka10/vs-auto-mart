@@ -17,6 +17,11 @@ export default async function AdminDashboardPage() {
     sold: vehicles.filter((v) => v.status === "sold").length,
   };
 
+  const { count: newSellRequests } = await supabase
+    .from("sell_car_submissions")
+    .select("id", { count: "exact", head: true })
+    .eq("status", "NEW");
+
   return (
     <div className="text-graphite-100">
       <div className="flex items-center justify-between">
@@ -32,6 +37,17 @@ export default async function AdminDashboardPage() {
           </p>
         </div>
         <div className="flex gap-3">
+          <Link
+            href="/admin/sell-requests"
+            className="relative rounded-plate border border-graphite-700 bg-graphite-900 px-4 py-2 text-sm font-semibold text-graphite-100 transition-colors hover:bg-graphite-800"
+          >
+            Sell Requests
+            {!!newSellRequests && (
+              <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-brass-500 px-1 text-xs font-bold text-graphite-950">
+                {newSellRequests}
+              </span>
+            )}
+          </Link>
           <Link
             href="/admin/testimonials"
             className="rounded-plate border border-graphite-700 bg-graphite-900 px-4 py-2 text-sm font-semibold text-graphite-100 transition-colors hover:bg-graphite-800"
