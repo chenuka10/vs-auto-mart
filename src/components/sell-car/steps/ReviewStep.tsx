@@ -8,7 +8,8 @@ function optionLabel(options: { value: string; label: string }[], value: string)
 
 const rowClass = "flex items-baseline justify-between gap-4 py-1.5 text-sm";
 const labelSpanClass = "text-graphite-500";
-const valueSpanClass = "font-medium text-graphite-900 text-right";
+const valueSpanClass = "font-medium text-graphite-100 text-right";
+const sectionClass = "rounded-plate border border-graphite-700/30 bg-graphite-900/30 p-4 backdrop-blur-md";
 
 interface Props {
   data: SellCarFormState;
@@ -20,7 +21,7 @@ interface Props {
 export default function ReviewStep({ data, consent, onConsentChange, consentError }: Props) {
   return (
     <div className="space-y-5">
-      <section className="rounded-plate border border-graphite-700/10 bg-white p-4">
+      <section className={sectionClass}>
         <p className="text-xs font-semibold uppercase tracking-wider text-brass-600">Seller</p>
         <div className="mt-1 divide-y divide-graphite-700/5">
           <div className={rowClass}>
@@ -44,7 +45,7 @@ export default function ReviewStep({ data, consent, onConsentChange, consentErro
         </div>
       </section>
 
-      <section className="rounded-plate border border-graphite-700/10 bg-white p-4">
+      <section className={sectionClass}>
         <p className="text-xs font-semibold uppercase tracking-wider text-brass-600">Vehicle</p>
         <div className="mt-1 divide-y divide-graphite-700/5">
           <div className={rowClass}>
@@ -86,16 +87,16 @@ export default function ReviewStep({ data, consent, onConsentChange, consentErro
         </div>
       </section>
 
-      <section className="rounded-plate border border-graphite-700/10 bg-white p-4">
+      <section className={sectionClass}>
         <p className="text-xs font-semibold uppercase tracking-wider text-brass-600">Pricing</p>
-        <p className="mt-1 font-display text-2xl font-semibold text-graphite-900">
+        <p className="mt-1 font-display text-2xl font-semibold text-graphite-100">
           {data.asking_price ? formatLKR(Number(data.asking_price)) : "—"}
         </p>
       </section>
 
-      <section className="rounded-plate border border-graphite-700/10 bg-white p-4">
+      <section className={sectionClass}>
         <p className="text-xs font-semibold uppercase tracking-wider text-brass-600">Photos</p>
-        <p className="mt-1 text-sm text-graphite-700">
+        <p className="mt-1 text-sm text-graphite-300">
           {data.photo_urls.length} photo{data.photo_urls.length === 1 ? "" : "s"} uploaded
         </p>
         {data.photo_urls.length > 0 && (
@@ -108,7 +109,7 @@ export default function ReviewStep({ data, consent, onConsentChange, consentErro
         )}
       </section>
 
-      <label className="flex items-start gap-2.5 text-sm text-graphite-700">
+      <label className="flex items-start gap-2.5 text-sm text-graphite-300">
         <input
           type="checkbox"
           checked={consent}
@@ -120,7 +121,7 @@ export default function ReviewStep({ data, consent, onConsentChange, consentErro
           form.
         </span>
       </label>
-      {consentError && <p className="text-xs font-medium text-rose-600">{consentError}</p>}
+      {consentError && <p className="text-xs font-medium text-rose-400">{consentError}</p>}
     </div>
   );
 }

@@ -27,16 +27,43 @@ export async function generateMetadata({
   const vehicle = await getVehicle(slug);
   if (!vehicle) return { title: "Vehicle not found" };
 
+  const canonicalUrl = `https://vsautomart.lk/cars/${slug}`;
   const title = `${vehicle.brand} ${vehicle.model} ${vehicle.year} for sale in Kadawatha — VS Auto Mart`;
   const description = `${vehicle.brand} ${vehicle.model} ${vehicle.year}, ${formatMileage(
     vehicle.mileage_km
   )}, ${vehicle.transmission}. Priced at ${formatLKR(vehicle.price)}. Buy from the trusted Kadawatha car sale: VS Auto Mart.`;
-  
-  const cover = sortVehicleImages(vehicle.vehicle_images ?? [])[0]?.image_url;
+
+  const sortedImages = sortVehicleImages(vehicle.vehicle_images ?? []);
+  const coverUrl = sortedImages[0]?.image_url;
+  const imageAlt = `${vehicle.brand} ${vehicle.model} ${vehicle.year} for sale at VS Auto Mart Kadawatha`;
+
+  // Structured Open Graph / Twitter image payload
+  const ogImages = coverUrl
+    ? [
+        {
+          url: coverUrl,
+          secureUrl: coverUrl,
+          width: 1200,
+          height: 630,
+          alt: imageAlt,
+          type: "image/jpeg",
+        },
+      ]
+    : [
+        {
+          url: "https://vsautomart.lk/og-default.jpg", // Fallback branded image
+          width: 1200,
+          height: 630,
+          alt: "VS Auto Mart Kadawatha",
+        },
+      ];
 
   return {
     title,
     description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     keywords: [
       `${vehicle.brand} ${vehicle.model} ${vehicle.year}`,
       `${vehicle.brand} ${vehicle.model} for sale Kadawatha`,
@@ -49,15 +76,23 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      images: cover ? [cover] : [],
-      url: `https://vsautomart.lk/cars/${slug}`,
+      url: canonicalUrl,
+      siteName: "VS Auto Mart",
+      locale: "en_LK",
       type: "website",
+      images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: cover ? [cover] : [],
+      images: ogImages.map((img) => img.url),
+    },
+    robots: {
+      index: vehicle.status === "available",
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   };
 }
@@ -121,12 +156,11 @@ export default async function VehicleDetailPage({
            works inside a Server Component. It's a real HTML attribute the browser
            executes directly. href="/inventory" is the fallback if there's no history
            (e.g. someone opened this page from a shared link in a new tab). */}
-        
-         <a href="/inventory"
+                 <a href="/inventory"
           onClick={undefined}
           // @ts-expect-error -- intentionally using the raw DOM attribute, not React's synthetic handler
           onclick="if(window.history.length>1){event.preventDefault();window.history.back();}"
-          className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-graphite-500 hover:text-graphite-700"
+          className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-graphite-400 hover:text-brass-400 transition-colors"
         >
           ← Back to Inventory
         </a>
@@ -144,27 +178,27 @@ export default async function VehicleDetailPage({
           {/* Details */}
           <div className="lg:col-span-2">
             <StatusBadge status={vehicle.status} />
-            <h1 className="mt-3 font-display text-3xl font-semibold">
+            <h1 className="mt-3 font-display text-3xl font-semibold text-graphite-100">
               {vehicle.brand} {vehicle.model}
             </h1>
-            <p className="mt-1 text-graphite-500">
+            <p className="mt-1 text-graphite-400">
               {vehicle.year} · {vehicle.location ?? "Kadawatha, Sri Lanka"}
             </p>
-            <p className="mt-4 font-display text-3xl font-semibold text-brass-600">
+            <p className="mt-4 font-display text-3xl font-semibold text-brass-400">
               {formatLKR(vehicle.price)}
             </p>
 
-            <dl className="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 border-y border-graphite-700/10 py-6 text-sm">
+            <dl className="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 border-y border-graphite-700/20 py-6 text-sm">
               {specs.map(([label, value]) => (
                 <div key={label}>
                   <dt className="text-graphite-500">{label}</dt>
-                  <dd className="font-medium capitalize">{value}</dd>
+                  <dd className="font-medium capitalize text-graphite-200">{value}</dd>
                 </div>
               ))}
             </dl>
 
             {vehicle.description && (
-              <p className="mt-6 text-sm leading-relaxed text-graphite-700">{vehicle.description}</p>
+              <p className="mt-6 text-sm leading-relaxed text-graphite-300">{vehicle.description}</p>
             )}
 
             <div className="mt-8 flex flex-col gap-3">
@@ -175,7 +209,7 @@ export default async function VehicleDetailPage({
               />
               
                <a href="tel:+94772500320"
-                className="rounded-plate border border-graphite-700/15 px-5 py-3 text-center text-sm font-semibold hover:bg-graphite-100"
+                className="rounded-plate border border-graphite-700/40 px-5 py-3 text-center text-sm font-semibold text-graphite-200 transition-colors hover:bg-graphite-800/50 hover:text-graphite-50"
               >
                 Call Now
               </a>

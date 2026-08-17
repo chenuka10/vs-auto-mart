@@ -10,9 +10,9 @@ export default function VehicleCard({ vehicle }: { vehicle: PublicVehicleWithIma
   return (
     <Link
       href={`/cars/${vehicle.slug}`}
-      className="group block overflow-hidden rounded-lg border border-white/5 bg-graphite-900/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brass-500/30 hover:shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
+      className="group block overflow-hidden rounded-lg border border-graphite-700/20 bg-graphite-900/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brass-500/30 hover:shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-graphite-100">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-graphite-900">
         <Image
           src={cover}
           alt={`${vehicle.brand} ${vehicle.model} ${vehicle.year}`}
@@ -31,13 +31,13 @@ export default function VehicleCard({ vehicle }: { vehicle: PublicVehicleWithIma
         </h3>
 
         <div className="mt-2 flex flex-wrap gap-1.5">
-          <span className="inline-flex items-center gap-1 rounded-plate border border-white/10 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300">{vehicle.year}</span>
-          <span className="inline-flex items-center gap-1 rounded-plate border border-white/10 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300">{formatMileage(vehicle.mileage_km)}</span>
-          <span className="inline-flex items-center gap-1 rounded-plate border border-white/10 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300 capitalize">{vehicle.fuel}</span>
-          <span className="inline-flex items-center gap-1 rounded-plate border border-white/10 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300 capitalize">{vehicle.transmission}</span>
+          <span className="inline-flex items-center gap-1 rounded-plate border border-graphite-700/40 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300">{vehicle.year}</span>
+          <span className="inline-flex items-center gap-1 rounded-plate border border-graphite-700/40 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300">{formatMileage(vehicle.mileage_km)}</span>
+          <span className="inline-flex items-center gap-1 rounded-plate border border-graphite-700/40 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300 capitalize">{vehicle.fuel}</span>
+          <span className="inline-flex items-center gap-1 rounded-plate border border-graphite-700/40 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300 capitalize">{vehicle.transmission}</span>
         </div>
 
-        <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3">
+        <div className="mt-4 flex items-center justify-between border-t border-graphite-700/20 pt-3">
           <p className="font-display text-lg font-semibold text-brass-400">
             {formatLKR(vehicle.price)}
           </p>

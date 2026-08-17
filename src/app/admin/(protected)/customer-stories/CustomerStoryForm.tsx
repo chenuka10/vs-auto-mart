@@ -11,7 +11,7 @@ interface Props {
 }
 
 const inputStyles =
-  "mt-1 w-full rounded-lg border border-zinc-800 bg-zinc-900/80 px-3 py-2.5 text-sm text-white placeholder:text-zinc-500 transition-colors focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-400";
+  "mt-1 w-full rounded-plate border border-graphite-700/40 bg-graphite-900 px-3 py-2.5 text-sm text-graphite-100 placeholder:text-graphite-500 transition-colors focus:border-brass-500/60 focus:outline-none focus:ring-1 focus:ring-brass-500/40";
 
 export function CustomerStoryForm({ story, onSave }: Props) {
   const router = useRouter();
@@ -51,14 +51,14 @@ export function CustomerStoryForm({ story, onSave }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 max-w-2xl space-y-7 text-white">
+    <form onSubmit={handleSubmit} className="mt-6 max-w-2xl space-y-7 text-graphite-100">
 
       {/* ── Customer Name ── */}
       <div>
-        <label htmlFor="customer_name" className="text-sm font-medium text-zinc-200">
+        <label htmlFor="customer_name" className="text-sm font-medium text-graphite-200">
           Customer Name
         </label>
-        <p className="mt-0.5 text-xs text-zinc-500">Leave blank to default to &ldquo;Happy Customer&rdquo;</p>
+        <p className="mt-0.5 text-xs text-graphite-500">Leave blank to default to &ldquo;Happy Customer&rdquo;</p>
         <input
           id="customer_name"
           name="customer_name"
@@ -71,10 +71,10 @@ export function CustomerStoryForm({ story, onSave }: Props) {
 
       {/* ── Vehicle Label ── */}
       <div>
-        <label htmlFor="vehicle_label" className="text-sm font-medium text-zinc-200">
+        <label htmlFor="vehicle_label" className="text-sm font-medium text-graphite-200">
           Vehicle Label
         </label>
-        <p className="mt-0.5 text-xs text-zinc-500">What vehicle was delivered? e.g. "2019 Toyota Aqua"</p>
+        <p className="mt-0.5 text-xs text-graphite-500">What vehicle was delivered? e.g. &quot;2019 Toyota Aqua&quot;</p>
         <input
           id="vehicle_label"
           name="vehicle_label"
@@ -87,10 +87,10 @@ export function CustomerStoryForm({ story, onSave }: Props) {
 
       {/* ── Delivery Date ── */}
       <div>
-        <label htmlFor="delivery_date" className="text-sm font-medium text-zinc-200">
+        <label htmlFor="delivery_date" className="text-sm font-medium text-graphite-200">
           Delivery Date
         </label>
-        <p className="mt-0.5 text-xs text-zinc-500">Leave blank to default to today</p>
+        <p className="mt-0.5 text-xs text-graphite-500">Leave blank to default to today</p>
         <input
           id="delivery_date"
           name="delivery_date"
@@ -102,10 +102,10 @@ export function CustomerStoryForm({ story, onSave }: Props) {
 
       {/* ── Customer Message ── */}
       <div>
-        <label htmlFor="message" className="text-sm font-medium text-zinc-200">
+        <label htmlFor="message" className="text-sm font-medium text-graphite-200">
           Customer Message
         </label>
-        <p className="mt-0.5 text-xs text-zinc-500">Optional short quote from the customer.</p>
+        <p className="mt-0.5 text-xs text-graphite-500">Optional short quote from the customer.</p>
         <textarea
           id="message"
           name="message"
@@ -118,8 +118,8 @@ export function CustomerStoryForm({ story, onSave }: Props) {
 
       {/* ── Delivery Photos ── */}
       <div>
-        <label className="text-sm font-medium text-zinc-200">Delivery Photos</label>
-        <p className="mt-0.5 text-xs text-zinc-500">
+        <label className="text-sm font-medium text-graphite-200">Delivery Photos</label>
+        <p className="mt-0.5 text-xs text-graphite-500">
           Upload customer delivery photos. These appear in the public Happy Customers gallery.
           Photos are stored in Cloudinary under the <code className="text-brass-400">testimonials</code> folder.
         </p>
@@ -143,10 +143,10 @@ export function CustomerStoryForm({ story, onSave }: Props) {
 
       {/* ── Video URL ── */}
       <div>
-        <label htmlFor="video_url" className="text-sm font-medium text-zinc-200">
+        <label htmlFor="video_url" className="text-sm font-medium text-graphite-200">
           Delivery Video URL
         </label>
-        <p className="mt-0.5 text-xs text-zinc-500">
+        <p className="mt-0.5 text-xs text-graphite-500">
           Paste a YouTube or other video link. This shows as a playable card on the Happy Customers page.
         </p>
         <input
@@ -160,16 +160,16 @@ export function CustomerStoryForm({ story, onSave }: Props) {
       </div>
 
       {/* ── Published ── */}
-      <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-900/40 px-4 py-3 text-sm text-zinc-200 hover:bg-zinc-900/70 transition-colors">
+      <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-graphite-700/30 bg-graphite-900/40 px-4 py-3 text-sm text-graphite-200 hover:bg-graphite-900/70 transition-colors">
         <input
           type="checkbox"
           name="is_published"
           defaultChecked={story?.is_published ?? true}
-          className="h-4 w-4 rounded border-zinc-700 bg-zinc-900 accent-amber-500 focus:ring-amber-400"
+          className="h-4 w-4 rounded border-graphite-700 bg-graphite-900 accent-brass-500 focus:ring-brass-400"
         />
         <div>
           <span className="font-medium">Published</span>
-          <span className="ml-2 text-xs text-zinc-500">Visible on the public Happy Customers page</span>
+          <span className="ml-2 text-xs text-graphite-500">Visible on the public Happy Customers page</span>
         </div>
       </label>
 
@@ -185,10 +185,10 @@ export function CustomerStoryForm({ story, onSave }: Props) {
         <button
           type="submit"
           disabled={isSaving}
-          className="inline-flex items-center justify-center gap-2 rounded-lg bg-brass-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brass-700 hover:shadow-md disabled:pointer-events-none disabled:opacity-50"
+          className="inline-flex items-center justify-center gap-2 rounded-plate bg-brass-500 px-6 py-2.5 text-sm font-semibold text-graphite-950 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brass-400 hover:shadow-md disabled:pointer-events-none disabled:opacity-50"
         >
           {isSaving && (
-            <span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+            <span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-graphite-950/40 border-t-graphite-950" />
           )}
           {isSaving ? "Saving…" : story ? "Update Story" : "Save Story"}
         </button>
@@ -197,7 +197,7 @@ export function CustomerStoryForm({ story, onSave }: Props) {
           type="button"
           onClick={() => router.push("/admin/customer-stories")}
           disabled={isSaving}
-          className="rounded-lg border border-zinc-700 px-6 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:bg-zinc-800 disabled:opacity-50"
+          className="rounded-plate border border-graphite-700/50 px-6 py-2.5 text-sm font-medium text-graphite-300 transition-colors hover:bg-graphite-800 disabled:opacity-50"
         >
           Cancel
         </button>

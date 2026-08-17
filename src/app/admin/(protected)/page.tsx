@@ -56,7 +56,7 @@ export default async function AdminDashboardPage() {
           </Link>
           <Link
             href="/admin/vehicles/new"
-            className="rounded-plate bg-white px-4 py-2 text-sm font-semibold text-graphite-950 transition-colors hover:bg-graphite-200"
+            className="rounded-plate bg-brass-500 px-4 py-2 text-sm font-semibold text-graphite-950 transition-colors hover:bg-brass-400"
           >
             + Add Vehicle
           </Link>

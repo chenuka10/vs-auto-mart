@@ -25,7 +25,7 @@ export default function VehicleRow({ vehicle }: { vehicle: Vehicle }) {
         isPending ? "opacity-50" : ""
       }`}
     >
-      <td className="py-3 pr-4 font-medium text-white">
+      <td className="py-3 pr-4 font-medium text-graphite-100">
         {vehicle.brand} {vehicle.model}{" "}
         <span className="text-graphite-400 font-normal">{vehicle.year}</span>
       </td>
@@ -57,11 +57,11 @@ export default function VehicleRow({ vehicle }: { vehicle: Vehicle }) {
           </option>
         </select>
       </td>
-      <td className="py-3 pr-4 text-amber-400">{vehicle.is_featured ? "★" : ""}</td>
+      <td className="py-3 pr-4 text-brass-400">{vehicle.is_featured ? "★" : ""}</td>
       <td className="py-3 text-right">
         <Link
           href={`/admin/vehicles/${vehicle.id}/edit`}
-          className="mr-4 text-amber-400 hover:text-amber-300 hover:underline"
+          className="mr-4 text-brass-400 hover:text-brass-300 hover:underline"
         >
           Edit
         </Link>

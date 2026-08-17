@@ -300,11 +300,11 @@ export function CloudinaryUploader({
         tabIndex={0}
         aria-labelledby={inputId}
         className={`flex cursor-pointer flex-col items-center justify-center rounded-plate border-2 border-dashed px-4 py-8 text-center text-sm transition-colors ${
-          isDragging ? "border-amber-500 bg-amber-500/5" : "border-graphite-700/20 hover:border-graphite-700/40"
+          isDragging ? "border-brass-500 bg-brass-500/10" : "border-graphite-700/40 hover:border-brass-500/40 bg-graphite-900/30"
         }`}
       >
         {/* Upload icon */}
-        <svg className="mb-3 h-8 w-8 text-graphite-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <svg className="mb-3 h-8 w-8 text-graphite-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           {mediaType === "video" ? (
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.882v6.236a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
           ) : (
@@ -312,7 +312,7 @@ export function CloudinaryUploader({
           )}
         </svg>
 
-        <span id={inputId} className="font-medium text-graphite-700">
+        <span id={inputId} className="font-medium text-graphite-100">
           {label}
         </span>
         <span className="mt-1 text-xs text-graphite-400">{labelHint}</span>
@@ -344,7 +344,7 @@ export function CloudinaryUploader({
           {items.map((item) => (
             <div
               key={item.id}
-              className="relative aspect-square overflow-hidden rounded-plate border border-graphite-700/15 bg-graphite-700/5"
+              className="relative aspect-square overflow-hidden rounded-plate border border-graphite-700/30 bg-graphite-900/40"
             >
               {item.isVideo ? (
                 /* Video preview placeholder */

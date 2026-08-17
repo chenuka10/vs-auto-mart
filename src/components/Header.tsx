@@ -9,7 +9,6 @@ import { usePathname } from "next/navigation";
 const NAV_LINKS = [
   { href: "/inventory", label: "Inventory" },
   { href: "/customers", label: "Happy Customers" },
-  { href: "/reviews", label: "Reviews" },
   { href: "/sell-your-car", label: "Sell Your Car" },
   { href: "/about", label: "About" },
   { href: "/faq", label: "FAQ" }
@@ -42,7 +41,7 @@ export default function Header() {
           />
 
           <div className="flex flex-col leading-tight">
-            <span className="font-display text-lg font-semibold tracking-wide text-white">
+            <span className={`font-display text-lg font-semibold tracking-wide ${isHome ? "text-white" : "text-graphite-100"}`}>
               VS Auto Mart
             </span>
 
@@ -86,7 +85,7 @@ export default function Header() {
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={open}
-            className="flex h-10 w-10 items-center justify-center rounded-plate text-brass-400 transition hover:bg-white/5"
+            className="flex h-10 w-10 items-center justify-center rounded-plate text-brass-400 transition hover:bg-graphite-800/40"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +133,7 @@ export default function Header() {
                 className={`rounded-plate px-4 py-3.5 text-sm font-medium transition ${
                   active
                     ? "bg-brass-400/10 text-brass-400"
-                    : "text-white hover:bg-white/5 hover:text-brass-400"
+                    : "text-graphite-100 hover:bg-graphite-800/40 hover:text-brass-400"
                 }`}
               >
                 {link.label}

@@ -105,18 +105,18 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
   }
 
   const inputStyles =
-    "mt-1 w-full rounded-lg border border-zinc-800 bg-zinc-900/80 px-3 py-2.5 text-sm text-white placeholder:text-zinc-500 transition-colors focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-400";
+    "mt-1 w-full rounded-plate border border-graphite-700/40 bg-graphite-900 px-3 py-2.5 text-sm text-graphite-100 placeholder:text-graphite-500 transition-colors focus:border-brass-500/60 focus:outline-none focus:ring-1 focus:ring-brass-500/40";
 
   return (
     <form
       action={handleSubmit}
-      className="mt-6 max-w-xl space-y-6 text-white"
+      className="mt-6 max-w-xl space-y-6 text-graphite-100"
     >
       {/* Reviewer Name */}
       <div>
         <label
           htmlFor="reviewer_name"
-          className="text-sm font-medium text-zinc-200"
+          className="text-sm font-medium text-graphite-200"
         >
           Reviewer Name
         </label>
@@ -137,7 +137,7 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
       <div>
         <label
           htmlFor="rating"
-          className="text-sm font-medium text-zinc-200"
+          className="text-sm font-medium text-graphite-200"
         >
           Rating
         </label>
@@ -152,10 +152,10 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
             step={1}
             inputMode="numeric"
             defaultValue={testimonial?.rating ?? ""}
-            className="w-24 rounded-lg border border-zinc-800 bg-zinc-900/80 px-3 py-2.5 text-sm text-white transition-colors focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-400"
+            className="w-24 rounded-plate border border-graphite-700/40 bg-graphite-900 px-3 py-2.5 text-sm text-graphite-100 transition-colors focus:border-brass-500/60 focus:outline-none focus:ring-1 focus:ring-brass-500/40"
           />
 
-          <span className="text-xs text-zinc-500">
+          <span className="text-xs text-graphite-500">
             Leave blank if no rating is available
           </span>
         </div>
@@ -165,7 +165,7 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
       <div>
         <label
           htmlFor="review_text"
-          className="text-sm font-medium text-zinc-200"
+          className="text-sm font-medium text-graphite-200"
         >
           Review Text
         </label>
@@ -182,11 +182,11 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
 
       {/* Photo */}
       <div>
-        <label className="text-sm font-medium text-zinc-200">
+        <label className="text-sm font-medium text-graphite-200">
           Customer Photo
         </label>
 
-        <p className="mt-1 text-xs leading-5 text-zinc-500">
+        <p className="mt-1 text-xs leading-5 text-graphite-500">
           Optional. One photo can be displayed on the testimonial card.
         </p>
 
@@ -201,7 +201,7 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
         </div>
 
         {photoUrls.length > 0 && (
-          <p className="mt-2 text-xs text-zinc-400">
+          <p className="mt-2 text-xs text-emerald-400">
             1 photo uploaded
           </p>
         )}
@@ -211,7 +211,7 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
       <div>
         <label
           htmlFor="video_url"
-          className="text-sm font-medium text-zinc-200"
+          className="text-sm font-medium text-graphite-200"
         >
           Video URL
         </label>
@@ -227,17 +227,17 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
       </div>
 
       {/* Published */}
-      <label className="flex cursor-pointer items-center gap-3 text-sm text-zinc-200">
+      <label className="flex cursor-pointer items-center gap-3 text-sm text-graphite-200">
         <input
           type="checkbox"
           name="is_published"
           defaultChecked={testimonial?.is_published ?? true}
-          className="h-4 w-4 rounded border-zinc-800 bg-zinc-900 accent-amber-500 focus:ring-amber-400"
+          className="h-4 w-4 rounded border-graphite-700 bg-graphite-900 accent-brass-500 focus:ring-brass-400"
         />
 
         <span>
           Published
-          <span className="ml-2 text-xs text-zinc-500">
+          <span className="ml-2 text-xs text-graphite-500">
             Visible on the public website
           </span>
         </span>
@@ -258,12 +258,12 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
         <button
           type="submit"
           disabled={isSaving}
-          className="inline-flex items-center justify-center gap-2 rounded-lg bg-brass-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-brass-700 hover:shadow-md disabled:pointer-events-none disabled:opacity-50"
+          className="inline-flex items-center justify-center gap-2 rounded-plate bg-brass-500 px-6 py-2.5 text-sm font-semibold text-graphite-950 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-brass-400 hover:shadow-md disabled:pointer-events-none disabled:opacity-50"
         >
           {isSaving && (
             <span
               aria-hidden="true"
-              className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"
+              className="h-4 w-4 animate-spin rounded-full border-2 border-graphite-950/40 border-t-graphite-950"
             />
           )}
 
@@ -274,7 +274,7 @@ export function TestimonialForm({ testimonial }: TestimonialFormProps) {
           type="button"
           onClick={() => router.push("/admin/testimonials")}
           disabled={isSaving}
-          className="rounded-lg border border-zinc-700 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:bg-zinc-800 disabled:opacity-50"
+          className="rounded-plate border border-graphite-700/50 px-6 py-2.5 text-sm font-medium text-graphite-300 transition-colors hover:bg-graphite-800 disabled:opacity-50"
         >
           Cancel
         </button>

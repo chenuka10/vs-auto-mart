@@ -15,6 +15,7 @@ import VehicleDetailsStep from "./steps/VehicleDetailsStep";
 import PhotoUploadStep from "./steps/PhotoUploadStep";
 import ReviewStep from "./steps/ReviewStep";
 import SubmissionSuccess from "./SubmissionSuccess";
+import { ZodError } from "zod";
 
 export interface SellCarFormState {
   seller_name: string;
@@ -63,12 +64,18 @@ const EMPTY_STATE: SellCarFormState = {
 
 const TOTAL_STEPS = 5;
 
-function collectZodErrors(error: { issues: { path: (string | number)[]; message: string }[] }) {
+
+function collectZodErrors(error: ZodError) {
   const errors: Record<string, string> = {};
+
   for (const issue of error.issues) {
     const key = issue.path[0]?.toString() ?? "form";
-    if (!errors[key]) errors[key] = issue.message;
+
+    if (!errors[key]) {
+      errors[key] = issue.message;
+    }
   }
+
   return errors;
 }
 
@@ -147,11 +154,11 @@ export default function SellCarForm() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <div className="sticky top-16 z-10 -mx-6 border-b border-graphite-700/10 bg-paper/95 px-6 py-4 backdrop-blur sm:static sm:mx-0 sm:border-none sm:bg-transparent sm:p-0 sm:pb-6">
+      <div className="sticky top-16 z-10 -mx-6 border-b border-graphite-700/20 bg-graphite-950/90 px-6 py-4 backdrop-blur-xl sm:static sm:mx-0 sm:border-none sm:bg-transparent sm:p-0 sm:pb-6">
         <StepIndicator current={step} />
       </div>
 
-      <div className="mt-6 rounded-plate border border-graphite-700/10 bg-graphite-700/[0.02] p-5 sm:p-6">
+      <div className="glass-panel mt-6 rounded-[20px] p-5 sm:p-6">
         {step === 1 && <SellerInformationStep data={data} errors={errors} onChange={patch} />}
         {step === 2 && <VehicleInformationStep data={data} errors={errors} onChange={patch} />}
         {step === 3 && <VehicleDetailsStep data={data} errors={errors} onChange={patch} />}
@@ -167,7 +174,7 @@ export default function SellCarForm() {
       </div>
 
       {formError && (
-        <p className="mt-4 rounded-plate bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700">
+        <p className="mt-4 rounded-plate border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-300">
           {formError}
         </p>
       )}
@@ -177,7 +184,7 @@ export default function SellCarForm() {
           type="button"
           onClick={goBack}
           disabled={step === 1 || isPending}
-          className="rounded-plate border border-graphite-700/20 px-5 py-2.5 text-sm font-semibold text-graphite-700 transition-colors hover:bg-graphite-700/5 disabled:cursor-not-allowed disabled:opacity-40"
+          className="rounded-plate border border-graphite-700/40 px-5 py-2.5 text-sm font-semibold text-graphite-200 transition-colors hover:bg-graphite-800/50 disabled:cursor-not-allowed disabled:opacity-40"
         >
           Back
         </button>
@@ -186,7 +193,7 @@ export default function SellCarForm() {
           <button
             type="button"
             onClick={goNext}
-            className="rounded-plate bg-graphite-950 px-6 py-2.5 text-sm font-semibold text-paper transition-colors hover:bg-graphite-800"
+            className="rounded-plate bg-gradient-gold px-6 py-2.5 text-sm font-semibold text-graphite-950 transition-all hover:shadow-glow-gold hover:-translate-y-0.5"
           >
             Continue
           </button>
@@ -195,7 +202,7 @@ export default function SellCarForm() {
             type="button"
             onClick={handleSubmit}
             disabled={isPending}
-            className="rounded-plate bg-brass-500 px-6 py-2.5 text-sm font-semibold text-graphite-950 transition-colors hover:bg-brass-400 disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-plate bg-gradient-gold px-6 py-2.5 text-sm font-semibold text-graphite-950 transition-all hover:shadow-glow-gold hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isPending ? "Submitting…" : "Submit Vehicle"}
           </button>

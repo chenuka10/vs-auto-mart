@@ -15,7 +15,7 @@ export default function PhotoManager({
   const [isPending, startTransition] = useTransition();
 
   if (images.length === 0) {
-    return <p className="text-sm text-graphite-500">No photos yet — add some below.</p>;
+    return <p className="text-sm text-graphite-400">No photos yet — add some below.</p>;
   }
 
   return (
@@ -31,7 +31,7 @@ export default function PhotoManager({
           </div>
 
           {img.is_cover ? (
-            <span className="mt-1 block text-center text-[11px] font-semibold text-brass-600">
+            <span className="mt-1 block text-center text-[11px] font-semibold text-brass-400">
               Cover photo
             </span>
           ) : (
@@ -39,7 +39,7 @@ export default function PhotoManager({
               type="button"
               disabled={isPending}
               onClick={() => startTransition(() => setCoverImage(vehicleId, img.id))}
-              className="mt-1 block w-full text-center text-[11px] font-medium text-graphite-500 hover:text-brass-600"
+              className="mt-1 block w-full text-center text-[11px] font-medium text-graphite-400 hover:text-brass-400"
             >
               Set as cover
             </button>
@@ -49,7 +49,7 @@ export default function PhotoManager({
             type="button"
             disabled={isPending}
             onClick={() => startTransition(() => deleteVehicleImage(img.id, vehicleId))}
-            className="absolute right-1 top-1 rounded-full bg-graphite-950/70 px-1.5 py-0.5 text-[11px] font-semibold text-white hover:bg-signal-600"
+            className="absolute right-1 top-1 rounded-full bg-graphite-950/80 px-1.5 py-0.5 text-[11px] font-semibold text-white hover:bg-rose-600 transition-colors"
             aria-label="Delete photo"
           >
             ✕

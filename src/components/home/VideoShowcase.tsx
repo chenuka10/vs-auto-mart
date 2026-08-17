@@ -13,14 +13,14 @@ export default function VideoShowcase() {
   };
 
   return (
-    <section className="bg-[#050505] py-20 text-paper">
+    <section className="bg-transparent py-12 text-graphite-100">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="relative aspect-video overflow-hidden rounded-lg border border-white/10 bg-[#0D0D0F]"
+          className="relative aspect-video overflow-hidden rounded-lg border border-graphite-700/30 bg-graphite-900/60"
         >
           <video
             ref={videoRef}

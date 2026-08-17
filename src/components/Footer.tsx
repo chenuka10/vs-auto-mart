@@ -4,7 +4,7 @@ import Image from "next/image";
 const NAV_LINKS = [
   { href: "/inventory", label: "Inventory" },
   { href: "/sell-your-car", label: "Sell Your Car" },
-  { href: "/reviews", label: "Customer Stories" },
+  { href: "/customers", label: "Customer Stories" },
   { href: "/about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
@@ -17,7 +17,7 @@ const SOCIAL_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#050505] py-14 text-paper">
+    <footer className="border-t border-graphite-700/20 bg-graphite-950 py-14 text-graphite-100">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 md:grid-cols-[1.2fr_1fr_1fr] md:px-10">
         <div>
           <Image src="/logo.png" alt="VS Auto Mart" width={40} height={40} className="h-9 w-auto" />
@@ -62,7 +62,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mx-auto mt-10 max-w-6xl border-t border-white/10 px-6 pt-6 text-xs text-graphite-600 md:px-10">
+      <div className="mx-auto mt-10 max-w-6xl border-t border-graphite-700/20 px-6 pt-6 text-xs text-graphite-500 md:px-10">
         © {new Date().getFullYear()} VS Auto Mart. All rights reserved.
       </div>
     </footer>

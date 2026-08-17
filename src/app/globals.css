@@ -7,53 +7,52 @@
    ========================================================= */
 
 @layer base {
-  :root {
-    /* Dark Theme (Default). Values are "R G B" so Tailwind can apply
-       opacity via rgb(var(--x) / <alpha-value>). Softened from pure
-       black so the site doesn't read as too dark. */
-    --graphite-950: 17 19 23; /* page background */
-    --graphite-900: 27 30 36; /* panel background */
-    --graphite-800: 39 43 50; /* card background */
-    --graphite-700: 57 62 71; /* borders / dividers */
-    --graphite-600: 82 88 98; /* muted surfaces */
-    --graphite-500: 118 124 134; /* muted text */
-    --graphite-400: 152 158 167; /* secondary text */
-    --graphite-300: 180 185 193; /* tertiary text */
-    --graphite-200: 209 212 217; /* faint text */
-    --graphite-100: 238 239 241; /* primary text */
-    --graphite-50: 248 248 249; /* highest-contrast text */
+:root {
+  /* BLACK — Luxury Dark Theme */
+  --graphite-950: 8 8 8;        /* True luxury black */
+  --graphite-900: 14 14 14;     /* Main background */
+  --graphite-800: 22 22 22;     /* Panels */
+  --graphite-700: 35 35 35;     /* Cards / elevated surfaces */
+  --graphite-600: 55 55 55;     /* Borders */
+  --graphite-500: 105 105 105;  /* Muted text */
+  --graphite-400: 160 160 160;  /* Secondary text */
+  --graphite-300: 195 195 195;  /* Tertiary text */
+  --graphite-200: 220 220 220;  /* Light text */
+  --graphite-100: 240 240 240;  /* Primary text */
+  --graphite-50: 255 255 255;   /* Highest contrast */
 
-    --paper: 241 238 230;
+  --paper: 245 243 238;
 
-    --brass-700: 122 92 23;
-    --brass-600: 161 122 34;
-    --brass-500: 199 158 50;
-    --brass-400: 223 190 90;
-    --brass-300: 238 213 132;
+  /* LUXURY GOLD */
+  --brass-700: 112 78 25;       /* Deep gold */
+  --brass-600: 151 108 35;      /* Dark gold */
+  --brass-500: 184 134 49;      /* Main gold */
+  --brass-400: 205 160 70;      /* Bright gold */
+  --brass-300: 225 195 120;     /* Champagne gold */
+
   }
 
   [data-theme="light"] {
-    /* Light Theme (Pearl White & Rose Gold). Same variable names carry
-       reversed lightness so "950" always means "background" and "100"
-       always means "primary text" regardless of theme. */
-    --graphite-950: 250 249 246; /* Pearl White page background */
-    --graphite-900: 244 242 237; /* panel background */
-    --graphite-800: 234 231 224; /* card background */
-    --graphite-700: 214 211 202; /* borders / dividers */
-    --graphite-600: 173 170 160; /* muted surfaces */
-    --graphite-500: 141 139 130; /* muted text */
-    --graphite-400: 108 106 98; /* secondary text */
-    --graphite-300: 82 82 82; /* tertiary text */
-    --graphite-200: 58 58 58; /* faint text */
-    --graphite-100: 34 34 34; /* primary text */
-    --graphite-50: 20 20 20; /* highest-contrast text */
+  /* LIGHT THEME — Warm White & Luxury Gold */
+  --graphite-950: 250 249 247; /* Page background */
+  --graphite-900: 245 244 241; /* Panel background */
+  --graphite-800: 235 233 228; /* Card background */
+  --graphite-700: 215 212 204; /* Borders */
+  --graphite-600: 170 166 156; /* Muted surfaces */
+  --graphite-500: 115 112 105; /* Muted text */
+  --graphite-400: 80 78 72;    /* Secondary text */
+  --graphite-300: 55 53 48;    /* Tertiary text */
+  --graphite-200: 35 34 31;    /* Strong text */
+  --graphite-100: 20 20 18;    /* Primary text */
+  --graphite-50: 8 8 8;         /* Highest contrast */
 
-    --brass-700: 180 130 140; /* Rose Gold Dark */
-    --brass-600: 200 150 160;
-    --brass-500: 220 170 180; /* Rose Gold Base */
-    --brass-400: 230 190 200;
-    --brass-300: 240 210 220;
-  }
+  /* Luxury Gold */
+  --brass-700: 112 78 25;
+  --brass-600: 151 108 35;
+  --brass-500: 184 134 49;
+  --brass-400: 205 160 70;
+  --brass-300: 225 195 120;
+}
 
   html {
     scroll-behavior: smooth;
@@ -240,12 +239,12 @@
   }
 
   .shadow-glow-gold {
-    box-shadow: 0 0 25px -5px rgba(199, 158, 50, 0.4);
+    box-shadow: 0 0 25px -5px rgb(var(--brass-500) / 0.4);
     transition: box-shadow 300ms ease;
   }
 
   .shadow-glow-gold:hover {
-    box-shadow: 0 0 35px 0 rgba(199, 158, 50, 0.6);
+    box-shadow: 0 0 35px 0 rgb(var(--brass-500) / 0.6);
   }
 
   .glass-card-dark {
@@ -271,10 +270,10 @@
   }
 
   .glass-card-dark:hover {
-    border-color: rgb(var(--brass-500) / 0.3);
+    border-color: rgb(var(--brass-500) / 0.4);
     box-shadow: 
       0 15px 50px rgb(var(--graphite-950) / 0.4),
-      0 0 20px rgb(var(--brass-500) / 0.1);
+      0 0 25px rgb(var(--brass-500) / 0.15);
   }
 }
 

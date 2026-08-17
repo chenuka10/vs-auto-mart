@@ -38,9 +38,9 @@ export default async function ReviewsPage() {
         <TestimonialsSection initialTestimonials={testimonials} totalCount={totalCount} />
       </div>
 
-      <div className="mt-16 rounded-lg border border-graphite-700/10 bg-graphite-100 p-8 text-center">
-        <h2 className="font-display text-xl font-semibold">Loved your experience?</h2>
-        <p className="mt-2 text-sm text-graphite-500">
+      <div className="mt-16 rounded-[24px] border border-graphite-700/20 bg-graphite-900/50 p-8 text-center backdrop-blur-md">
+        <h2 className="font-display text-xl font-semibold text-graphite-100">Loved your experience?</h2>
+        <p className="mt-2 text-sm text-graphite-400">
           A quick Google review helps other buyers trust VS Auto Mart too.
         </p>
 
@@ -48,7 +48,7 @@ export default async function ReviewsPage() {
           href={GOOGLE_REVIEWS_CONFIG.leaveReviewUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-block rounded-lg bg-brass-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-brass-700"
+          className="mt-6 inline-block rounded-plate bg-gradient-gold px-6 py-2.5 text-sm font-semibold text-graphite-950 transition-all hover:shadow-glow-gold hover:-translate-y-0.5"
         >
           Leave a Google Review
         </a>

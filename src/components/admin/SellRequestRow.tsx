@@ -18,7 +18,7 @@ export default function SellRequestRow({ submission }: { submission: SellCarSubm
       <td className="py-3 pr-4">
         <Link
           href={`/admin/sell-requests/${submission.id}`}
-          className="font-medium text-white hover:text-brass-400 hover:underline"
+          className="font-medium text-graphite-100 hover:text-brass-400 hover:underline"
         >
           {submission.vehicle_make} {submission.vehicle_model}
         </Link>{" "}

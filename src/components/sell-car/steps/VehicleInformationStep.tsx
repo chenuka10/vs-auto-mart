@@ -1,6 +1,6 @@
 import { FUEL_OPTIONS, TRANSMISSION_OPTIONS } from "@/lib/validation/sell-car";
 import type { SellCarFormState } from "../SellCarForm";
-import { inputClass, labelClass, errorClass, fieldError } from "./field-styles";
+import { inputClass, selectClass, labelClass, errorClass, fieldError } from "./field-styles";
 
 interface Props {
   data: SellCarFormState;
@@ -78,7 +78,7 @@ export default function VehicleInformationStep({ data, errors, onChange }: Props
       <label className={labelClass}>
         Fuel Type
         <select
-          className={inputClass}
+          className={selectClass}
           value={data.fuel_type}
           onChange={(e) => onChange({ fuel_type: e.target.value as SellCarFormState["fuel_type"] })}
           required
@@ -96,7 +96,7 @@ export default function VehicleInformationStep({ data, errors, onChange }: Props
       <label className={labelClass}>
         Transmission
         <select
-          className={inputClass}
+          className={selectClass}
           value={data.transmission}
           onChange={(e) =>
             onChange({ transmission: e.target.value as SellCarFormState["transmission"] })

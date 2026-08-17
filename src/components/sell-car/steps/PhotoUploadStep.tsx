@@ -29,13 +29,13 @@ interface Props {
 export default function PhotoUploadStep({ data, errors, onChange }: Props) {
   return (
     <div>
-      <div className="rounded-plate border border-graphite-700/10 bg-graphite-700/5 p-4 text-sm text-graphite-700">
-        <p className="font-medium text-graphite-900">For a better valuation, include photos of:</p>
+      <div className="rounded-plate border border-graphite-700/30 bg-graphite-900/30 p-4 text-sm text-graphite-300">
+        <p className="font-medium text-graphite-100">For a better valuation, include photos of:</p>
         <div className="mt-2 flex flex-wrap gap-1.5">
           {SUGGESTED_SHOTS.map((shot) => (
             <span
               key={shot}
-              className="rounded-full border border-graphite-700/15 bg-white px-2.5 py-1 text-xs text-graphite-600"
+              className="rounded-full border border-graphite-700/40 bg-graphite-900/50 px-2.5 py-1 text-xs text-graphite-300"
             >
               {shot}
             </span>
@@ -53,7 +53,7 @@ export default function PhotoUploadStep({ data, errors, onChange }: Props) {
           initialUrls={data.photo_urls}
           onChange={(urls) => onChange({ photo_urls: urls })}
         />
-        <p className="mt-2 text-xs text-graphite-400">
+        <p className="mt-2 text-xs text-graphite-500">
           Up to 15 photos · JPG, PNG or WEBP · 10 MB max per photo
         </p>
         {fieldError(errors, "photo_urls") && (

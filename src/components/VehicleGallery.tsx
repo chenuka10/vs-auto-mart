@@ -29,12 +29,20 @@ export default function VehicleGallery({
     if (!lightboxOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightboxOpen(false);
-      if (e.key === "ArrowRight") nextImage();
-      if (e.key === "ArrowLeft") previousImage();
+      if (e.key === "ArrowRight") {
+        setCurrentIndex((current) =>
+          current === images.length - 1 ? 0 : current + 1
+        );
+      }
+      if (e.key === "ArrowLeft") {
+        setCurrentIndex((current) =>
+          current === 0 ? images.length - 1 : current - 1
+        );
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [lightboxOpen]);
+  }, [lightboxOpen, images.length]);
 
   if (!images || images.length === 0) {
     return (

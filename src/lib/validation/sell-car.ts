@@ -75,7 +75,7 @@ export const photosSchema = z
 
 export const consentSchema = z.object({
   consent_given: z.literal(true, {
-    errorMap: () => ({ message: "You must agree before submitting." }),
+    message: "You must agree before submitting.",
   }),
 });
 

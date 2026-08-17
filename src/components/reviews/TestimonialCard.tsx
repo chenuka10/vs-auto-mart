@@ -37,7 +37,7 @@ export function TestimonialCard({
         aria-hidden="true"
         className="
           pointer-events-none absolute inset-x-8 top-0 z-20 h-px
-          bg-gradient-to-r from-transparent via-white to-transparent
+          bg-gradient-to-r from-transparent via-graphite-100/20 to-transparent
           opacity-60
         "
       />

@@ -94,7 +94,7 @@ export default function FeaturedVehicles({
                 <Link
                   key={vehicle.id}
                   href={`/cars/${vehicle.slug}`}
-                  className="group w-[78%] shrink-0 snap-start rounded-lg border border-white/5 bg-graphite-900/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-brass-500/30 sm:w-[45%] lg:w-[31%]"
+                  className="group w-[78%] shrink-0 snap-start rounded-lg border border-graphite-700/20 bg-graphite-900/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-brass-500/30 sm:w-[45%] lg:w-[31%]"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden rounded-t-lg">
                     {img && (
@@ -107,7 +107,7 @@ export default function FeaturedVehicles({
                     )}
                   </div>
                   <div className="p-4">
-                    <p className="font-medium">{vehicle.brand}</p>
+                    <p className="font-medium text-graphite-100">{vehicle.brand}</p>
                     <p className="mt-1 font-mono text-brass-400">
                       {formatLKR(vehicle.price)}
                     </p>

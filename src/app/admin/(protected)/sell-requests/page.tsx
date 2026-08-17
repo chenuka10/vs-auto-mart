@@ -18,10 +18,10 @@ export default async function SellRequestsPage() {
       <div className="flex items-center justify-between">
         <div className="flex gap-6 text-sm">
           <p className="text-graphite-300">
-            <span className="font-semibold text-white">{submissions.length}</span> total
+            <span className="font-semibold text-graphite-100">{submissions.length}</span> total
           </p>
           <p className="text-graphite-300">
-            <span className="font-semibold text-amber-400">{newCount}</span> new
+            <span className="font-semibold text-brass-400">{newCount}</span> new
           </p>
         </div>
         <Link

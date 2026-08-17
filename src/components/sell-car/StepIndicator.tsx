@@ -13,10 +13,10 @@ export default function StepIndicator({ current }: { current: number }) {
             <span
               className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold transition-colors ${
                 isActive
-                  ? "bg-graphite-950 text-paper"
+                  ? "bg-gradient-gold text-graphite-950 shadow-glow-gold"
                   : isDone
-                    ? "bg-brass-500 text-graphite-950"
-                    : "bg-graphite-700/10 text-graphite-500"
+                    ? "bg-brass-500/80 text-graphite-950"
+                    : "border border-graphite-700/40 bg-graphite-900/40 text-graphite-500"
               }`}
               aria-current={isActive ? "step" : undefined}
             >
@@ -24,13 +24,13 @@ export default function StepIndicator({ current }: { current: number }) {
             </span>
             <span
               className={`hidden text-xs font-medium sm:inline ${
-                isActive ? "text-graphite-900" : "text-graphite-500"
+                isActive ? "text-graphite-100" : "text-graphite-500"
               }`}
             >
               {label}
             </span>
             {stepNumber < STEPS.length && (
-              <span className="h-px w-3 shrink-0 bg-graphite-700/15 sm:w-6" aria-hidden />
+              <span className="h-px w-3 shrink-0 bg-graphite-700/40 sm:w-6" aria-hidden />
             )}
           </li>
         );

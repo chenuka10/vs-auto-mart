@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { createVehicle } from "../../actions";
 import { CloudinaryUploader } from "@/components/admin/CloudinaryUploader";
 
@@ -33,7 +34,18 @@ export default function AddVehiclePage() {
 
   return (
     <div className="max-w-2xl text-graphite-100">
-      <h1 className="font-display text-2xl font-semibold text-white">Add Vehicle</h1>
+      <div className="flex items-center gap-2 text-sm">
+        <Link
+          href="/admin"
+          className="flex items-center gap-1 text-graphite-400 hover:text-brass-400 transition-colors"
+        >
+          ← Vehicles
+        </Link>
+        <span className="text-graphite-600">/</span>
+        <span className="text-graphite-300">Add Vehicle</span>
+      </div>
+
+      <h1 className="mt-4 font-display text-2xl font-semibold text-graphite-100">Add Vehicle</h1>
       <p className="mt-1 text-sm text-graphite-400">
         Upload the vehicle photos below. The first one becomes the cover photo shown on the
         vehicle card — you can change this later from the edit page.
@@ -137,7 +149,7 @@ export default function AddVehiclePage() {
         <button
           type="submit"
           disabled={loading}
-          className="mt-2 rounded-plate bg-white px-5 py-2.5 text-sm font-semibold text-graphite-950 transition-colors hover:bg-graphite-200 disabled:cursor-not-allowed disabled:opacity-50 sm:col-span-2"
+          className="mt-2 rounded-plate bg-brass-500 px-5 py-2.5 text-sm font-semibold text-graphite-950 transition-colors hover:bg-brass-400 disabled:cursor-not-allowed disabled:opacity-50 sm:col-span-2"
         >
           {loading ? "Publishing..." : "Publish Vehicle"}
         </button>

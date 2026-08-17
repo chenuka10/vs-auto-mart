@@ -85,7 +85,7 @@ export default function AboutPage() {
         {/* =====================================================
             HERO
         ===================================================== */}
-        <section className="animate-fade-up relative overflow-hidden rounded-[28px] border border-white/10 bg-graphite-950 text-white shadow-2xl">
+        <section className="animate-fade-up relative overflow-hidden rounded-[28px] border border-graphite-700/20 bg-graphite-950 text-graphite-100 shadow-2xl">
           {/* Ambient glow */}
           <div
             aria-hidden="true"
@@ -94,7 +94,7 @@ export default function AboutPage() {
 
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-white/[0.03] blur-3xl"
+            className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-brass-500/[0.03] blur-3xl"
           />
 
           <div className="relative grid gap-10 p-7 sm:p-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:p-14">
@@ -103,13 +103,13 @@ export default function AboutPage() {
                 Since 2012 · Kadawatha · Sri Lanka
               </p>
 
-              <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+              <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-graphite-100 sm:text-5xl lg:text-6xl">
                 Built on trust.
                 <br />
                 Driven by cars.
               </h1>
 
-              <p className="mt-6 max-w-2xl text-base leading-8 text-white/65 sm:text-lg">
+              <p className="mt-6 max-w-2xl text-base leading-8 text-graphite-400 sm:text-lg">
                 VS Auto Mart is a trusted vehicle dealership based in Kadawatha,
                 Sri Lanka, dedicated to providing quality vehicles with honest
                 service, competitive pricing, and a buying experience built
@@ -117,34 +117,34 @@ export default function AboutPage() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <div className="glass-shine rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-medium text-white/80 backdrop-blur-xl">
+                <div className="glass-shine rounded-full border border-graphite-700/30 bg-graphite-900/60 px-4 py-2 text-xs font-medium text-graphite-200 backdrop-blur-xl">
                   500+ Happy Customers
                 </div>
 
-                <div className="glass-shine rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-medium text-white/80 backdrop-blur-xl">
+                <div className="glass-shine rounded-full border border-graphite-700/30 bg-graphite-900/60 px-4 py-2 text-xs font-medium text-graphite-200 backdrop-blur-xl">
                   Quality Used Vehicles
                 </div>
 
-                <div className="glass-shine rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-medium text-white/80 backdrop-blur-xl">
+                <div className="glass-shine rounded-full border border-graphite-700/30 bg-graphite-900/60 px-4 py-2 text-xs font-medium text-graphite-200 backdrop-blur-xl">
                   Honest Service
                 </div>
               </div>
             </div>
 
             <div className="hidden lg:block">
-              <div className="glass-panel rounded-3xl border-white/10 bg-white/[0.05] p-6 text-white/80 backdrop-blur-xl">
+              <div className="glass-panel rounded-3xl border border-graphite-700/30 bg-graphite-900/50 p-6 text-graphite-300 backdrop-blur-xl">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-brass-400">
                   What matters to us
                 </p>
 
-                <p className="mt-4 font-display text-2xl leading-tight text-white">
+                <p className="mt-4 font-display text-2xl leading-tight text-graphite-100">
                   “Sell vehicles you&apos;d be comfortable putting your own
                   family in.”
                 </p>
 
-                <div className="mt-6 h-px bg-white/10" />
+                <div className="mt-6 h-px bg-graphite-700/40" />
 
-                <p className="mt-4 text-xs uppercase tracking-[0.16em] text-white/40">
+                <p className="mt-4 text-xs uppercase tracking-[0.16em] text-graphite-500">
                   The principle behind VS Auto Mart
                 </p>
               </div>
@@ -378,7 +378,7 @@ export default function AboutPage() {
                   <CheckIcon />
                 </div>
 
-                <span className="pt-1 text-sm font-medium leading-6 text-graphite-300 group-hover:text-white transition-colors">
+                <span className="pt-1 text-sm font-medium leading-6 text-graphite-300 group-hover:text-brass-400 transition-colors">
                   {item}
                 </span>
               </div>
@@ -464,18 +464,18 @@ export default function AboutPage() {
         {/* =====================================================
             CONTACT
         ===================================================== */}
-        <section className="mt-20 overflow-hidden rounded-[28px] bg-graphite-950 text-white shadow-2xl">
+        <section className="mt-20 overflow-hidden rounded-[28px] border border-graphite-700/20 bg-graphite-950 text-graphite-100 shadow-2xl">
           <div className="grid lg:grid-cols-[0.75fr_1.25fr]">
-            <div className="border-b border-white/10 p-7 sm:p-10 lg:border-b-0 lg:border-r lg:p-12">
+            <div className="border-b border-graphite-700/20 p-7 sm:p-10 lg:border-b-0 lg:border-r lg:p-12">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brass-400">
                 Visit or contact us
               </p>
 
-              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-graphite-100 sm:text-4xl">
                 Let&apos;s talk cars.
               </h2>
 
-              <p className="mt-4 text-sm leading-7 text-white/55">
+              <p className="mt-4 text-sm leading-7 text-graphite-400">
                 Whether you&apos;re looking to buy, sell, trade, finance, or
                 simply understand your options, the team at VS Auto Mart is
                 here to help.
@@ -486,7 +486,7 @@ export default function AboutPage() {
               {contactItems.map((item, index) => (
                 <div
                   key={item.label}
-                  className={`border-white/10 p-6 sm:p-7 ${
+                  className={`border-graphite-700/20 p-6 sm:p-7 ${
                     index >= 2 ? "border-t" : ""
                   } ${index % 2 === 1 ? "sm:border-l" : ""} ${
                     item.label === "Address"
@@ -494,11 +494,11 @@ export default function AboutPage() {
                       : ""
                   }`}
                 >
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">
+                  <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-graphite-500">
                     {item.label}
                   </dt>
 
-                  <dd className="mt-2 text-sm font-medium leading-6 text-white/85">
+                  <dd className="mt-2 text-sm font-medium leading-6 text-graphite-200">
                     {item.value}
                   </dd>
                 </div>

@@ -122,7 +122,7 @@ export async function createTestimonial(input: TestimonialInput) {
   }
 
   revalidatePath("/admin/testimonials");
-  revalidatePath("/reviews");
+  revalidatePath("/customers");
 }
 
 export async function updateTestimonial(
@@ -150,7 +150,7 @@ export async function updateTestimonial(
 
   revalidatePath("/admin/testimonials");
   revalidatePath(`/admin/testimonials/${id}/edit`);
-  revalidatePath("/reviews");
+  revalidatePath("/customers");
 }
 
 export async function togglePublish(
@@ -178,7 +178,7 @@ export async function togglePublish(
   }
 
   revalidatePath("/admin/testimonials");
-  revalidatePath("/reviews");
+  revalidatePath("/customers");
 }
 
 export async function deleteTestimonial(id: string) {
@@ -218,5 +218,5 @@ export async function deleteTestimonial(id: string) {
    */
 
   revalidatePath("/admin/testimonials");
-  revalidatePath("/reviews");
+  revalidatePath("/customers");
 }

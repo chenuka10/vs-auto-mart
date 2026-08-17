@@ -32,7 +32,7 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
   }, [inView, value]);
 
   return (
-    <span ref={ref} className="font-mono text-4xl font-semibold text-paper md:text-5xl">
+    <span ref={ref} className="font-mono text-4xl font-semibold text-graphite-100 md:text-5xl">
       {display}
       {suffix}
     </span>
@@ -41,7 +41,7 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
 
 export default function TrustStats() {
   return (
-    <section className="relative bg-[#0D0D0F] py-20">
+    <section className="relative bg-transparent py-12">
       <div className="mx-auto grid max-w-6xl gap-4 px-6 sm:grid-cols-2 md:px-10 lg:grid-cols-4">
         {STATS.map((stat, i) => (
           <motion.div
@@ -50,10 +50,10 @@ export default function TrustStats() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ delay: i * 0.1, duration: 0.6 }}
-            className="group rounded-lg border border-white/10 bg-white/[0.03] p-8 shadow-[0_8px_30px_rgba(0,0,0,0.4)] backdrop-blur-md transition hover:-translate-y-1 hover:border-brass-400/30 hover:bg-white/[0.05]"
+            className="group rounded-lg border border-graphite-700/20 bg-graphite-900/40 p-8 shadow-[0_8px_30px_rgba(0,0,0,0.4)] backdrop-blur-md transition hover:-translate-y-1 hover:border-brass-400/30 hover:bg-graphite-900/60"
           >
             <Counter value={stat.value} suffix={stat.suffix} />
-            <p className="mt-2 text-sm uppercase tracking-wider text-paper/70">
+            <p className="mt-2 text-sm uppercase tracking-wider text-graphite-400">
               {stat.label}
             </p>
           </motion.div>

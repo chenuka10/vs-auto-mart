@@ -1,6 +1,6 @@
 import { CONDITION_OPTIONS } from "@/lib/validation/sell-car";
 import type { SellCarFormState } from "../SellCarForm";
-import { inputClass, labelClass, errorClass, fieldError } from "./field-styles";
+import { inputClass, selectClass, labelClass, errorClass, fieldError } from "./field-styles";
 
 interface Props {
   data: SellCarFormState;
@@ -45,7 +45,7 @@ export default function VehicleDetailsStep({ data, errors, onChange }: Props) {
       <label className={labelClass}>
         Condition
         <select
-          className={inputClass}
+          className={selectClass}
           value={data.condition}
           onChange={(e) => onChange({ condition: e.target.value as SellCarFormState["condition"] })}
           required

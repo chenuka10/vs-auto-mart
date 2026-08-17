@@ -30,7 +30,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-graphite-950 px-6 py-16 text-paper">
+    <div className="flex min-h-screen items-center justify-center bg-graphite-950 px-6 py-16 text-graphite-100">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-brass-500/30 bg-brass-500/10 text-brass-400">
@@ -49,13 +49,13 @@ export default function AdminLoginPage() {
               />
             </svg>
           </span>
-          <h1 className="mt-4 font-display text-2xl font-semibold">Admin Sign In</h1>
-          <p className="mt-1 text-sm text-graphite-300">Staff access only.</p>
+          <h1 className="mt-4 font-display text-2xl font-semibold text-graphite-100">Admin Sign In</h1>
+          <p className="mt-1 text-sm text-graphite-400">Staff access only.</p>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-charcoal-900 p-6 shadow-2xl shadow-black/30"
+          className="flex flex-col gap-4 rounded-2xl border border-graphite-700/30 bg-graphite-900 p-6 shadow-2xl shadow-black/30"
         >
           <label className="flex flex-col gap-1.5 text-sm">
             <span className="text-graphite-300">Email</span>
@@ -65,7 +65,7 @@ export default function AdminLoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
-              className="rounded-plate border border-white/10 bg-graphite-950 px-3 py-2.5 text-paper outline-none transition-colors duration-200 placeholder:text-graphite-500 focus:border-brass-500/60 focus:ring-2 focus:ring-brass-500/20"
+              className="rounded-plate border border-graphite-700/40 bg-graphite-950 px-3 py-2.5 text-graphite-100 outline-none transition-colors duration-200 placeholder:text-graphite-500 focus:border-brass-500/60 focus:ring-2 focus:ring-brass-500/20"
             />
           </label>
           <label className="flex flex-col gap-1.5 text-sm">
@@ -76,7 +76,7 @@ export default function AdminLoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
-              className="rounded-plate border border-white/10 bg-graphite-950 px-3 py-2.5 text-paper outline-none transition-colors duration-200 placeholder:text-graphite-500 focus:border-brass-500/60 focus:ring-2 focus:ring-brass-500/20"
+              className="rounded-plate border border-graphite-700/40 bg-graphite-950 px-3 py-2.5 text-graphite-100 outline-none transition-colors duration-200 placeholder:text-graphite-500 focus:border-brass-500/60 focus:ring-2 focus:ring-brass-500/20"
             />
           </label>
 

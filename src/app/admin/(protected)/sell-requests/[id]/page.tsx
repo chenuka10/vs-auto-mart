@@ -51,13 +51,22 @@ export default async function SellRequestDetailPage({ params }: { params: Promis
 
   return (
     <div className="text-graphite-100">
-      <Link href="/admin/sell-requests" className="text-sm text-graphite-400 hover:text-graphite-200">
-        ← All Sell Requests
-      </Link>
+      <div className="flex items-center gap-2 text-sm">
+        <Link
+          href="/admin/sell-requests"
+          className="flex items-center gap-1 text-graphite-400 hover:text-brass-400 transition-colors"
+        >
+          ← Sell Requests
+        </Link>
+        <span className="text-graphite-600">/</span>
+        <span className="text-graphite-300">
+          {submission.vehicle_make} {submission.vehicle_model}
+        </span>
+      </div>
 
       <div className="mt-3 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="font-display text-2xl font-semibold text-white">
+          <h1 className="font-display text-2xl font-semibold text-graphite-100">
             {submission.vehicle_make} {submission.vehicle_model} {submission.vehicle_year}
           </h1>
           <p className="mt-1 text-sm text-graphite-400">{submission.reference_number}</p>
@@ -115,7 +124,7 @@ export default async function SellRequestDetailPage({ params }: { params: Promis
             <h2 className="text-xs font-semibold uppercase tracking-wide text-graphite-400">
               Seller
             </h2>
-            <p className="mt-2 font-medium text-white">{submission.seller_name}</p>
+            <p className="mt-2 font-medium text-graphite-100">{submission.seller_name}</p>
             <div className="mt-4 space-y-2">
               <a
                 href={`tel:${submission.seller_phone}`}

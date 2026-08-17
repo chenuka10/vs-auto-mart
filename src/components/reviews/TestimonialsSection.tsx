@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { TestimonialCard } from "@/components/reviews/TestimonialCard";
-import { loadMoreTestimonials } from "@/app/reviews/actions";
+import { loadMoreTestimonials } from "@/app/customers/actions";
 import type { Testimonial } from "@/lib/types";
 
 interface TestimonialsSectionProps {

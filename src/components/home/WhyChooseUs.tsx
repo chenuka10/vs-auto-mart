@@ -23,13 +23,13 @@ const CREDENTIALS = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="bg-[#0D0D0F] py-20 text-paper">
+    <section className="bg-transparent py-12 text-graphite-100">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
-        <h2 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
+        <h2 className="font-display text-3xl font-semibold tracking-tight text-graphite-100 md:text-4xl">
           Why Choose VS Auto Mart
         </h2>
 
-        <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
+        <div className="mt-10 divide-y divide-graphite-700/20 border-y border-graphite-700/20">
           {CREDENTIALS.map((item, i) => (
             <motion.div
               key={item.title}
