@@ -1,7 +1,6 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import SignOutButton from "@/components/admin/SignOutButton";
+import AdminNav from "@/components/admin/AdminNav";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -14,9 +13,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   if (!user) redirect("/admin/login");
 
   return (
-    <div className="min-h-screen bg-graphite-950 text-paper">
+    <div className="min-h-screen bg-graphite-950 text-graphite-100">
       <div className="mx-auto max-w-6xl px-6 py-10">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-graphite-700/20 pb-6">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brass-400">
               VS Auto Mart
@@ -24,21 +23,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <p className="mt-1 font-display text-xl font-semibold">Admin Dashboard</p>
             <p className="text-sm text-graphite-300">{user.email}</p>
           </div>
-          <nav className="flex items-center gap-2 text-sm font-medium">
-            <Link
-              href="/admin"
-              className="rounded-plate px-3 py-2 text-graphite-300 transition-colors duration-200 hover:bg-white/5 hover:text-brass-400"
-            >
-              Vehicles
-            </Link>
-            <Link
-              href="/admin/vehicles/new"
-              className="rounded-plate bg-brass-500 px-3 py-2 font-semibold text-graphite-950 transition-all duration-200 hover:bg-brass-400"
-            >
-              + Add Vehicle
-            </Link>
-            <SignOutButton />
-          </nav>
+          <AdminNav />
         </div>
         <div className="mt-8">{children}</div>
       </div>

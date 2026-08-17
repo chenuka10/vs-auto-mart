@@ -5,19 +5,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Wired to the CSS variables in globals.css so these actually
+        // respond to the [data-theme="light"] toggle instead of being
+        // frozen at build time. The <alpha-value> placeholder lets
+        // opacity modifiers keep working, e.g. bg-graphite-900/40.
         graphite: {
-          950: "#12151A",
-          900: "#181C22",
-          700: "#2B313A",
-          500: "#3E4C59",
-          300: "#8A95A1",
-          100: "#E7E9EC",
+          950: "rgb(var(--graphite-950) / <alpha-value>)",
+          900: "rgb(var(--graphite-900) / <alpha-value>)",
+          800: "rgb(var(--graphite-800) / <alpha-value>)",
+          700: "rgb(var(--graphite-700) / <alpha-value>)",
+          600: "rgb(var(--graphite-600) / <alpha-value>)",
+          500: "rgb(var(--graphite-500) / <alpha-value>)",
+          400: "rgb(var(--graphite-400) / <alpha-value>)",
+          300: "rgb(var(--graphite-300) / <alpha-value>)",
+          200: "rgb(var(--graphite-200) / <alpha-value>)",
+          100: "rgb(var(--graphite-100) / <alpha-value>)",
+          50: "rgb(var(--graphite-50) / <alpha-value>)",
         },
-        paper: "#F1EEE6",
+        paper: "rgb(var(--paper) / <alpha-value>)",
         brass: {
-          600: "#9C7A2E",
-          500: "#B08D3F",
-          400: "#C7A85C",
+          700: "rgb(var(--brass-700) / <alpha-value>)",
+          600: "rgb(var(--brass-600) / <alpha-value>)",
+          500: "rgb(var(--brass-500) / <alpha-value>)",
+          400: "rgb(var(--brass-400) / <alpha-value>)",
+          300: "rgb(var(--brass-300) / <alpha-value>)",
         },
         moss: {
           600: "#3F6B4F",

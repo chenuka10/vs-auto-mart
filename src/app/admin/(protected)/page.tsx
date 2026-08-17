@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import VehicleRow from "@/components/admin/VehicleRow";
+import VehicleTable from "@/components/admin/VehicleTable";
 import type { Vehicle } from "@/lib/types";
 
 export default async function AdminDashboardPage() {
@@ -17,59 +17,54 @@ export default async function AdminDashboardPage() {
     sold: vehicles.filter((v) => v.status === "sold").length,
   };
 
+  const { count: newSellRequests } = await supabase
+    .from("sell_car_submissions")
+    .select("id", { count: "exact", head: true })
+    .eq("status", "NEW");
+
   return (
-    <div>
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-white/10 bg-charcoal-900 p-4">
-          <p className="text-xs font-medium uppercase tracking-wide text-graphite-300">Available</p>
-          <p className="mt-1 font-display text-2xl font-semibold text-emerald-400">
-            {counts.available}
+    <div className="text-graphite-100">
+      <div className="flex items-center justify-between">
+        <div className="flex gap-6 text-sm">
+          <p className="text-graphite-300">
+            <span className="font-semibold text-emerald-400">{counts.available}</span> available
+          </p>
+          <p className="text-graphite-300">
+            <span className="font-semibold text-amber-400">{counts.reserved}</span> reserved
+          </p>
+          <p className="text-graphite-300">
+            <span className="font-semibold text-rose-400">{counts.sold}</span> sold
           </p>
         </div>
-        <div className="rounded-2xl border border-white/10 bg-charcoal-900 p-4">
-          <p className="text-xs font-medium uppercase tracking-wide text-graphite-300">Reserved</p>
-          <p className="mt-1 font-display text-2xl font-semibold text-amber-400">
-            {counts.reserved}
-          </p>
-        </div>
-        <div className="rounded-2xl border border-white/10 bg-charcoal-900 p-4">
-          <p className="text-xs font-medium uppercase tracking-wide text-graphite-300">Sold</p>
-          <p className="mt-1 font-display text-2xl font-semibold text-red-400">{counts.sold}</p>
+        <div className="flex gap-3">
+          <Link
+            href="/admin/sell-requests"
+            className="relative rounded-plate border border-graphite-700 bg-graphite-900 px-4 py-2 text-sm font-semibold text-graphite-100 transition-colors hover:bg-graphite-800"
+          >
+            Sell Requests
+            {!!newSellRequests && (
+              <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-brass-500 px-1 text-xs font-bold text-graphite-950">
+                {newSellRequests}
+              </span>
+            )}
+          </Link>
+          <Link
+            href="/admin/testimonials"
+            className="rounded-plate border border-graphite-700 bg-graphite-900 px-4 py-2 text-sm font-semibold text-graphite-100 transition-colors hover:bg-graphite-800"
+          >
+            Manage Testimonials
+          </Link>
+          <Link
+            href="/admin/vehicles/new"
+            className="rounded-plate bg-brass-500 px-4 py-2 text-sm font-semibold text-graphite-950 transition-colors hover:bg-brass-400"
+          >
+            + Add Vehicle
+          </Link>
         </div>
       </div>
 
-      <div className="mt-6 flex justify-end sm:hidden">
-        <Link
-          href="/admin/vehicles/new"
-          className="rounded-plate bg-brass-500 px-4 py-2 text-sm font-semibold text-graphite-950 transition-all duration-200 hover:bg-brass-400"
-        >
-          + Add Vehicle
-        </Link>
-      </div>
-
-      <div className="mt-6 overflow-x-auto rounded-2xl border border-white/10 bg-charcoal-900">
-        <table className="w-full min-w-[640px] border-collapse">
-          <thead>
-            <tr className="border-b border-white/10 text-left text-xs uppercase tracking-wide text-graphite-300">
-              <th className="px-4 py-3 font-medium">Vehicle</th>
-              <th className="px-4 py-3 font-medium">Price</th>
-              <th className="px-4 py-3 font-medium">Status</th>
-              <th className="px-4 py-3 font-medium">Featured</th>
-              <th className="px-4 py-3 text-right font-medium">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="px-4">
-            {vehicles.map((vehicle) => (
-              <VehicleRow key={vehicle.id} vehicle={vehicle} />
-            ))}
-          </tbody>
-        </table>
-
-        {vehicles.length === 0 && (
-          <p className="px-4 py-10 text-center text-graphite-300">
-            No vehicles yet — add your first one.
-          </p>
-        )}
+      <div className="mt-6">
+        <VehicleTable vehicles={vehicles} />
       </div>
     </div>
   );

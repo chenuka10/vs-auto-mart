@@ -37,7 +37,7 @@ create table public.vehicles (
   transmission transmission_type not null,
   engine_capacity text,                    -- e.g. "998cc"
   colour text,
-  registration_no text,                    -- kept private, never exposed to public API
+  registration_no text,                    -- plate number, admin-only identifier — never selected on public pages
   condition text,
   description text,
   location text,                           -- e.g. "Kadawatha"
@@ -51,6 +51,7 @@ create table public.vehicles (
 
 create index vehicles_status_idx on public.vehicles(status);
 create index vehicles_brand_model_idx on public.vehicles(brand, model);
+create index vehicles_registration_no_idx on public.vehicles(registration_no);
 create index vehicles_featured_idx on public.vehicles(is_featured) where is_featured = true;
 
 -- =========================================================
@@ -62,10 +63,16 @@ create table public.vehicle_images (
   image_url text not null,                 -- Cloudinary URL
   context image_context not null default 'exterior',
   sort_order int not null default 0,
+  is_cover boolean not null default false,  -- shown on the vehicle card; rest appear in the gallery
   created_at timestamptz not null default now()
 );
 
 create index vehicle_images_vehicle_idx on public.vehicle_images(vehicle_id);
+
+-- Only one cover photo per vehicle.
+create unique index vehicle_images_one_cover_idx
+  on public.vehicle_images(vehicle_id)
+  where is_cover = true;
 
 -- =========================================================
 -- CUSTOMER DELIVERY STORIES ("Happy Customers")

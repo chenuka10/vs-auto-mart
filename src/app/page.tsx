@@ -1,259 +1,269 @@
+import { createClient } from "@/lib/supabase/server";
+import { PUBLIC_VEHICLE_WITH_IMAGES_COLUMNS } from "@/lib/queries";
+import type { PublicVehicleWithImages } from "@/lib/types";
 import Link from "next/link";
 import Image from "next/image";
-import { createClient } from "@/lib/supabase/server";
-import VehicleCard from "@/components/VehicleCard";
-import WhatsAppButton from "@/components/WhatsAppButton";
-import type { VehicleWithImages, CustomerStory } from "@/lib/types";
+
+import Hero from "@/components/home/Hero";
+import TrustStats from "@/components/home/TrustStats";
+import FeaturedVehicles from "@/components/home/FeaturedVehicles";
+import WhyChooseUs from "@/components/home/WhyChooseUs";
+import LocationSection from "@/components/home/LocationSection";
+import VideoShowcase from "@/components/home/VideoShowcase";
+import SellCarBanner from "@/components/SellCarBanner";
 
 export const revalidate = 60;
 
 async function getHomepageData() {
   const supabase = await createClient();
 
-  const [{ data: featured }, { data: latest }, { data: stories }] = await Promise.all([
-    supabase
-      .from("vehicles")
-      .select("*, vehicle_images(*)")
-      .eq("is_featured", true)
-      .eq("status", "available")
-      .order("date_added", { ascending: false })
-      .limit(6),
-    supabase
-      .from("vehicles")
-      .select("*, vehicle_images(*)")
-      .eq("status", "available")
-      .order("date_added", { ascending: false })
-      .limit(4),
-    supabase
-      .from("customer_stories")
-      .select("*, customer_story_photos(*)")
-      .eq("is_published", true)
-      .order("delivery_date", { ascending: false })
-      .limit(3),
-  ]);
+  const { data: featured } = await supabase
+    .from("vehicles")
+    .select(PUBLIC_VEHICLE_WITH_IMAGES_COLUMNS)
+    .eq("is_featured", true)
+    .eq("status", "available")
+    .order("date_added", { ascending: false })
+    .limit(6);
 
   return {
-    featured: (featured ?? []) as VehicleWithImages[],
-    latest: (latest ?? []) as VehicleWithImages[],
-    stories: (stories ?? []) as CustomerStory[],
+    featured: (featured ?? []) as PublicVehicleWithImages[],
   };
 }
 
 export default async function HomePage() {
-  const { featured, latest, stories } = await getHomepageData();
+  const { featured } = await getHomepageData();
 
   return (
-    <>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-graphite-950 text-paper">
+    <main className="relative isolate overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1c1500] via-[#080808] to-black text-white">
+      {/* =====================================================
+          GLOBAL ATMOSPHERE (LIQUID GLASS BACKGROUND ACCENTS)
+      ===================================================== */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+      >
+        <div className="absolute -left-40 -top-32 h-[45rem] w-[45rem] rounded-full bg-brass-500/[0.15] blur-[160px]" />
+        <div className="absolute right-[-15rem] top-[22rem] h-[42rem] w-[42rem] rounded-full bg-white/[0.05] blur-[150px]" />
+        <div className="absolute left-[15%] top-[78rem] h-[40rem] w-[40rem] rounded-full bg-brass-600/[0.08] blur-[150px]" />
+        <div className="absolute right-[10%] top-[150rem] h-[32rem] w-[32rem] rounded-full bg-white/[0.03] blur-[140px]" />
+
         <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(200,169,81,0.10),transparent_45%)]"
+          className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)
+            `,
+            backgroundSize: "72px 72px",
+            maskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
+          }}
         />
-        <div className="relative mx-auto grid max-w-6xl gap-10 px-6 py-24 md:grid-cols-2 md:items-center md:py-32">
-          <div className="animate-[fadeInUp_0.7s_ease-out]">
-            <span className="plate-tag border-brass-400/30 bg-transparent text-brass-400">
-              Kadawatha, Sri Lanka
-            </span>
-            <h1 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-              Your Trusted Partner for{" "}
-              <span className="text-brass-400">Quality Vehicles</span> in Sri Lanka
-            </h1>
-            <p className="mt-5 max-w-md text-graphite-300">
-              Every vehicle inspected, every sale backed by real service —
-              browse an inventory chosen for reliability, not just looks.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/inventory"
-                className="group rounded-plate bg-brass-500 px-6 py-3 text-sm font-semibold text-graphite-950 shadow-[0_0_0_0_rgba(200,169,81,0)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-brass-400 hover:shadow-[0_8px_24px_-4px_rgba(200,169,81,0.45)]"
-              >
-                Browse Vehicles
-                <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-              </Link>
-              <Link
-                href="#contact"
-                className="rounded-plate border border-paper/20 px-6 py-3 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:border-paper/40 hover:bg-white/5"
-              >
-                Contact Us
-              </Link>
-              <WhatsAppButton variant="inline" label="WhatsApp Now" />
-            </div>
-          </div>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/40">
-            <Image
-              src="/hero-showroom.jpg"
-              alt="VS Auto Mart showroom"
-              fill
-              priority
-              className="object-cover transition-transform duration-700 hover:scale-105"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-          </div>
-        </div>
+
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(135deg, transparent 0, transparent 140px, rgba(255,255,255,0.7) 141px, transparent 142px)",
+          }}
+        />
+      </div>
+
+      {/* =====================================================
+          FULL-SCREEN HERO
+      ===================================================== */}
+      <section className="relative min-h-screen w-full flex flex-col justify-center">
+        <Hero />
       </section>
 
-      {/* Featured vehicles */}
-      {featured.length > 0 && (
-        <section className="bg-charcoal-900 py-16 text-paper">
-          <div className="mx-auto max-w-6xl px-6">
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brass-400">
-                  Handpicked
-                </p>
-                <h2 className="mt-2 font-display text-2xl font-semibold">Featured Vehicles</h2>
-              </div>
-              <Link
-                href="/inventory"
-                className="group text-sm font-medium text-brass-400 transition-colors hover:text-brass-300"
-              >
-                View all
-                <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-              </Link>
-            </div>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {featured.map((vehicle, i) => (
-                <div
-                  key={vehicle.id}
-                  className="group rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_32px_-12px_rgba(0,0,0,0.6)]"
-                  style={{ animationDelay: `${i * 60}ms` }}
-                >
-                  <VehicleCard vehicle={vehicle} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* =====================================================
+          CAR SHOWCASE COLLAGE (STANDALONE SECTION)
+      ===================================================== */}
+      <section className="relative pt-12 sm:pt-20">
+        <div className="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8">
+          {/* Subtle surrounding glow */}
+          <div className="relative">
+            <div className="pointer-events-none absolute -inset-2 rounded-[2.5rem] bg-gradient-to-r from-brass-500/20 via-transparent to-brass-500/20 opacity-60 blur-3xl" />
 
-      {/* Latest arrivals */}
-      {latest.length > 0 && (
-        <section className="bg-graphite-950 py-16 text-paper">
-          <div className="mx-auto max-w-6xl px-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brass-400">
-              Just In
-            </p>
-            <h2 className="mt-2 font-display text-2xl font-semibold">New Arrivals This Week</h2>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {latest.map((vehicle) => (
-                <div
-                  key={vehicle.id}
-                  className="group rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_32px_-12px_rgba(0,0,0,0.6)]"
-                >
-                  <VehicleCard vehicle={vehicle} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Why choose us */}
-      <section className="bg-charcoal-900 py-16 text-paper">
-        <div className="mx-auto max-w-6xl px-6">
-          <h2 className="font-display text-2xl font-semibold">Why Choose VS Auto Mart</h2>
-          <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { title: "Years of Experience", body: "A family-run dealership built on repeat customers and referrals." },
-              { title: "Quality Inspection", body: "Every vehicle checked mechanically before it's listed for sale." },
-              { title: "Honest Service", body: "Straightforward pricing and no pressure — the details up front." },
-              { title: "Wide Selection", body: "From city cars to family SUVs, sourced and vetted carefully." },
-            ].map((item) => (
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.12] bg-black/60 shadow-[0_30px_100px_rgba(0,0,0,0.85)] backdrop-blur-3xl">
+              {/* ── COLLAGE GRID ── */}
               <div
-                key={item.title}
-                className="group rounded-2xl border border-white/5 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brass-500/30 hover:bg-white/[0.03]"
+                className="grid grid-cols-1 md:grid-cols-[1.15fr_0.85fr] md:grid-rows-2"
+                style={{
+                  minHeight: "clamp(380px, 45vw, 560px)",
+                }}
               >
-                <div className="h-0.5 w-8 bg-brass-500 transition-all duration-300 group-hover:w-12" />
-                <p className="mt-4 font-display text-lg font-semibold">{item.title}</p>
-                <p className="mt-2 text-sm text-graphite-300">{item.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+                {/* LEFT: Large Hero Image */}
+                <div className="group relative min-h-[260px] md:min-h-0 md:row-span-2 md:col-start-1 overflow-hidden">
+                  <Image
+                    src="/Collage/1.jpeg"
+                    alt="VS Auto Mart featured vehicle – Renault Kwid"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 55vw"
+                    className="object-cover object-center transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+                  />
+                  {/* Vignette Gradients */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/60 hidden md:block" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  
+                  {/* Badge */}
+                  <div className="absolute left-5 top-5 z-20 flex items-center gap-2 rounded-full border border-brass-500/40 bg-black/60 px-4 py-1.5 backdrop-blur-md">
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-brass-500 shadow-[0_0_8px_rgba(212,175,55,0.9)]" />
+                    <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-brass-400">
+                      Our Fleet
+                    </span>
+                  </div>
+                </div>
 
-      {/* Happy customers preview */}
-      <section className="bg-graphite-950 py-16 text-paper">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brass-400">
-                Trusted
-              </p>
-              <h2 className="mt-2 font-display text-2xl font-semibold">500+ Happy Customers</h2>
-              <p className="mt-1 text-sm text-graphite-300">Real customers, real vehicles, real proof.</p>
-            </div>
-            <Link
-              href="/customers"
-              className="group hidden text-sm font-medium text-brass-400 transition-colors hover:text-brass-300 sm:inline-block"
-            >
-              View all stories
-              <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
-                →
-              </span>
-            </Link>
-          </div>
-          <div className="mt-8 grid gap-6 sm:grid-cols-3">
-            {stories.map((story) => (
-              <div
-                key={story.id}
-                className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-brass-500/30 hover:shadow-[0_16px_32px_-12px_rgba(0,0,0,0.6)]"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden bg-graphite-700">
-                  {story.customer_story_photos?.[0] && (
+                {/* RIGHT-TOP */}
+                <div className="group relative min-h-[180px] md:min-h-0 md:row-start-1 md:col-start-2 overflow-hidden border-t md:border-t-0 md:border-l border-white/[0.08]">
+                  <Image
+                    src="/Collage/2.jpeg"
+                    alt="VS Auto Mart featured vehicle – Suzuki Celerio grey"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 45vw"
+                    className="object-cover object-center transition-transform duration-[1000ms] ease-out group-hover:scale-[1.06]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                </div>
+
+                {/* RIGHT-BOTTOM: Two Column Split */}
+                <div className="relative grid grid-cols-2 md:row-start-2 md:col-start-2 border-t md:border-l border-white/[0.08]">
+                  {/* Bottom-left */}
+                  <div className="group relative min-h-[160px] md:min-h-0 overflow-hidden">
                     <Image
-                      src={story.customer_story_photos[0].image_url}
-                      alt={story.customer_name}
+                      src="/Collage/3.jpeg"
+                      alt="VS Auto Mart featured vehicle – Perodua Bezza"
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className="object-cover object-center transition-transform duration-[1100ms] ease-out group-hover:scale-[1.07]"
                     />
-                  )}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                </div>
-                <div className="p-4">
-                  <p className="font-display font-semibold">
-                    Congratulations, {story.customer_name} <span className="text-brass-400">🎉</span>
-                  </p>
-                  <p className="mt-1 text-sm text-graphite-300">{story.vehicle_label}</p>
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/35 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  </div>
+
+                  {/* Bottom-right */}
+                  <div className="group relative min-h-[160px] md:min-h-0 overflow-hidden border-l border-white/[0.08]">
+                    <Image
+                      src="/Collage/4.jpeg"
+                      alt="VS Auto Mart featured vehicle – Suzuki Celerio blue"
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className="object-cover object-center transition-transform duration-[1000ms] ease-out group-hover:scale-[1.06]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-tl from-brass-500/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  </div>
                 </div>
               </div>
-            ))}
+
+              {/* ── BOTTOM LABEL BAR ── */}
+              <div className="relative flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/[0.08] bg-black/70 px-6 py-4 backdrop-blur-xl sm:px-8">
+                <div className="flex items-center gap-3">
+                  <div className="h-px w-8 bg-brass-500" />
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brass-400 text-center sm:text-left">
+                    Quality vehicles · Kadawatha, Sri Lanka
+                  </span>
+                </div>
+                <Link
+                  href="/inventory"
+                  className="group flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-2.5 text-xs font-semibold text-white backdrop-blur-sm transition-all hover:border-brass-500/50 hover:bg-brass-500/10 hover:text-brass-400"
+                >
+                  Explore Inventory
+                  <svg
+                    className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="2.5"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                    />
+                  </svg>
+                </Link>
+              </div>
+            </div>
           </div>
-          <Link
-            href="/customers"
-            className="mt-8 block text-center text-sm font-medium text-brass-400 transition-colors hover:text-brass-300 sm:hidden"
-          >
-            View all customer stories →
-          </Link>
         </div>
       </section>
 
-      {/* Contact */}
-      <section id="contact" className="bg-charcoal-900 py-16 text-paper">
-        <div className="mx-auto max-w-6xl px-6">
-          <h2 className="font-display text-2xl font-semibold">Visit or Reach Us</h2>
-          <div className="mt-6 grid gap-6 sm:grid-cols-3 text-sm">
-            {[
-              { label: "Phone", value: "+94 77 123 4567" },
-              { label: "Location", value: "Kadawatha, Sri Lanka" },
-              { label: "Hours", value: "Mon – Sat, 9am – 6pm" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="rounded-2xl border border-white/5 p-5 transition-colors duration-300 hover:border-brass-500/30"
-              >
-                <p className="font-semibold text-paper">{item.label}</p>
-                <p className="mt-1 text-graphite-300">{item.value}</p>
-              </div>
-            ))}
+      {/* =====================================================
+          FEATURED VEHICLES GRID
+      ===================================================== */}
+      {featured.length > 0 && (
+        <section className="relative mt-20 sm:mt-32">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-20 top-10 h-72 w-72 rounded-full bg-brass-500/[0.08] blur-[120px]"
+          />
+          <FeaturedVehicles vehicles={featured} />
+        </section>
+      )}
+
+      {/* =====================================================
+          TRUST STATS
+      ===================================================== */}
+      <section className="relative mt-16 sm:mt-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-3xl border border-graphite-700/20 bg-graphite-900/40 shadow-[0_30px_100px_rgba(0,0,0,0.5)] backdrop-blur-2xl">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -left-20 top-1/2 h-56 w-56 -translate-y-1/2 rounded-full bg-brass-500/[0.1] blur-[90px]"
+            />
+            <div className="relative px-5 py-8 sm:px-8 sm:py-10">
+              <TrustStats />
+            </div>
           </div>
         </div>
       </section>
-    </>
+
+      {/* =====================================================
+          SELL YOUR CAR
+      ===================================================== */}
+      <section className="relative mt-20 sm:mt-32">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <SellCarBanner />
+        </div>
+      </section>
+
+      {/* =====================================================
+          WHY CHOOSE US
+      ===================================================== */}
+      <section className="relative mt-20 sm:mt-32">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-[2rem] border border-graphite-700/20 bg-graphite-900/40 shadow-[0_30px_100px_rgba(0,0,0,0.5)] backdrop-blur-3xl">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-brass-500/[0.12] blur-[100px]"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-brass-500/[0.04] blur-[110px]"
+            />
+            <div className="relative px-5 py-10 sm:px-10 sm:py-14 lg:px-14">
+              <WhyChooseUs />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================
+          VIDEO
+      ===================================================== */}
+      <section className="relative mt-20 sm:mt-28">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brass-500/[0.08] blur-[120px]"
+        />
+        <VideoShowcase />
+      </section>
+
+      {/* =====================================================
+          LOCATION
+      ===================================================== */}
+      <section className="relative mt-20 sm:mt-32">
+        <LocationSection />
+      </section>
+    </main>
   );
 }

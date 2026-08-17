@@ -38,9 +38,22 @@ export interface VehicleImage {
   image_url: string;
   context: ImageContext;
   sort_order: number;
+  is_cover: boolean;
 }
 
 export interface VehicleWithImages extends Vehicle {
+  vehicle_images: VehicleImage[];
+}
+
+/**
+ * Fields safe to select on public pages. Deliberately omits registration_no
+ * (plate number) and created_by, which are admin-only. Always select this
+ * exact column list (see PUBLIC_VEHICLE_COLUMNS in lib/queries.ts) rather
+ * than "*" on any public-facing query.
+ */
+export type PublicVehicle = Omit<Vehicle, "registration_no">;
+
+export interface PublicVehicleWithImages extends PublicVehicle {
   vehicle_images: VehicleImage[];
 }
 
@@ -56,6 +69,7 @@ export interface CustomerStory {
   customer_story_photos: { id: string; image_url: string; sort_order: number }[];
 }
 
+// Replace the existing Testimonial interface with this (added is_published, created_at)
 export interface Testimonial {
   id: string;
   reviewer_name: string;
@@ -63,6 +77,15 @@ export interface Testimonial {
   review_text: string | null;
   photo_url: string | null;
   video_url: string | null;
+  is_published: boolean;
+  created_at: string;
+}
+
+export interface GoogleReviewsConfig {
+  rating: number;
+  totalReviews: number;
+  googleReviewsUrl: string;
+  leaveReviewUrl: string;
 }
 
 export interface InventoryFilters {
@@ -72,4 +95,65 @@ export interface InventoryFilters {
   maxPrice?: number;
   fuel?: FuelType;
   transmission?: TransmissionType;
+}
+
+export type SellCarFuelType = "petrol" | "diesel" | "hybrid" | "electric" | "other";
+export type SellCarTransmission = "automatic" | "manual" | "amt" | "cvt" | "other";
+export type SellCarCondition = "excellent" | "good" | "fair" | "needs_repairs";
+export type SellCarStatus =
+  | "NEW"
+  | "REVIEWING"
+  | "CONTACTED"
+  | "INSPECTION"
+  | "OFFER_MADE"
+  | "PURCHASED"
+  | "REJECTED"
+  | "CLOSED";
+
+export interface SellCarSubmissionPhoto {
+  id: string;
+  submission_id: string;
+  image_url: string;
+  cloudinary_public_id: string | null;
+  sort_order: number;
+  created_at: string;
+}
+
+export interface SellCarSubmission {
+  id: string;
+  reference_number: string;
+  created_at: string;
+  updated_at: string;
+
+  seller_name: string;
+  seller_phone: string;
+  seller_whatsapp: string;
+  seller_email: string | null;
+
+  vehicle_make: string;
+  vehicle_model: string;
+  vehicle_year: number;
+  registration_number: string;
+  mileage: number;
+
+  fuel_type: SellCarFuelType;
+  transmission: SellCarTransmission;
+  colour: string | null;
+  engine_capacity: string | null;
+  owners_count: number | null;
+  condition: SellCarCondition;
+
+  asking_price: number;
+  description: string | null;
+
+  status: SellCarStatus;
+  admin_notes: string | null;
+  assigned_to: string | null;
+
+  consent_given: boolean;
+  consent_at: string | null;
+}
+
+export interface SellCarSubmissionWithPhotos extends SellCarSubmission {
+  sell_car_submission_photos: SellCarSubmissionPhoto[];
 }
