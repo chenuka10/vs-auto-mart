@@ -4,7 +4,17 @@ import { NextResponse, type NextRequest } from "next/server";
 type CookieToSet = {
   name: string;
   value: string;
-  options?: Parameters<typeof NextResponse.prototype.cookies.set>[2];
+  options?: {
+    domain?: string;
+    encode?: (value: string) => string;
+    expires?: Date;
+    httpOnly?: boolean;
+    maxAge?: number;
+    path?: string;
+    priority?: "low" | "medium" | "high";
+    sameSite?: boolean | "lax" | "strict" | "none";
+    secure?: boolean;
+  };
 };
 
 export async function updateSession(request: NextRequest) {
@@ -25,16 +35,21 @@ export async function updateSession(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
+
         setAll(cookiesToSet: CookieToSet[]) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+          cookiesToSet.forEach(({ name, value }) => {
+            request.cookies.set(name, value);
+          });
+
           response = NextResponse.next({
             request: {
               headers: requestHeaders,
             },
           });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
-          );
+
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set(name, value, options);
+          });
         },
       },
     }
