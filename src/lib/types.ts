@@ -133,7 +133,7 @@ export interface SellCarSubmission {
   vehicle_make: string;
   vehicle_model: string;
   vehicle_year: number;
-  registration_number: string;
+  registration_number: string | null;
   mileage: number;
 
   fuel_type: SellCarFuelType;

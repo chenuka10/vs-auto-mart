@@ -62,7 +62,7 @@ export async function submitSellCarForm(rawInput: unknown): Promise<SubmitSellCa
     vehicle_make: data.vehicle_make,
     vehicle_model: data.vehicle_model,
     vehicle_year: data.vehicle_year,
-    registration_number: data.registration_number,
+    registration_number: data.registration_number ? data.registration_number.trim() : null,
     mileage: data.mileage,
 
     fuel_type: data.fuel_type,
