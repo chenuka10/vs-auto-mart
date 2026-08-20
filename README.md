@@ -1,109 +1,176 @@
-# VS Auto Mart
+# VS Auto Mart — Digital Dealership Platform
 
-Digital dealership platform: public showroom, live inventory, customer trust
-portfolio, and an admin dashboard — built with Next.js (App Router),
-Tailwind CSS, and Supabase.
+[![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-Database%20%26%20Auth-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com/)
+[![Cloudinary](https://img.shields.io/badge/Cloudinary-Media%20CDN-3448C5?style=flat-square&logo=cloudinary)](https://cloudinary.com/)
 
-## What's included
+A modern, high-performance web platform and management system built for **VS Auto Mart**, a premier automobile dealership based in Kadawatha, Sri Lanka.
 
-- **Public site** — homepage (hero, featured vehicles, latest arrivals, why-us,
-  customer preview), `/inventory` with filtering, `/cars/[slug]` detail pages
-  with SEO metadata, `/customers` delivery portfolio, `/about`.
-- **Admin dashboard** (`/admin`, auth-protected) — add vehicles, edit price/
-  description/photos, change status (available/reserved/sold), delete.
-- **Database schema** (`supabase/schema.sql`) — vehicles, images, customer
-  stories, testimonials, inquiries, staff profiles, with row-level security.
-- **SEO** — dynamic `sitemap.xml`, `robots.txt`, per-vehicle metadata.
+---
 
-Not included yet (see "Next steps" below): Cloudinary upload widget (photo
-URLs are pasted in manually for now), the AI assistant and CRM from the
-proposal's Phase 2, and automatic social media posting.
+## 🚀 Key Features
 
-## 1. Set up Supabase
+### 🌟 Public Storefront
+- **Dynamic Showroom & Hero**: Showcase collage, trust metrics, video showcases, and featured stock.
+- **Inventory Browser (`/inventory`)**: Real-time vehicle filtering by make, price range, transmission, fuel type, and availability.
+- **Vehicle Detail Pages (`/cars/[slug]`)**:
+  - Touch-swipe image gallery with zoom and fullscreen lightbox.
+  - Complete technical specifications table (Plate-tag motif).
+  - One-tap WhatsApp inquiry and direct phone dialer.
+  - Dynamic JSON-LD structured data and OpenGraph meta tags for search engines.
+- **Sell Your Car Portal (`/sell-your-car`)**:
+  - 4-step valuation and submission wizard with client/server validation.
+  - Optional registration number field for seller privacy.
+  - Direct Cloudinary image uploads and automated reference number generator.
+- **Customer Trust & Social Proof**:
+  - **Happy Customers (`/customers`)**: Vehicle delivery photo stories and customer showcases.
+  - **Customer Reviews (`/reviews`)**: Verified buyer ratings, Google review cards, and trust badges.
+- **Information Hub**: Company story (`/about`) and FAQ section (`/faq`).
 
-1. Create a project at [supabase.com](https://supabase.com).
-2. Open the SQL Editor and run `supabase/schema.sql` in full.
-3. Create your first staff login: **Authentication → Users → Add user**,
-   then insert a matching row in `profiles`:
-   ```sql
-   insert into public.profiles (id, name, role)
-   values ('paste-the-user-uuid-here', 'Your Name', 'owner');
-   ```
-4. Copy your Project URL and anon key from **Project Settings → API**.
+---
 
-## 2. Set up Cloudinary (image hosting)
+### 🛡️ Admin Management Dashboard (`/admin`)
+- **Authentication & Security**: Supabase Auth with Row-Level Security (RLS) and server-side middleware protection.
+- **Navigation & Active States**: Unified `AdminNav` with live route indicators and breadcrumb navigation.
+- **Vehicle Management**:
+  - Create, update, and archive vehicles with live pricing, mileage, and condition flags.
+  - Cloudinary upload widget with cover photo selection and photo deletion.
+  - Instant status toggling (`Available`, `Reserved`, `Sold`).
+- **Sell Requests Manager (`/admin/sell-requests`)**:
+  - Filter and search incoming valuation requests.
+  - Manage lead status workflows (`NEW`, `REVIEWING`, `CONTACTED`, `INSPECTION`, `OFFER_MADE`, `PURCHASED`, `REJECTED`, `CLOSED`).
+- **Content Portfolios**:
+  - Manage **Customer Delivery Stories** (`/admin/customer-stories`) with photo/video links.
+  - Manage **Testimonials & Reviews** (`/admin/testimonials`) with star ratings and publish toggles.
 
-Create a free account at [cloudinary.com](https://cloudinary.com) and copy
-your cloud name, API key, and API secret from the dashboard. For now, upload
-photos there directly (or via any Cloudinary upload tool) and paste the
-resulting URLs into the admin "Add Vehicle" / "Edit Vehicle" forms.
+---
 
-## 3. Configure environment variables
+### 🎨 Design & Atmosphere
+- **Global Theme Engine**: Full Light/Dark theme adaptation via CSS variables (`graphite-*`, `brass-*`).
+- **Studio Atmosphere**: Ambient monochrome studio spotlight with soft rim glows and film grain texture.
+- **Automotive Aesthetic**: Registration plate typography and badges using Oswald, Inter, and JetBrains Mono.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+| :--- | :--- |
+| **Framework** | [Next.js 14](https://nextjs.org/) (App Router, Server Actions, SSR/ISR) |
+| **Language** | [TypeScript 5](https://www.typescriptlang.org/) |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) with custom design tokens |
+| **Database & Auth** | [Supabase](https://supabase.com/) (PostgreSQL with RLS policies) |
+| **Media Hosting** | [Cloudinary](https://cloudinary.com/) (Asset CDN & Direct Upload API) |
+| **Animations** | [Framer Motion](https://www.framer.com/motion/) |
+| **Validation** | [Zod](https://zod.dev/) (Shared client/server schemas) |
+
+---
+
+## 📁 Repository Structure
+
+```
+vs-auto-mart/
+├── public/                     # Static brand assets, logos, and icons
+├── src/
+│   ├── app/                    # Next.js App Router routes
+│   │   ├── (public)/
+│   │   │   ├── page.tsx        # Homepage
+│   │   │   ├── inventory/      # Live inventory search & filters
+│   │   │   ├── cars/[slug]/    # Responsive vehicle detail view
+│   │   │   ├── sell-your-car/  # 4-step seller onboarding wizard
+│   │   │   ├── customers/      # Delivery stories showcase
+│   │   │   ├── reviews/        # Customer reviews & testimonials
+│   │   │   ├── about/          # Dealership background & location
+│   │   │   └── faq/            # Frequently asked questions
+│   │   └── admin/              # Staff management portal
+│   │       ├── login/          # Secure staff login
+│   │       └── (protected)/    # Auth-guarded admin routes
+│   │           ├── vehicles/   # Inventory add & edit pages
+│   │           ├── sell-requests/ # Customer selling inquiries
+│   │           ├── customer-stories/ # Delivery stories CRUD
+│   │           └── testimonials/     # Reviews CRUD
+│   ├── components/             # Reusable UI component library
+│   │   ├── admin/              # Admin dashboard widgets & forms
+│   │   ├── home/               # Homepage hero, showcases, & trust sections
+│   │   ├── sell-car/           # Multi-step sell car components
+│   │   └── reviews/            # Review cards & rating displays
+│   └── lib/                    # Shared libraries & utilities
+│       ├── supabase/           # Server, client, and middleware Supabase SDKs
+│       ├── validation/         # Zod schemas for forms and server actions
+│       ├── email/              # Notification handlers
+│       ├── types.ts            # Project-wide TypeScript definitions
+│       └── utils.ts            # Currency (LKR), mileage, and slug helpers
+└── supabase/                   # PostgreSQL schema migrations and RLS policies
+```
+
+---
+
+## ⚙️ Getting Started
+
+### 1. Prerequisites
+- Node.js 18.17+ or 20+
+- npm, yarn, or pnpm
+- A Supabase project and Cloudinary account
+
+### 2. Environment Configuration
+Copy the template and provide your API keys:
 
 ```bash
 cp .env.local.example .env.local
 ```
 
-Fill in the Supabase, Cloudinary, and WhatsApp values.
+Configure the following variables in `.env.local`:
 
-## 4. Install and run
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+
+# Dealership Contact
+NEXT_PUBLIC_WHATSAPP_NUMBER=94772500320
+```
+
+### 3. Install & Run Locally
 
 ```bash
+# Install dependencies
 npm install
+
+# Start local development server
 npm run dev
 ```
 
-Visit `http://localhost:3000` for the public site and
-`http://localhost:3000/admin/login` for the dashboard.
+The application will be accessible at:
+- **Public Website**: [http://localhost:3000](http://localhost:3000)
+- **Admin Dashboard**: [http://localhost:3000/admin](http://localhost:3000/admin)
 
-## 5. Deploy
+### 4. Build & Type Checking
 
-Push this repo to GitHub and import it into [Vercel](https://vercel.com).
-Add the same environment variables from `.env.local` in the Vercel project
-settings, then deploy. Point your domain (e.g. `vsautomart.lk`) at the
-Vercel project once it's live.
+```bash
+# Run TypeScript validation
+npx tsc --noEmit
 
-## Project structure
+# Run ESLint check
+npm run lint
 
-```
-src/
-  app/
-    page.tsx                 → homepage
-    inventory/page.tsx        → /inventory (filterable listing)
-    cars/[slug]/page.tsx      → vehicle detail page
-    customers/page.tsx        → happy customers / delivery portfolio
-    about/page.tsx            → company story + founder
-    admin/
-      login/page.tsx          → staff sign-in
-      (protected)/            → auth-gated dashboard routes
-        page.tsx               → vehicle table + status control
-        actions.ts              → server actions (create/update/delete)
-        vehicles/new/page.tsx    → add vehicle form
-        vehicles/[id]/edit/page.tsx → edit vehicle form
-  components/                → shared UI (VehicleCard, StatusBadge, etc.)
-  lib/
-    supabase/                → browser/server/middleware Supabase clients
-    types.ts                 → shared TypeScript types
-    utils.ts                 → formatting helpers (LKR, mileage, slugs, WhatsApp links)
-supabase/schema.sql           → full database schema + RLS policies
+# Build production bundle
+npm run build
 ```
 
-## Design notes
+---
 
-Visual language is built around the registration-plate motif (`plate-tag` in
-`globals.css`) for specs and status — grounded in the vehicle-plate theme
-rather than generic badges. Palette: graphite/charcoal base, brass accent
-(trust/premium, not the typical AI-orange), moss green for "available",
-signal red for "sold". Display type is Oswald (technical, dashboard-like
-condensed caps), body is Inter, and spec tags use JetBrains Mono for a
-data-plate feel.
+## 🚢 Deployment
 
-## Next steps toward the full proposal
+The repository is configured for zero-config deployment on [Vercel](https://vercel.com/):
 
-- Wire up a Cloudinary unsigned upload widget in the admin forms instead of
-  pasting URLs.
-- Add a "Request more information" contact form (schema already has an
-  `inquiries` table ready for it).
-- Phase 2 from the original proposal: customer accounts + saved favourites,
-  an AI vehicle-recommendation assistant, a CRM view over `inquiries`, and
-  auto-posting new listings to Facebook/Instagram/TikTok.
+1. Connect the GitHub repository to Vercel.
+2. In **Project Settings → Environment Variables**, add the variables from `.env.local`.
+3. Trigger a deployment. Vercel will build and deploy the production site with Edge middleware and serverless functions.
