@@ -151,65 +151,76 @@ export default async function VehicleDetailPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
-      <div className="mx-auto max-w-6xl px-6 py-12">
+      {/* overflow-x-hidden here is a safety net: it guarantees this page can
+          never widen the viewport even if a descendant miscalculates its
+          own width, without affecting the sticky/absolute gallery controls
+          (those are positioned relative to the gallery container, not this one). */}
+      <div className="mx-auto w-full max-w-6xl overflow-x-hidden px-4 py-6 sm:px-6 sm:py-10 lg:py-12">
         {/* Back button: plain <a> with lowercase "onclick" (not React's onClick) so this
            works inside a Server Component. It's a real HTML attribute the browser
            executes directly. href="/inventory" is the fallback if there's no history
            (e.g. someone opened this page from a shared link in a new tab). */}
-                 <a href="/inventory"
+        <a
+          href="/inventory"
           onClick={undefined}
           // @ts-expect-error -- intentionally using the raw DOM attribute, not React's synthetic handler
           onclick="if(window.history.length>1){event.preventDefault();window.history.back();}"
-          className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-graphite-400 hover:text-brass-400 transition-colors"
+          className="mb-4 sm:mb-6 inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-graphite-400 hover:text-brass-400 transition-colors"
         >
           ← Back to Inventory
         </a>
 
-        <div className="grid gap-10 lg:grid-cols-5">
+        {/* min-w-0 on the grid + each column is the actual fix: grid items
+            default to min-width:auto, which means their intrinsic content
+            (e.g. an image or a long unbreakable value) can force the track
+            wider than the grid and blow out the whole row on mobile. */}
+        <div className="grid min-w-0 gap-6 sm:gap-8 lg:grid-cols-5 lg:gap-10">
           {/* Gallery */}
-          <div className="lg:col-span-3">
+          <div className="min-w-0 lg:col-span-3">
             <VehicleGallery
               images={images}
               vehicleName={`${vehicle.brand} ${vehicle.model} ${vehicle.year}`}
             />
           </div>
-          
 
           {/* Details */}
-          <div className="lg:col-span-2">
+          <div className="min-w-0 lg:col-span-2">
             <StatusBadge status={vehicle.status} />
-            <h1 className="mt-3 font-display text-3xl font-semibold text-graphite-100">
+            <h1 className="mt-3 font-display text-2xl sm:text-3xl font-semibold text-graphite-100 break-words">
               {vehicle.brand} {vehicle.model}
             </h1>
-            <p className="mt-1 text-graphite-400">
+            <p className="mt-1 text-xs sm:text-sm text-graphite-400">
               {vehicle.year} · {vehicle.location ?? "Kadawatha, Sri Lanka"}
             </p>
-            <p className="mt-4 font-display text-3xl font-semibold text-brass-400">
+            <p className="mt-3 sm:mt-4 font-display text-2xl sm:text-3xl font-semibold text-brass-400">
               {formatLKR(vehicle.price)}
             </p>
 
-            <dl className="mt-6 grid grid-cols-2 gap-x-4 gap-y-3 border-y border-graphite-700/20 py-6 text-sm">
+            <dl className="mt-5 sm:mt-6 grid grid-cols-2 gap-x-4 gap-y-3 sm:gap-y-3.5 border-y border-graphite-700/20 py-5 sm:py-6 text-sm">
               {specs.map(([label, value]) => (
-                <div key={label}>
-                  <dt className="text-graphite-500">{label}</dt>
-                  <dd className="font-medium capitalize text-graphite-200">{value}</dd>
+                <div key={label} className="min-w-0">
+                  <dt className="text-xs text-graphite-500">{label}</dt>
+                  <dd className="font-medium capitalize text-graphite-200 truncate">{value}</dd>
                 </div>
               ))}
             </dl>
 
             {vehicle.description && (
-              <p className="mt-6 text-sm leading-relaxed text-graphite-300">{vehicle.description}</p>
+              <p className="mt-5 sm:mt-6 text-xs sm:text-sm leading-relaxed text-graphite-300 whitespace-pre-line break-words">
+                {vehicle.description}
+              </p>
             )}
 
-            <div className="mt-8 flex flex-col gap-3">
+            <div className="mt-6 sm:mt-8 flex flex-col gap-3">
               <WhatsAppButton
                 variant="inline"
                 label="WhatsApp Inquiry"
                 message={`Hi, I'm interested in the ${vehicle.brand} ${vehicle.model} (${vehicle.year}) listed for ${formatLKR(vehicle.price)}.`}
               />
-              
-               <a href="tel:+94772500320"
-                className="rounded-plate border border-graphite-700/40 px-5 py-3 text-center text-sm font-semibold text-graphite-200 transition-colors hover:bg-graphite-800/50 hover:text-graphite-50"
+
+              <a
+                href="tel:+94772500320"
+                className="rounded-plate border border-graphite-700/40 px-5 py-3 text-center text-sm font-semibold text-graphite-200 transition-colors hover:bg-graphite-800/50 hover:text-graphite-50 touch-manipulation"
               >
                 Call Now
               </a>

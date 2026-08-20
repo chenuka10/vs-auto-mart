@@ -34,40 +34,7 @@ export default async function HomePage() {
   const { featured } = await getHomepageData();
 
   return (
-    <main className="relative isolate overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1c1500] via-[#080808] to-black text-white">
-      {/* =====================================================
-          GLOBAL ATMOSPHERE (LIQUID GLASS BACKGROUND ACCENTS)
-      ===================================================== */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
-      >
-        <div className="absolute -left-40 -top-32 h-[45rem] w-[45rem] rounded-full bg-brass-500/[0.15] blur-[160px]" />
-        <div className="absolute right-[-15rem] top-[22rem] h-[42rem] w-[42rem] rounded-full bg-white/[0.05] blur-[150px]" />
-        <div className="absolute left-[15%] top-[78rem] h-[40rem] w-[40rem] rounded-full bg-brass-600/[0.08] blur-[150px]" />
-        <div className="absolute right-[10%] top-[150rem] h-[32rem] w-[32rem] rounded-full bg-white/[0.03] blur-[140px]" />
-
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)
-            `,
-            backgroundSize: "72px 72px",
-            maskImage: "linear-gradient(to bottom, black 0%, transparent 85%)",
-          }}
-        />
-
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(135deg, transparent 0, transparent 140px, rgba(255,255,255,0.7) 141px, transparent 142px)",
-          }}
-        />
-      </div>
-
+    <main className="relative isolate overflow-hidden text-graphite-100">
       {/* =====================================================
           FULL-SCREEN HERO
       ===================================================== */}

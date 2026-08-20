@@ -11,7 +11,6 @@ const NAV_LINKS = [
 
 const SOCIAL_LINKS = [
   { href: "https://www.facebook.com/people/VS-auto-mart/100063609908658/", label: "Facebook" },
-  { href: "https://instagram.com", label: "Instagram" },
   { href: "https://www.tiktok.com/@vs_auto_mart", label: "TikTok" },
 ];
 

@@ -48,7 +48,7 @@ export const vehicleInfoSchema = z.object({
     .int()
     .min(1980, "Enter a valid year.")
     .max(currentYear + 1, "Enter a valid year."),
-  registration_number: z.string().trim().min(1, "Registration number is required.").max(20),
+  registration_number: z.string().trim().max(20).optional().or(z.literal("")),
   mileage: z.coerce.number().int().min(0, "Mileage can't be negative.").max(2_000_000),
   fuel_type: z.enum(["petrol", "diesel", "hybrid", "electric", "other"]),
   transmission: z.enum(["automatic", "manual", "amt", "cvt", "other"]),

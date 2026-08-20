@@ -49,13 +49,12 @@ export default function VehicleInformationStep({ data, errors, onChange }: Props
       </label>
 
       <label className={labelClass}>
-        Registration Number
+        Registration Number (Optional)
         <input
           className={inputClass}
           value={data.registration_number}
           onChange={(e) => onChange({ registration_number: e.target.value })}
-          placeholder="WP CAB-1234"
-          required
+          placeholder="e.g. WP CAB-1234 (Optional)"
         />
         {fieldError(errors, "registration_number") && (
           <span className={errorClass}>{errors.registration_number}</span>
