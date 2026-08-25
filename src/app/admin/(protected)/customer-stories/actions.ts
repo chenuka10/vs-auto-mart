@@ -25,6 +25,62 @@ export interface CustomerStoryInput {
   photo_urls: string[];
 }
 
+export interface BulkStoryItem {
+  image_url: string;
+  customer_name?: string;
+  vehicle_label?: string;
+  delivery_date?: string;
+  is_published?: boolean;
+}
+
+export async function createBulkCustomerStories(items: BulkStoryItem[]) {
+  const supabase = await requireAdmin();
+
+  if (!items || items.length === 0) {
+    return { error: "No photos provided." };
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  const storiesToInsert = items.map((item) => ({
+    id: crypto.randomUUID(),
+    customer_name: item.customer_name?.trim() || "Happy Customer",
+    vehicle_label: item.vehicle_label?.trim() || null,
+    delivery_date: item.delivery_date?.trim() || today,
+    message: null,
+    video_url: null,
+    is_published: item.is_published !== false,
+  }));
+
+  const { error: storiesErr } = await supabase
+    .from("customer_stories")
+    .insert(storiesToInsert);
+
+  if (storiesErr) {
+    console.error("Failed to bulk create customer stories:", storiesErr);
+    return { error: storiesErr.message };
+  }
+
+  const photosToInsert = items.map((item, idx) => ({
+    story_id: storiesToInsert[idx].id,
+    image_url: item.image_url,
+    sort_order: 0,
+  }));
+
+  const { error: photosErr } = await supabase
+    .from("customer_story_photos")
+    .insert(photosToInsert);
+
+  if (photosErr) {
+    console.error("Failed to insert customer story photos:", photosErr);
+  }
+
+  revalidatePath("/admin/customer-stories");
+  revalidatePath("/customers");
+  revalidatePath("/");
+  return { success: true, count: storiesToInsert.length };
+}
+
 export async function createCustomerStory(formData: FormData) {
   const supabase = await requireAdmin();
 

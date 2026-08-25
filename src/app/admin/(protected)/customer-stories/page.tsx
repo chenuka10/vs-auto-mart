@@ -48,13 +48,22 @@ export default async function AdminCustomerStoriesPage() {
             </p>
           </div>
 
-          <Link
-            href="/admin/customer-stories/new"
-            className="inline-flex items-center justify-center gap-2 rounded-plate bg-brass-500 px-4 py-2.5 text-sm font-semibold text-graphite-950 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brass-400 hover:shadow-md"
-          >
-            <span className="text-base leading-none">+</span>
-            Add Customer Story
-          </Link>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              href="/admin/customer-stories/bulk"
+              className="inline-flex items-center justify-center gap-2 rounded-plate border border-brass-500/40 bg-graphite-900 px-4 py-2.5 text-sm font-semibold text-brass-400 shadow-sm transition-all hover:border-brass-500 hover:bg-brass-500/10"
+            >
+              <span>⚡</span>
+              Bulk Upload
+            </Link>
+            <Link
+              href="/admin/customer-stories/new"
+              className="inline-flex items-center justify-center gap-2 rounded-plate bg-brass-500 px-4 py-2.5 text-sm font-semibold text-graphite-950 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brass-400 hover:shadow-md"
+            >
+              <span className="text-base leading-none">+</span>
+              Add Customer Story
+            </Link>
+          </div>
         </div>
 
         {/* ── Stats ── */}
@@ -246,9 +255,20 @@ export default async function AdminCustomerStoriesPage() {
               </svg>
             </div>
             <p className="font-display text-lg font-semibold text-graphite-200">No stories yet</p>
-            <Link href="/admin/customer-stories/new" className="mt-5 inline-flex rounded-plate bg-brass-500 px-5 py-2.5 text-sm font-semibold text-graphite-950 hover:bg-brass-400 transition-colors">
-              + Add Customer Story
-            </Link>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/admin/customer-stories/bulk"
+                className="inline-flex rounded-plate border border-brass-500/40 bg-graphite-900 px-5 py-2.5 text-sm font-semibold text-brass-400 hover:bg-brass-500/10 transition-colors"
+              >
+                ⚡ Bulk Upload
+              </Link>
+              <Link
+                href="/admin/customer-stories/new"
+                className="inline-flex rounded-plate bg-brass-500 px-5 py-2.5 text-sm font-semibold text-graphite-950 hover:bg-brass-400 transition-colors"
+              >
+                + Add Customer Story
+              </Link>
+            </div>
           </div>
         )}
       </div>
