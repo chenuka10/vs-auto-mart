@@ -7,7 +7,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
-  { href: "/inventory", label: "Inventory" },
+  { href: "/inventory", label: "Cars" },
   { href: "/customers", label: "Happy Customers" },
   { href: "/sell-your-car", label: "Sell Your Car" },
   { href: "/about", label: "About" },

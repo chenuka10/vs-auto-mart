@@ -22,8 +22,7 @@ export default function WhatsAppButton({
 
   if (variant === "inline") {
     return (
-      
-        <a href={href}
+      <a href={href}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center justify-center gap-2 rounded-plate bg-emerald-600 px-5 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-500 hover:shadow-[0_8px_24px_-4px_rgba(16,185,129,0.4)]"
@@ -35,11 +34,11 @@ export default function WhatsAppButton({
   }
 
   return (
-    
-      <a href={href}
+    <a href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-emerald-600 py-3.5 pl-3.5 pr-3.5 text-sm font-semibold text-white shadow-lg shadow-black/30 transition-all duration-300 hover:bg-emerald-500 hover:pr-5 sm:bottom-6 sm:right-6"
+      // Added justify-center, consolidated padding to p-3.5, and changed gap to transition on hover
+      className="group fixed bottom-5 right-5 z-50 flex items-center justify-center gap-0 p-3.5 rounded-full bg-emerald-600 text-sm font-semibold text-white shadow-lg shadow-black/30 transition-all duration-300 hover:bg-emerald-500 group-hover:gap-2 group-hover:pr-5 sm:bottom-6 sm:right-6"
       aria-label="Chat on WhatsApp">
       <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-emerald-500/50" />
       <WhatsAppIcon className="h-6 w-6 shrink-0" />

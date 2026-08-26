@@ -187,7 +187,7 @@ export default async function HomePage() {
       {/* =====================================================
           SELL YOUR CAR
       ===================================================== */}
-      <section className="relative mt-20 sm:mt-32">
+      <section className="relative mt-16 sm:mt-24 bg-gradient-to-r from-brass-500/[0.03] via-transparent to-brass-500/[0.03]">
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
           <SellCarBanner />
         </div>

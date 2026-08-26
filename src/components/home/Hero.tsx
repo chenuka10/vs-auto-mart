@@ -76,7 +76,7 @@ export default function Hero() {
             href="/inventory"
             className="rounded-plate bg-gradient-gold px-8 py-3.5 text-sm font-semibold text-graphite-950 shadow-glow-gold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_35px_0_rgba(199,158,50,0.6)]"
           >
-            Explore Inventory
+            View Cars 🚗 
           </Link>
 
           <Link
