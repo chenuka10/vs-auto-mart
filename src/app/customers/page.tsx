@@ -7,6 +7,7 @@ import { getGooglePlaceRating } from "@/lib/google-places";
 import { TESTIMONIALS_PAGE_SIZE, GOOGLE_REVIEWS_CONFIG } from "@/lib/constants";
 import { GoogleReviewSummaryCard } from "@/components/reviews/GoogleReviewSummaryCard";
 import { TestimonialsSection } from "@/components/reviews/TestimonialsSection";
+import { DeliveryGallery } from "@/components/gallery/DeliveryGallery";
 
 export const metadata = {
   title: "Happy Customers & Reviews — VS Auto Mart Kadawatha",
@@ -81,7 +82,7 @@ export default async function HappyCustomersPage() {
   );
   const videoStories = stories.filter((s) => s.video_url);
 
-  /* Build a flat photo list for the masonry wall (up to 3 per story) */
+  /* Build a flat photo list for the gallery (up to 3 per story) */
   const photoWall: { url: string; customer: string; vehicle: string | null; date: string }[] = [];
   for (const story of photoStories) {
     const photos = (story.customer_story_photos ?? []).slice(0, 3);
@@ -94,6 +95,11 @@ export default async function HappyCustomersPage() {
       });
     }
   }
+
+  const galleryItems = photoWall.map((item) => ({
+    image: item.url,
+    text: item.vehicle ? `${item.customer} — ${item.vehicle}` : item.customer,
+  }));
 
   return (
     <main className="relative overflow-hidden">
@@ -159,57 +165,7 @@ export default async function HappyCustomersPage() {
               <div className="h-px flex-1 bg-gradient-to-l from-brass-500/40 to-transparent" />
             </div>
 
-            {/* Responsive masonry-style grid */}
-            <div
-              className="grid gap-3 sm:gap-4"
-              style={{
-                gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-              }}
-            >
-              {photoWall.map((item, i) => (
-                <div
-                  key={`${item.url}-${i}`}
-                  className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-black/30 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
-                  style={{
-                    /* Give every 4th item a taller span for visual variety */
-                    gridRow: (i + 1) % 5 === 0 ? "span 2" : "span 1",
-                    aspectRatio: (i + 1) % 5 === 0 ? "3/4" : "4/3",
-                  }}
-                >
-                  <Image
-                    src={item.url}
-                    alt={`${item.customer} with their ${item.vehicle ?? "vehicle"}`}
-                    fill
-                    priority={i < 6}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                  />
-
-                  {/* Gradient overlay — slides up on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-400 group-hover:opacity-100" />
-
-                  {/* Info reveal on hover */}
-                  <div className="absolute inset-x-0 bottom-0 translate-y-2 p-4 opacity-0 transition-all duration-400 group-hover:translate-y-0 group-hover:opacity-100">
-                    <p className="text-sm font-semibold text-white">
-                      {item.customer} 🎉
-                    </p>
-                    {item.vehicle && (
-                      <p className="mt-0.5 text-xs text-white/70">
-                        {item.vehicle}
-                      </p>
-                    )}
-                    <p className="mt-1 text-[10px] font-medium uppercase tracking-[0.14em] text-brass-400">
-                      {formatDate(item.date)}
-                    </p>
-                  </div>
-
-                  {/* Always-visible subtle badge */}
-                  <div className="absolute left-3 top-3 rounded-full border border-white/15 bg-black/40 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-white/80 backdrop-blur-md">
-                    Delivery
-                  </div>
-                </div>
-              ))}
-            </div>
+            <DeliveryGallery items={galleryItems} />
           </section>
         )}
 
