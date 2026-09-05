@@ -67,6 +67,14 @@ export default function VehicleGallery({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [lightboxOpen, images.length]);
 
+  // Lock body scroll while lightbox is open
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [lightboxOpen]);
+
   if (!images || images.length === 0) {
     return (
       <div className="flex aspect-[4/3] w-full items-center justify-center rounded-2xl sm:rounded-[24px] bg-graphite-900/40 border border-brass-500/10 text-graphite-500 text-sm sm:text-base">
@@ -125,7 +133,7 @@ export default function VehicleGallery({
             alt={`${vehicleName} - ${currentImage.context ?? "Vehicle photo"}`}
             fill
             priority={currentIndex === 0}
-            className="object-cover transition-opacity duration-300"
+            className="object-contain transition-opacity duration-300"
             sizes="(min-width: 1024px) 60vw, 100vw"
           />
         </div>
@@ -210,6 +218,9 @@ export default function VehicleGallery({
             animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
             transition={{ duration: 0.3 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${vehicleName} fullscreen gallery`}
             className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-graphite-950/95 p-3 sm:p-6 select-none"
             onClick={() => setLightboxOpen(false)}
             onTouchStart={handleTouchStart}

@@ -12,15 +12,24 @@ export default function VehicleCard({ vehicle }: { vehicle: PublicVehicleWithIma
       href={`/cars/${vehicle.slug}`}
       className="group block overflow-hidden rounded-lg border border-graphite-700/20 bg-graphite-900/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brass-500/30 hover:shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-graphite-900">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-graphite-950">
+        {/* Blurred Background Layer */}
+        <Image
+          src={cover}
+          alt=""
+          fill
+          className="object-cover opacity-50 blur-xl scale-110"
+          sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 90vw"
+        />
+        {/* Foreground Image */}
         <Image
           src={cover}
           alt={`${vehicle.brand} ${vehicle.model} ${vehicle.year}`}
           fill
-          className="object-cover transition duration-300 group-hover:scale-105"
+          className="object-contain transition duration-300 group-hover:scale-105 z-10"
           sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 90vw"
         />
-        <div className="absolute left-3 top-3">
+        <div className="absolute left-3 top-3 z-20">
           <StatusBadge status={vehicle.status} />
         </div>
       </div>

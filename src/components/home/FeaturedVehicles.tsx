@@ -37,13 +37,13 @@ export default function FeaturedVehicles({
           transition={{ duration: 0.7 }}
           className="mt-10 grid gap-0 overflow-hidden rounded-lg glass-card-dark md:grid-cols-2"
         >
-          <div className="group relative aspect-[4/3] overflow-hidden md:aspect-auto">
+          <div className="group relative aspect-[4/3] overflow-hidden bg-graphite-900 md:aspect-auto">
             {coverImage && (
               <Image
                 src={coverImage}
                 alt={spotlight.brand}
                 fill
-                className="object-cover transition duration-700 ease-out group-hover:scale-105"
+                className="object-contain transition duration-700 ease-out group-hover:scale-105"
               />
             )}
           </div>
@@ -96,13 +96,13 @@ export default function FeaturedVehicles({
                   href={`/cars/${vehicle.slug}`}
                   className="group w-[78%] shrink-0 snap-start rounded-lg border border-graphite-700/20 bg-graphite-900/40 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-brass-500/30 sm:w-[45%] lg:w-[31%]"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-t-lg">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-t-lg bg-graphite-900">
                     {img && (
                       <Image
                         src={img}
                         alt={vehicle.brand}
                         fill
-                        className="object-cover transition duration-500 group-hover:scale-105"
+                        className="object-contain transition duration-500 group-hover:scale-105"
                       />
                     )}
                   </div>

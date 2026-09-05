@@ -154,6 +154,20 @@ export default async function EditVehiclePage({
               />
             </label>
 
+            {/* Transmission */}
+            <label className={labelClass}>
+              Transmission
+              <select
+                name="transmission"
+                required
+                defaultValue={vehicle.transmission}
+                className={inputClass}
+              >
+                <option value="automatic" className="bg-graphite-900 text-graphite-100">Automatic</option>
+                <option value="manual" className="bg-graphite-900 text-graphite-100">Manual</option>
+              </select>
+            </label>
+
             {/* Description */}
             <label className={`${labelClass} sm:col-span-2`}>
               Description

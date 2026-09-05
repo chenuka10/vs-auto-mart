@@ -84,22 +84,19 @@ export default function InventoryFilters() {
         />
       </label>
 
-      <label className="flex flex-col gap-2.5 text-xs font-semibold uppercase tracking-wider text-graphite-400 min-w-[220px]">
-        <div className="flex justify-between items-center">
-          <span>Max Price</span>
-          <span className="text-brass-400 font-mono tracking-normal">
-            {parseInt(maxPrice) >= 100000000 ? 'Any Price' : `Rs. ${(parseInt(maxPrice) / 1000000).toFixed(1)}M`}
-          </span>
-        </div>
-        <input
-          type="range"
-          min="1000000"
-          max="100000000"
-          step="1000000"
-          className="w-full h-1.5 bg-graphite-800 rounded-lg appearance-none cursor-pointer accent-brass-500 hover:accent-brass-400 transition-all"
-          value={maxPrice}
-          onChange={(e) => setMaxPrice(e.target.value)}
-        />
+      <label className="flex flex-col gap-1.5 text-xs font-semibold uppercase tracking-wider text-graphite-400">
+        Max Price
+        <select className={selectClass} value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)}>
+          <option value="100000000" className="bg-graphite-900">Any Price</option>
+          <option value="3000000" className="bg-graphite-900">Under Rs. 3M</option>
+          <option value="5000000" className="bg-graphite-900">Under Rs. 5M</option>
+          <option value="7000000" className="bg-graphite-900">Under Rs. 7M</option>
+          <option value="10000000" className="bg-graphite-900">Under Rs. 10M</option>
+          <option value="15000000" className="bg-graphite-900">Under Rs. 15M</option>
+          <option value="20000000" className="bg-graphite-900">Under Rs. 20M</option>
+          <option value="30000000" className="bg-graphite-900">Under Rs. 30M</option>
+          <option value="50000000" className="bg-graphite-900">Under Rs. 50M</option>
+        </select>
       </label>
 
       <label className="flex flex-col gap-1.5 text-xs font-semibold uppercase tracking-wider text-graphite-400">
