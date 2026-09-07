@@ -6,7 +6,7 @@ const NAV_LINKS = [
   { href: "/sell-your-car", label: "Sell Your Car" },
   { href: "/customers", label: "Customer Stories" },
   { href: "/about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  { href: "/about", label: "Contact" },
 ];
 
 const SOCIAL_LINKS = [

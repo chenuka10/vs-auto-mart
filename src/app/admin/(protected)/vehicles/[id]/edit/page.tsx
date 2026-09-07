@@ -127,6 +127,22 @@ export default async function EditVehiclePage({
               />
             </label>
 
+            {/* Fuel */}
+            <label className={labelClass}>
+              Fuel
+              <select
+                name="fuel"
+                required
+                defaultValue={vehicle.fuel}
+                className={inputClass}
+              >
+                <option value="petrol" className="bg-graphite-900 text-graphite-100">Petrol</option>
+                <option value="diesel" className="bg-graphite-900 text-graphite-100">Diesel</option>
+                <option value="hybrid" className="bg-graphite-900 text-graphite-100">Hybrid</option>
+                <option value="electric" className="bg-graphite-900 text-graphite-100">Electric</option>
+              </select>
+            </label>
+
             {/* Condition */}
             <label className={labelClass}>
               Condition

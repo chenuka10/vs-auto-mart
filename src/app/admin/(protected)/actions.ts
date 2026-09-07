@@ -89,11 +89,14 @@ export async function deleteVehicle(id: string) {
 export async function updateVehicle(id: string, formData: FormData) {
   const supabase = await createClient();
 
+  const fuel = String(formData.get("fuel") ?? "").trim();
+
   await supabase
     .from("vehicles")
     .update({
       price: Number(formData.get("price")),
       mileage_km: Number(formData.get("mileage_km")),
+      ...(fuel ? { fuel } : {}),
       description: String(formData.get("description") ?? "") || null,
       is_featured: formData.get("is_featured") === "on",
       condition: String(formData.get("condition") ?? "") || null,

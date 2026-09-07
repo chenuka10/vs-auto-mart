@@ -20,15 +20,15 @@ export default function VehicleCard({ vehicle }: { vehicle: PublicVehicleWithIma
           className="object-cover transition duration-300 group-hover:scale-105"
           sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 90vw"
         />
-        <div className="absolute left-3 top-3">
-          <StatusBadge status={vehicle.status} />
-        </div>
       </div>
 
       <div className="p-4">
-        <h3 className="font-display text-lg font-semibold text-graphite-100 group-hover:text-brass-400 transition-colors">
-          {vehicle.brand} {vehicle.model}
-        </h3>
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="font-display text-lg font-semibold text-graphite-100 group-hover:text-brass-400 transition-colors">
+            {vehicle.brand} {vehicle.model}
+          </h3>
+          <StatusBadge status={vehicle.status} />
+        </div>
 
         <div className="mt-2 flex flex-wrap gap-1.5">
           <span className="inline-flex items-center gap-1 rounded-plate border border-graphite-700/40 bg-graphite-950 px-2.5 py-1 font-plate text-xs font-medium tracking-wider text-graphite-300">{vehicle.year}</span>
