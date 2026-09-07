@@ -2,6 +2,25 @@ import crypto from "crypto";
 import { createClient } from "@supabase/supabase-js";
 import { formatLKR } from "@/lib/utils";
 
+interface VehicleImageRecord {
+  image_url: string;
+  is_cover?: boolean | null;
+  sort_order?: number | null;
+}
+
+interface VehicleQueryResult {
+  id: string;
+  brand?: string | null;
+  model?: string | null;
+  year?: number | null;
+  price?: number | null;
+  slug?: string | null;
+  status?: string | null;
+  primary_image?: string | null;
+  images?: string[] | null;
+  vehicle_images?: VehicleImageRecord[] | null;
+}
+
 function getAdminSupabase() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -45,7 +64,7 @@ function verifySignature(rawBody: string, signatureHeader: string | null, appSec
 /**
  * Helper to send a text message via Meta Graph API.
  */
-export async function sendText(to: string, bodyText: string): Promise<void> {
+async function sendText(to: string, bodyText: string): Promise<void> {
   await sendWhatsAppMessage({
     messaging_product: "whatsapp",
     recipient_type: "individual",
@@ -61,7 +80,7 @@ export async function sendText(to: string, bodyText: string): Promise<void> {
 /**
  * Helper to send an image/media message via Meta Graph API.
  */
-export async function sendMedia(to: string, imageUrl: string, caption?: string): Promise<void> {
+async function sendMedia(to: string, imageUrl: string, caption?: string): Promise<void> {
   await sendWhatsAppMessage({
     messaging_product: "whatsapp",
     recipient_type: "individual",
@@ -232,7 +251,7 @@ export async function POST(request: Request) {
         console.error("Error querying vehicle:", vehicleError);
       }
 
-      const car = vehicles?.[0];
+      const car = vehicles?.[0] as VehicleQueryResult | undefined;
 
       // Fallback if no matching car is available
       if (!car) {
@@ -246,15 +265,17 @@ export async function POST(request: Request) {
       // Extract image URL from primary_image, images[0], or sorted vehicle_images
       const sortedImages = Array.isArray(car.vehicle_images)
         ? [...car.vehicle_images].sort((a, b) =>
-            a.is_cover === b.is_cover ? a.sort_order - b.sort_order : a.is_cover ? -1 : 1
+            (a.is_cover ?? false) === (b.is_cover ?? false)
+              ? (a.sort_order ?? 0) - (b.sort_order ?? 0)
+              : a.is_cover
+              ? -1
+              : 1
           )
         : [];
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const rawCar = car as any;
       const imageUrl: string | null =
-        rawCar.primary_image ||
-        rawCar.images?.[0] ||
+        car.primary_image ||
+        car.images?.[0] ||
         sortedImages[0]?.image_url ||
         null;
 
